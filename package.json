@@ -1,5 +1,5 @@
 {
-  "name": "cm4025",
+  "name": "cm4025-frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

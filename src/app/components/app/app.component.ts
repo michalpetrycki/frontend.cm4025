@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  text = 'cm4025';
+  title = 'CM4025-frontend';
 }

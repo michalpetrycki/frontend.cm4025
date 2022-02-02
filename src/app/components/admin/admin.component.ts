@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from 'src/app/services/users/users.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -10,12 +10,24 @@ export class AdminComponent implements OnInit {
 
   users = <any>[];
 
-  constructor(private usersService: UsersService) { }
+  constructor(private userService: UserService) { }
 
   async ngOnInit(): Promise<void> {
 
-    this.users = await this.usersService.fetchUsers();
+    try{
+      this.users = await this.userService.fetchUsers();
+    }
+    catch (error){
+      console.log(error);
+    }
 
+    try{
+      this.userService.registerUser({ username: 'username', password: 'password', email: 'email', role: 'role' });
+    }
+    catch (error){
+      console.log(error);
+    }
+    
   }
 
 }
