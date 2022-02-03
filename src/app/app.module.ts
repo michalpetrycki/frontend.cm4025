@@ -9,6 +9,8 @@ import { UsersComponent } from 'src/app/components/users/users.component';
 import { PostsComponent } from 'src/app/components/posts/posts.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     AdminComponent,
     UsersComponent,
-    PostsComponent
+    PostsComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
