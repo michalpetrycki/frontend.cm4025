@@ -4,13 +4,27 @@
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input id="username" type="text" pInputText placeholder="username" formControlName="username">
+                <input id="username" type="text" pInputText placeholder="...username..." formControlName="username" [ngClass]="{'p-invalid': registerForm.controls['username'].hasError('invalidUsername')}">
+                <small *ngIf="registerForm.controls['username'].hasError('invalidUsername')" id="username2-help" class="p-invalid">Username cannot contain extra characters.</small>
+            </div>
+        </div>
+        <span *ngIf="">Invalid username</span>
+        <div class="col-12 md:col-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <input id="email" type="email" pInputText placeholder="...email..." formControlName="email">
             </div>
         </div>
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input id="password" type="text" pInputText placeholder="password" formControlName="password">
+                <input id="password" type="password" pInputText placeholder="...password..." formControlName="password">
+            </div>
+        </div>
+        <div class="col-12 md:col-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <input id="confirmPassword" type="password" pInputText placeholder="...confirm password..." formControlName="confirmPassword">
             </div>
         </div>
     </div>

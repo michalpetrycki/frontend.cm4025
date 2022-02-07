@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminComponent } from './components/admin/admin.component';
-import { LoginComponent } from './components/login/login.component';
-import { PostsComponent } from './components/posts/posts.component';
-import { RegisterComponent } from './components/register/register.component';
-import { UsersComponent } from './components/users/users.component';
+import { AdminComponent } from '../components/admin/admin.component';
+import { LoginComponent } from '../components/login/login.component';
+import { PostsComponent } from '../components/posts/posts.component';
+import { RegisterComponent } from '../components/register/register.component';
+import { UsersComponent } from '../components/users/users.component';
 
 const routes: Routes = [
 
