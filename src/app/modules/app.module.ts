@@ -16,6 +16,7 @@ import { LoginComponent } from '../components/login/login.component';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { InputTextModule } from 'primeng/inputtext';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     ButtonModule,
-    InputTextModule
+    InputTextModule,
+    InputMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]

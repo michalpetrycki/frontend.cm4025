@@ -1,35 +1,47 @@
-<form [formGroup]="registerForm" (ngSubmit)="submitForm()">
+<form id="register-form" [formGroup]="registerForm" (ngSubmit)="submitForm()">
+
+    <h1>Register</h1>
 
     <div class="grid p-fluid">
+
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input id="username" type="text" pInputText placeholder="...username..." formControlName="username" [ngClass]="{'p-invalid': registerForm.controls['username'].hasError('invalidUsername')}">
-                <small *ngIf="registerForm.controls['username'].hasError('invalidUsername')" id="username2-help" class="p-invalid">Username cannot contain extra characters.</small>
+                <input id="username" type="text" pInputText placeholder="Username..." formControlName="username">
             </div>
+            <small *ngIf="registerForm.controls['username'].hasError('invalidUsername')" id="username-error" class="p-invalid">Extra characters are disallowed</small>
+            <small *ngIf="registerForm.controls['username'].hasError('minlength')" id="username-error" class="p-invalid">Minimum length is 4</small>
+            <small *ngIf="registerForm.controls['username'].hasError('maxlength')" id="username-error" class="p-invalid">Maximum length is 30</small>
         </div>
-        <span *ngIf="">Invalid username</span>
+
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input id="email" type="email" pInputText placeholder="...email..." formControlName="email">
+                <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+                <input id="email" type="email" pInputText placeholder="email@domain.com..." formControlName="email" email>
             </div>
+            <small *ngIf="registerForm.controls['email'].hasError('email')" id="repeat-password-error" class="p-invalid">Email not valid</small>
         </div>
+
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input id="password" type="password" pInputText placeholder="...password..." formControlName="password">
+                <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+                <input id="password" type="password" pInputText placeholder="Password..." formControlName="password"  (ngModelChange)="onPasswordChange()">
             </div>
         </div>
+
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input id="confirmPassword" type="password" pInputText placeholder="...confirm password..." formControlName="confirmPassword">
+                <span class="p-inputgroup-addon"><i class="pi pi-replay"></i></span>
+                <input id="repeatPassword" type="password" pInputText placeholder="Repeat password..." formControlName="repeatPassword" (ngModelChange)="onPasswordChange()">
             </div>
+            <small *ngIf="registerForm.controls['repeatPassword'].hasError('mismatch')" id="repeat-password-error" class="p-invalid">Repeat password and password don't match.</small>
         </div>
+
     </div>
 
-    <button pButton type="submit" label="Register" icon="pi pi-check" iconPos="left"></button>
-    <button pButton type="button" label="Cancel" icon="pi pi-times" iconPos="left" (click)="resetForm()"></button>
-
+    <div id="register-buttons-section">
+        <button pButton type="submit" label="Register" icon="pi pi-check" iconPos="left" [disabled]="registerForm.invalid"></button>
+        <button pButton type="button" label="Cancel" icon="pi pi-times" iconPos="left" (click)="resetForm()"></button>    
+    </div>
+    
 </form>

@@ -1,1 +1,31 @@
-<p>login works!</p>
+<form id="login-form" [formGroup]="loginForm" (ngSubmit)="submitForm()">
+
+    <h1>Login</h1>
+
+    <div class="grid p-fluid">
+
+        <div class="col-12 md:col-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                <input id="usernameOrEmail" type="text" pInputText placeholder="Username / login" formControlName="usernameOrEmail">
+            </div>
+            <small *ngIf="loginForm.controls['username'].hasError('invalidUsername')" id="username-error" class="p-invalid">Extra characters are disallowed</small>
+            <small *ngIf="loginForm.controls['username'].hasError('minlength')" id="username-error" class="p-invalid">Minimum length is 4</small>
+            <small *ngIf="loginForm.controls['username'].hasError('maxlength')" id="username-error" class="p-invalid">Maximum length is 30</small>
+        </div>
+
+        <div class="col-12 md:col-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+                <input id="password" type="password" pInputText placeholder="Password..." formControlName="password">
+            </div>
+        </div>
+        
+    </div>
+
+    <div id="register-buttons-section">
+        <button pButton type="submit" label="Login" icon="pi pi-check" iconPos="left" [disabled]="registerForm.invalid"></button>
+        <button pButton type="button" label="Cancel" icon="pi pi-times" iconPos="left" (click)="resetForm()"></button>    
+    </div>
+    
+</form>

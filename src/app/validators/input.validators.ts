@@ -1,21 +1,17 @@
-import { FormControl } from "@angular/forms";
+import { AbstractControl, FormControl,ValidatorFn, ValidationErrors } from "@angular/forms";
 
 export class InputValidators{
 
-    usernameValidator(control: FormControl): { [key: string]: boolean }{
-        
-        const nameRegexp: RegExp = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+    usernameValidator(): ValidatorFn {
 
-        let error = {
-            invalidUsername: false
+        return (control: AbstractControl): ValidationErrors | null => {
+
+            const nameRegexp: RegExp = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
+            return (control.value && nameRegexp.test(control.value)) ? { invalidName: { value: control.value } } : null;
+
         };
-
-        if (control.value && nameRegexp.test(control.value)){
-            error.invalidUsername = true ;
-        }
-
-        return error;
-
-    }
+                
+    };
 
 }
