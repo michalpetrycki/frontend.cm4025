@@ -15,9 +15,9 @@ export class LoginComponent implements OnInit {
 
   loginForm = new FormGroup({
 
-    usernameOrEmail: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(30), this.validators.usernameValidator]),
+    email: new FormControl('', [Validators.required, Validators.email, this.validators.specialCharsValidator]),
     password: new FormControl('', [Validators.required]),
-        
+
   });
 
   get passwordControl(): AbstractControl{
@@ -32,56 +32,21 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  submitForm(): void{
+  async submitForm(): Promise<void>{
 
-    debugger;
+    const loginUser: LoginUser = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value
+    } as LoginUser;
 
-    const isFormValid = this.validateForm();
+    await this.authenticationService.login(loginUser);
 
-    if (isFormValid){
-
-      const loginUser: LoginUser = {
-        username: this.loginForm.get('username')?.value,
-        email: this.loginForm.get('email')?.value,
-        password: this.loginForm.get('password')?.value
-      } as LoginUser;
-  
-      this.authenticationService.login(loginUser);
-
-    }
+    this.loginForm.reset();
 
   }
 
   resetForm(): void{
-    console.warn('reset form');
-  }
-
-  private validateForm(): boolean{
-
-    let isFormValid = true;
-    let errors: string[] = [];
-
-    if (this.usernameControl.value.indexOf('!') > - 1){
-      isFormValid = false;
-      errors.push(`Username cannot contain special chars`);
-    }
-
-    if (errors.length > 0){
-
-      let errorsString = '';
-
-      errors.forEach((error: string) => {
-
-        errorsString += error + '\n';
-
-      });
-
-      alert('Cannot submit form. Clear following errors: \n' + errorsString);
-
-    }
-
-    return isFormValid;
-
+    this.loginForm.reset();
   }
 
 }

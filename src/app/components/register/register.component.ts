@@ -15,11 +15,11 @@ export class RegisterComponent implements OnInit {
 
   registerForm = new FormGroup({
 
-    username: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(30), this.validators.usernameValidator]),
-    email: new FormControl('', [Validators.required]),
+    username: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(30), this.validators.specialCharsValidator()]),
+    email: new FormControl('', [Validators.required, this.validators.specialCharsValidator]),
     password: new FormControl('', [Validators.required]),
     repeatPassword: new FormControl('', [Validators.required]),
-    
+
   });
 
   get passwordControl(): AbstractControl{
@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
         repeatPassword: this.registerForm.get('repeatPassword')?.value,
         role: 'user'
       } as RegisterUser;
-  
+
       this.authenticationService.register(newUser);
 
     }

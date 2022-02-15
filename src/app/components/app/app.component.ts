@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'CM4025-frontend';
+
+  isAuthenticated = false;
+
+  constructor(private authenticationService: AuthenticationService) {
+
+    this.isAuthenticated = authenticationService.isUserAuthenticated;
+
+  }
+
 }

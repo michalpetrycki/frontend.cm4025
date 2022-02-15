@@ -4,7 +4,8 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { RegisterUser } from 'src/app/models/interfaces/register-user.interface';
 import { LoginUser } from 'src/app/models/interfaces/login-user.interface';
 import { DateTime } from 'luxon';
-import { HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +13,35 @@ import { HttpResponse } from '@angular/common/http';
 export class AuthenticationService {
 
   private isAuthenticated = false;
+  private baseUrl = environment.baseUrl;
 
   get isUserAuthenticated(): boolean{
     return this.isAuthenticated;
   }
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private httpClient: HttpClient) { }
 
-  public login(loginUser: LoginUser): Promise<string>{
-    return new Promise<string>((resolve, reject) => {
+  public async login(loginUser: LoginUser): Promise<string>{
+    return new Promise<string>(async (resolve, reject) => {
 
-      this.apiService.post(ApiOperation.login, loginUser);
+      this.httpClient.post(this.baseUrl + ApiOperation.login, loginUser, { observe: 'response' })
+        .subscribe((response: HttpResponse<object>) => {
+
+          if (response.ok && response.status === 200 && response.statusText === 'OK'){
+
+            if ('token' in response.body!){
+
+              const token = response.body['token'];
+              this.setSession(token);
+
+            }
+
+          }
+          else{
+            debugger;
+          }
+
+      });
 
     });
   }
@@ -35,12 +54,24 @@ export class AuthenticationService {
     });
   }
 
-  private setSession(authResult: any): void{
+  private setSession(authToken: string): void{
 
-    const expiresAt = DateTime.now().plus(authResult.expiresIn);
+    const base64Url = authToken.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
 
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', JSON.stringify(authResult.expires_at.valueof()));
+    const fullPayload = JSON.parse(jsonPayload);
+
+    const expDate = DateTime.fromMillis(fullPayload['exp'] * 1000).toFormat('DD/MM/YYYY HH:mm:ss');
+
+    debugger;
+
+    localStorage.setItem('id_token', JSON.stringify(authToken));
+    localStorage.setItem('expires_at', JSON.stringify(expDate));
+
+    debugger;
 
   }
 
@@ -62,7 +93,7 @@ export class AuthenticationService {
     const expiration = localStorage.getItem('expires_at');
     const expiresAt = JSON.parse(expiration!);
 
-    return DateTime.fromISO(expiresAt);
+    return DateTime.fromJSDate(expiresAt);
 
   }
 

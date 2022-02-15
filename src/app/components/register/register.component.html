@@ -1,4 +1,4 @@
-<form id="register-form" [formGroup]="registerForm" (ngSubmit)="submitForm()">
+<form class="login-register-form" [formGroup]="registerForm" (ngSubmit)="submitForm()">
 
     <h1>Register</h1>
 
@@ -10,8 +10,8 @@
                 <input id="username" type="text" pInputText placeholder="Username..." formControlName="username">
             </div>
             <small *ngIf="registerForm.controls['username'].hasError('invalidUsername')" id="username-error" class="p-invalid">Extra characters are disallowed</small>
-            <small *ngIf="registerForm.controls['username'].hasError('minlength')" id="username-error" class="p-invalid">Minimum length is 4</small>
-            <small *ngIf="registerForm.controls['username'].hasError('maxlength')" id="username-error" class="p-invalid">Maximum length is 30</small>
+            <small *ngIf="registerForm.controls['username'].hasError('minlength')" id="min-length-error" class="p-invalid">Minimum length is 4</small>
+            <small *ngIf="registerForm.controls['username'].hasError('maxlength')" id="max-length-error" class="p-invalid">Maximum length is 30</small>
         </div>
 
         <div class="col-12 md:col-4">
@@ -19,7 +19,7 @@
                 <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
                 <input id="email" type="email" pInputText placeholder="email@domain.com..." formControlName="email" email>
             </div>
-            <small *ngIf="registerForm.controls['email'].hasError('email')" id="repeat-password-error" class="p-invalid">Email not valid</small>
+            <small *ngIf="registerForm.controls['email'].hasError('email')" id="email-error" class="p-invalid">Email not valid</small>
         </div>
 
         <div class="col-12 md:col-4">
@@ -41,7 +41,7 @@
 
     <div id="register-buttons-section">
         <button pButton type="submit" label="Register" icon="pi pi-check" iconPos="left" [disabled]="registerForm.invalid"></button>
-        <button pButton type="button" label="Cancel" icon="pi pi-times" iconPos="left" (click)="resetForm()"></button>    
+        <button pButton type="button" label="Cancel" icon="pi pi-times" iconPos="left" (click)="resetForm()"></button>
     </div>
-    
+
 </form>

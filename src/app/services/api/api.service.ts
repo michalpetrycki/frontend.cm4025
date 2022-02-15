@@ -39,14 +39,12 @@ export class ApiService {
     });
   }
 
-  post(apiOperation: ApiOperation, body: any): Promise<void>{
+  async post(apiOperation: ApiOperation, body: any): Promise<void>{
     return new Promise<void>((resolve, reject) => {
 
       this.httpClient.post(this.baseUrl + apiOperation, body, { observe: 'response' })
       .subscribe((response: HttpResponse<object>) => {
 
-        debugger;
-        
         if (response.ok && response.status === 201 && response.statusText === 'Created'){
           debugger;
         }
