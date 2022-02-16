@@ -5,7 +5,7 @@ import { LoginComponent } from 'src/app/components/login/login.component';
 import { PostsComponent } from 'src/app/components/posts/posts.component';
 import { RegisterComponent } from 'src/app/components/register/register.component';
 import { UsersComponent } from 'src/app/components/users/users.component';
-import {PageNotFoundComponent} from 'src/app/components/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
 

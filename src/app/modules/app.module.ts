@@ -9,14 +9,17 @@ import { HeaderComponent } from 'src/app/components/header/header.component';
 import { AdminComponent } from 'src/app/components/admin/admin.component';
 import { UsersComponent } from 'src/app/components/users/users.component';
 import { PostsComponent } from 'src/app/components/posts/posts.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { RegisterComponent } from '../components/register/register.component';
-import { LoginComponent } from '../components/login/login.component';
+import { RegisterComponent } from 'src/app/components/register/register.component';
+import { LoginComponent } from 'src/app/components/login/login.component';
+import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
 
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
+
+import { JwtInterceptor } from 'src/app/services/http-interceptor/JwtInterceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,8 @@ import { InputMaskModule } from 'primeng/inputmask';
     UsersComponent,
     PostsComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +43,9 @@ import { InputMaskModule } from 'primeng/inputmask';
     InputTextModule,
     InputMaskModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

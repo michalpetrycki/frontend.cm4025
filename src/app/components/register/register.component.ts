@@ -41,23 +41,14 @@ export class RegisterComponent implements OnInit {
 
   submitForm(): void{
 
-    debugger;
+    const newUser: RegisterUser = {
+      username: this.registerForm.get('username')?.value,
+      email: this.registerForm.get('email')?.value,
+      password: this.registerForm.get('password')?.value,
+      role: 'user'
+    } as RegisterUser;
 
-    const isFormValid = this.validateForm();
-
-    if (isFormValid){
-
-      const newUser: RegisterUser = {
-        username: this.registerForm.get('username')?.value,
-        email: this.registerForm.get('email')?.value,
-        password: this.registerForm.get('password')?.value,
-        repeatPassword: this.registerForm.get('repeatPassword')?.value,
-        role: 'user'
-      } as RegisterUser;
-
-      this.authenticationService.register(newUser);
-
-    }
+    this.authenticationService.register(newUser);
 
   }
 
@@ -73,39 +64,6 @@ export class RegisterComponent implements OnInit {
     else{
       this.repeatPasswordControl.setErrors({ mismatch: true });
     }
-
-  }
-
-  private validateForm(): boolean{
-
-    let isFormValid = true;
-    let errors: string[] = [];
-
-    if (this.passwordControl.value !== this.repeatPasswordControl.value){
-      isFormValid = false;
-      errors.push(`Repeat password and password don't match`);
-    }
-
-    if (this.usernameControl.value.indexOf('!') > - 1){
-      isFormValid = false;
-      errors.push(`Username cannot contain special chars`);
-    }
-
-    if (errors.length > 0){
-
-      let errorsString = '';
-
-      errors.forEach((error: string) => {
-
-        errorsString += error + '\n';
-
-      });
-
-      alert('Cannot submit form. Clear following errors: \n' + errorsString);
-
-    }
-
-    return isFormValid;
 
   }
 

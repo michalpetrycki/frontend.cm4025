@@ -6,6 +6,7 @@ import { LoginUser } from 'src/app/models/interfaces/login-user.interface';
 import { DateTime } from 'luxon';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,14 @@ export class AuthenticationService {
   private isAuthenticated = false;
   private baseUrl = environment.baseUrl;
 
+  authenticationSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
+
   get isUserAuthenticated(): boolean{
     return this.isAuthenticated;
+  }
+
+  get authenticationObservable(): BehaviorSubject<boolean>{
+    return this.authenticationSubject;
   }
 
   constructor(private apiService: ApiService, private httpClient: HttpClient) { }
@@ -33,6 +40,8 @@ export class AuthenticationService {
 
               const token = response.body['token'];
               this.setSession(token);
+
+              this.authenticationObservable.next(this.isUserAuthenticated);
 
             }
 
@@ -66,12 +75,10 @@ export class AuthenticationService {
 
     const expDate = DateTime.fromMillis(fullPayload['exp'] * 1000).toFormat('DD/MM/YYYY HH:mm:ss');
 
-    debugger;
-
     localStorage.setItem('id_token', JSON.stringify(authToken));
     localStorage.setItem('expires_at', JSON.stringify(expDate));
 
-    debugger;
+    this.isAuthenticated = true;
 
   }
 
