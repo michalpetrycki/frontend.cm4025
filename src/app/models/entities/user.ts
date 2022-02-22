@@ -5,11 +5,17 @@ export class User extends Entity {
 
     public username: string;
     public role: string;
+    public email: string;
+    public createdAt: Date;
+    public updatedAt: Date;
 
     constructor(user: UserResponse) {
-        super(user.id);
+        super(user._id);
         this.username = user.username;
         this.role = user.role;
+        this.email = user.email;
+        this.createdAt = user.createdAt;
+        this.updatedAt = user.updatedAt;
     }
 
 }

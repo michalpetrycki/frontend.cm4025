@@ -70,8 +70,7 @@ export class ApiService {
 
         case EntityType.user: {
           const values = Object.values(responseBody);
-          entities = values.map((x: UserResponse) => new User(x));
-          debugger;
+          entities = values[0].map((x: UserResponse) => new User(x));
           break;
         };
   
@@ -87,7 +86,7 @@ export class ApiService {
 
     }
     
-    return new Array<Entity>();
+    return entities;
 
   }
 
