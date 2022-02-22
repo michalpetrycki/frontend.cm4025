@@ -10,3 +10,8 @@ export class Entity{
     }
 
 }
+
+export enum EntityType{
+    user = 'User',
+    post = 'Post'
+}

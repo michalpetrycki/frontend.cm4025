@@ -1,22 +1,15 @@
 import { Entity } from 'src/app/models/entities/entity';
+import { UserResponse } from 'src/app/models/interfaces/user.interface';
 
 export class User extends Entity {
 
-    private _username: string;
-    private _role: string;
+    public username: string;
+    public role: string;
 
-    get username(): string{
-        return this._username;
-    }
-
-    get role(): string{
-        return this._role;
-    }
-
-    constructor(id: string, username: string, role: string) {
-        super(id);
-        this._username = username;
-        this._role = role;
+    constructor(user: UserResponse) {
+        super(user.id);
+        this.username = user.username;
+        this.role = user.role;
     }
 
 }

@@ -2,7 +2,9 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ApiOperation } from 'src/app/models/enums/api-operation.enum';
-import { Entity } from 'src/app/models/entities/entity';
+import { Entity, EntityType } from 'src/app/models/entities/entity';
+import { User } from 'src/app/models/entities/user';
+import { UserResponse } from 'src/app/models/interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,8 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  get(apiOperation: ApiOperation): Promise<Entity[]>{
+  get(apiOperation: ApiOperation, entityType: EntityType): Promise<Entity[]>{
+
     return new Promise<Entity[]>((resolve, reject) => {
 
       this.httpClient.get(this.baseUrl + apiOperation, { observe: 'response' })
@@ -22,7 +25,7 @@ export class ApiService {
 
         if (response.ok && response.status === 200 && response.statusText === 'OK'){
 
-          const entities: Entity[] = this.extractAndSetEntities(response.body);
+          const entities: Entity[] = this.extractAndSetEntities(response.body, entityType);
 
           if (entities && entities.length > 0){
             resolve(entities);
@@ -57,8 +60,33 @@ export class ApiService {
     });
   }
 
-  extractAndSetEntities(responseBody: object | null): Entity[]{
+  extractAndSetEntities(responseBody: object | null, entityType: EntityType): Entity[]{
 
+    let entities: Entity[] = [];
+
+    if (responseBody){
+
+      switch (entityType){
+
+        case EntityType.user: {
+          const values = Object.values(responseBody);
+          entities = values.map((x: UserResponse) => new User(x));
+          debugger;
+          break;
+        };
+  
+        case EntityType.post: {
+          break;
+        }
+  
+        default: {
+          break;
+        }
+  
+      }
+
+    }
+    
     return new Array<Entity>();
 
   }

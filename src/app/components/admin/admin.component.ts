@@ -14,20 +14,32 @@ export class AdminComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
 
-    try{
-      this.users = await this.userService.fetchUsers();
-    }
-    catch (error){
-      console.log(error);
-    }
+    this.loadData();
 
-    try{
-      this.userService.registerUser({ username: 'username', password: 'password', email: 'email', role: 'role' });
-    }
-    catch (error){
-      console.log(error);
-    }
+    // try{
+    //   this.users = await this.userService.fetchUsers();
+    // }
+    // catch (error){
+    //   console.log(error);
+    // }
+
+    // try{
+    //   this.userService.registerUser({ username: 'username', password: 'password', email: 'email', role: 'role' });
+    // }
+    // catch (error){
+    //   console.log(error);
+    // }
     
+  }
+
+  private async loadData(): Promise<void>{
+
+    return new Promise<void>(async (resolve, reject) => {
+
+      this.users = await this.userService.fetchUsers();
+
+    });
+
   }
 
 }

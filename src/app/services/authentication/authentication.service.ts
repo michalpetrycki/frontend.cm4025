@@ -75,7 +75,7 @@ export class AuthenticationService {
 
     const expDate = DateTime.fromMillis(fullPayload['exp'] * 1000).toFormat('DD/MM/YYYY HH:mm:ss');
 
-    localStorage.setItem('id_token', JSON.stringify(authToken));
+    localStorage.setItem('id_token', authToken);
     localStorage.setItem('expires_at', JSON.stringify(expDate));
 
     this.isAuthenticated = true;

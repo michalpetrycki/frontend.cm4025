@@ -1,57 +1,28 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { User } from 'src/app/models/interfaces/user.interface';
+import { UserResponse } from 'src/app/models/interfaces/user.interface';
+import { ApiOperation } from 'src/app/models/enums/api-operation.enum';
+import { ApiService } from 'src/app/services/api/api.service';
+import { Entity, EntityType } from '../../models/entities/entity';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  users: Entity[] = [];
 
-  async fetchUsers(): Promise<User[]>{
+  constructor(private apiService: ApiService) { }
 
-    return new Promise<User[]>((resolve, reject) => {
+  async fetchUsers(): Promise<Entity[]>{
 
-      this.http.get('http://127.0.0.1:8000/admin/users', { observe: 'response' })
-      .subscribe((response: HttpResponse<object>) => {
+    return new Promise<Entity[]>(async (resolve, reject) => {
 
-        if (response.ok && response.status === 200 && response.statusText === 'OK'){
+      this.users = await this.apiService.get(ApiOperation.getUsers, EntityType.user);
 
-          const data = response.body as User[];
-
-          if (data && data.length > 0){
-            resolve(data);
-          }
-          else{
-            reject([]);
-          }
-
-        }
-        else{
-          reject([]);
-        }
-
-      });
-      
-    });
-
-  }
-
-  async registerUser(user: User): Promise<boolean>{
-
-    debugger;
+      resolve(this.users);
     
-    return new Promise<boolean>((resolve, reject) => {
-
-      this.http.post('http://127.0.0.1:8000/admin/register', user)
-      .subscribe((response: any) => {
-
-        debugger;
-
-      })
-
     });
 
   }
