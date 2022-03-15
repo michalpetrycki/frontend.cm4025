@@ -7,7 +7,7 @@
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                <input id="username" type="text" pInputText placeholder="Username..." formControlName="username">
+                <input id="username" type="text" pInputText pTooltip="Enter your username" placeholder="Username..." formControlName="username">
             </div>
             <small *ngIf="registerForm.controls['username'].hasError('invalidUsername')" id="username-error" class="p-invalid">Extra characters are disallowed</small>
             <small *ngIf="registerForm.controls['username'].hasError('minlength')" id="min-length-error" class="p-invalid">Minimum length is 4</small>
@@ -17,7 +17,7 @@
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
-                <input id="email" type="email" pInputText placeholder="email@domain.com..." formControlName="email" email>
+                <input id="email" type="email" pInputText pTooltip="Enter your email" placeholder="email@domain.com..." formControlName="email" email>
             </div>
             <small *ngIf="registerForm.controls['email'].hasError('email')" id="email-error" class="p-invalid">Email not valid</small>
         </div>
@@ -25,14 +25,14 @@
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
-                <input id="password" type="password" pInputText placeholder="Password..." formControlName="password"  (ngModelChange)="onPasswordChange()">
+                <input id="password" type="password" pInputText pTooltip="Enter your password" placeholder="Password..." formControlName="password"  (ngModelChange)="onPasswordChange()">
             </div>
         </div>
 
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-replay"></i></span>
-                <input id="repeatPassword" type="password" pInputText placeholder="Repeat password..." formControlName="repeatPassword" (ngModelChange)="onPasswordChange()">
+                <input id="repeatPassword" type="password" pInputText pTooltip="Repeat your password" placeholder="Repeat password..." formControlName="repeatPassword" (ngModelChange)="onPasswordChange()">
             </div>
             <small *ngIf="registerForm.controls['repeatPassword'].hasError('mismatch')" id="repeat-password-error" class="p-invalid">Repeat password and password don't match.</small>
         </div>

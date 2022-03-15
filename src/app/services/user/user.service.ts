@@ -1,10 +1,10 @@
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { UserResponse } from 'src/app/models/interfaces/user.interface';
+import { throwError } from 'rxjs';
 import { ApiOperation } from 'src/app/models/enums/api-operation.enum';
 import { ApiService } from 'src/app/services/api/api.service';
-import { Entity, EntityType } from '../../models/entities/entity';
+import { Entity, EntityType } from 'src/app/models/entities/entity';
+
 
 @Injectable({
   providedIn: 'root'

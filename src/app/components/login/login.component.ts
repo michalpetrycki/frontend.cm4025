@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
     } as LoginUser;
 
     await this.authenticationService.login(loginUser);
+    await this.authenticationService.setCurrentUser();
 
     this.loginForm.reset();
 

@@ -7,7 +7,7 @@
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
-                <input id="email" type="email" pInputText placeholder="Email..." formControlName="email">
+                <input id="email" type="email" pInputText pTooltip="Enter your email" placeholder="Email..." formControlName="email">
             </div>
             <small *ngIf="loginForm.controls['email'].hasError('email')" id="username-error" class="p-invalid">Extra characters are disallowed</small>
         </div>
@@ -15,7 +15,7 @@
         <div class="col-12 md:col-4">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
-                <input id="password" type="password" pInputText placeholder="Password..." formControlName="password">
+                <input id="password" type="password" pInputText pTooltip="Enter your password" placeholder="Password..." formControlName="password">
             </div>
         </div>
 

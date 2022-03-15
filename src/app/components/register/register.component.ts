@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/fo
 import { InputValidators } from 'src/app/validators/input.validators';
 import { RegisterUser } from 'src/app/models/interfaces/register-user.interface';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { UserRole } from 'src/app/models/enums/user-role.enum';
 
 @Component({
   selector: 'app-register',
@@ -45,7 +46,7 @@ export class RegisterComponent implements OnInit {
       username: this.registerForm.get('username')?.value,
       email: this.registerForm.get('email')?.value,
       password: this.registerForm.get('password')?.value,
-      role: 'user'
+      role: UserRole.user
     } as RegisterUser;
 
     this.authenticationService.register(newUser);

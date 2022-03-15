@@ -1,11 +1,12 @@
 <div id="navigation-panel">
   <nav>
     <ul>
-      <li><a routerLink="/admin" routerLinkActive="active">Admin</a></li>
-      <li><a routerLink="/users" routerLinkActive="active">Users</a></li>
-      <li><a routerLink="/posts" routerLinkActive="active">Posts</a></li>
-      <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
-      <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
+      <li><a routerLink="/admin" *ngIf="isAuthenticated && isAdmin" routerLinkActive="active">Admin<i class="pi pi-key"></i></a></li>
+      <li><a routerLink="/users" *ngIf="isAuthenticated && isAdmin" routerLinkActive="active">Users<i class="pi pi-users"></i></a></li>
+      <li><a routerLink="/posts" *ngIf="isAuthenticated" routerLinkActive="active">Posts<i class="pi pi-book"></i></a></li>
+      <li><a routerLink="/login" *ngIf="displayLoginButton" routerLinkActive="active">Login<i class="pi pi-sign-in"></i></a></li>
+      <li><a routerLink="/register" *ngIf="displayRegisterButton" routerLinkActive="active">Register<i class="pi pi-user-plus"></i></a></li>
+      <li *ngIf="isAuthenticated" (click)="logout()">Logout<i class="pi pi-sign-out"></i></li>
     </ul>
   </nav>
 </div>

@@ -1,9 +1,13 @@
+// Common modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 
+// Other modules 
 import { AppRoutingModule } from 'src/app/modules/app-routing.module';
+
+// Components
 import { AppComponent } from 'src/app/components/app/app.component';
 import { HeaderComponent } from 'src/app/components/header/header.component';
 import { AdminComponent } from 'src/app/components/admin/admin.component';
@@ -15,11 +19,16 @@ import { RegisterComponent } from 'src/app/components/register/register.componen
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
 
+// Primeng modules
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
+import { TooltipModule } from 'primeng/tooltip';
+import { ToastModule } from 'primeng/toast';
 
+// Interceptor
 import { JwtInterceptor } from 'src/app/services/http-interceptor/JwtInterceptor';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -41,10 +50,13 @@ import { JwtInterceptor } from 'src/app/services/http-interceptor/JwtInterceptor
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
-    InputMaskModule
+    InputMaskModule,
+    TooltipModule, 
+    ToastModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

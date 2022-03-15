@@ -6,10 +6,12 @@ import { PostsComponent } from 'src/app/components/posts/posts.component';
 import { RegisterComponent } from 'src/app/components/register/register.component';
 import { UsersComponent } from 'src/app/components/users/users.component';
 import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
+import { UserDetailComponent } from 'src/app/components/user-detail/user-detail.component';
 
 const routes: Routes = [
 
   { path: 'admin', component: AdminComponent },
+  { path: 'userDetail', component: UserDetailComponent },
   { path: 'users', component: UsersComponent },
   { path: 'posts', component: PostsComponent },
   { path: 'login', component: LoginComponent },

@@ -1,10 +1,11 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ApiOperation } from 'src/app/models/enums/api-operation.enum';
 import { Entity, EntityType } from 'src/app/models/entities/entity';
 import { User } from 'src/app/models/entities/user';
 import { UserResponse } from 'src/app/models/interfaces/user.interface';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ApiService {
   // BaseUrl = 'localhost:8000/api/
   private baseUrl = environment.baseUrl;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private toastService: ToastService) { }
 
   get(apiOperation: ApiOperation, entityType: EntityType): Promise<Entity[]>{
 
@@ -48,13 +49,17 @@ export class ApiService {
       this.httpClient.post(this.baseUrl + apiOperation, body, { observe: 'response' })
       .subscribe((response: HttpResponse<object>) => {
 
-        if (response.ok && response.status === 201 && response.statusText === 'Created'){
-          debugger;
-        }
-        else{
-          debugger;
-        }
+        debugger;
 
+        if (response.ok && response.status === 201 && response.statusText === 'Created'){
+          
+          this.toastService.showSuccess(apiOperation, response.statusText);
+
+        }
+        
+      },
+      (error: HttpErrorResponse) => {
+        this.toastService.showError(error);
       });
 
     });
