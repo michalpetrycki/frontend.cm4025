@@ -47,19 +47,21 @@ export class ApiService {
     return new Promise<void>((resolve, reject) => {
 
       this.httpClient.post(this.baseUrl + apiOperation, body, { observe: 'response' })
-      .subscribe((response: HttpResponse<object>) => {
+      .subscribe({
+        next: async(response: HttpResponse<object>) => {
 
-        debugger;
-
-        if (response.ok && response.status === 201 && response.statusText === 'Created'){
+          if (response.ok && response.status === 201 && response.statusText === 'Created'){
           
-          this.toastService.showSuccess(apiOperation, response.statusText);
+            this.toastService.showSuccess(apiOperation, response.statusText);
+            resolve();
+  
+          }
 
+        },
+        error: (error: HttpErrorResponse) => {
+          this.toastService.showError(error);
+          reject(false);
         }
-        
-      },
-      (error: HttpErrorResponse) => {
-        this.toastService.showError(error);
       });
 
     });

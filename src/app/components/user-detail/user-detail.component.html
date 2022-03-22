@@ -1,4 +1,38 @@
-<div>
-    <p><strong>Current user profile</strong></p>
-    <pre>{{currentUser | json }}</pre>
+<div id="user-profile">
+
+    <h1>Welcome {{currentUser?.username}}</h1>
+
+    <!-- That will be updated with user's image -->
+    <div id="profile-image">
+        <img src="https://images.pexels.com/photos/11213532/pexels-photo-11213532.png?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="Here should be displayed user profile picture">
+    </div>
+
+    <div class="profile-output">
+        <label for="user-role">Username:</label>
+        <input id="user-role" name="role" type="text" pInputText [disabled]="shouldInputBeDisabled('username')" value="{{currentUser?.role}}">
+    </div>
+
+    <div class="profile-output">
+        <label for="user-role">Role:</label>
+        <input id="user-role" name="role" type="text" pInputText [disabled]="shouldInputBeDisabled('role')" value="{{currentUser?.role}}">
+    </div>
+
+    <div class="profile-output">
+        <label for="user-email">Email:</label>
+        <input id="user-email" name="email" type="text" pInputText value="{{currentUser?.email}}">
+    </div>
+
+    <div class="profile-output">
+        <label for="user-created">Date of joining:</label>
+        <input id="user-created" name="created" type="text" pInputText value="{{formatDateString(currentUser?.createdAt)}}">
+    </div>
+
+    <div class="profile-output">
+        <label for="user-updated">Profile last updated on:</label>
+        <input id="user-updated" name="updated" type="text" pInputText value="{{formatDateString(currentUser?.updatedAt)}}">
+    </div>
+
 </div>
+
+<p><strong>Current user profile</strong></p>
+<pre>{{currentUser | json }}</pre>

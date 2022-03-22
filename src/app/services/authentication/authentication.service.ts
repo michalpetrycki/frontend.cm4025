@@ -6,7 +6,7 @@ import { LoginUser } from 'src/app/models/interfaces/login-user.interface';
 import { DateTime } from 'luxon';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject, forkJoin } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/models/entities/user';
 import { UserRole } from 'src/app/models/enums/user-role.enum';
 import { ToastService } from 'src/app/services/toast/toast.service';

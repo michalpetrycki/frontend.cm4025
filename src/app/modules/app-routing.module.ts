@@ -12,7 +12,7 @@ import { LogoutComponent } from 'src/app/components/logout/logout.component';
 const routes: Routes = [
 
   { path: 'admin', component: AdminComponent },
-  { path: 'userDetail', component: UserDetailComponent },
+  { path: 'profile', component: UserDetailComponent },
   { path: 'users', component: UsersComponent },
   { path: 'posts', component: PostsComponent },
   { path: 'login', component: LoginComponent },

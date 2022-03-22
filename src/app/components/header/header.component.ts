@@ -70,6 +70,7 @@ export class HeaderComponent implements OnInit {
     buttons.push({ routerLink: '/admin', text: 'Admin', class: 'pi pi-key', displayForUserRole: 'admin' });
     buttons.push({ routerLink: '/users', text: 'Users', class: 'pi pi-users', displayForUserRole: 'admin'  });
     buttons.push({ routerLink: '/posts', text: 'Posts', class: 'pi pi-book', displayForUserRole: 'user'  });
+    buttons.push({ routerLink: '/profile', text: 'My Profile', class: 'pi pi-user', displayForUserRole: 'user' });
     // buttons.push({ routerLink: '/login', text: 'Login', class: 'pi pi-sign-in', displayForUserRole: ''  });
     // buttons.push({ routerLink: '/register', text: 'Register', class: 'pi pi-user-plus', displayForUserRole: ''  });
     buttons.push({ routerLink: '/logout', text: 'Logout', class: 'pi pi-sign-out', displayForUserRole: 'all' })
@@ -80,33 +81,25 @@ export class HeaderComponent implements OnInit {
 
   public canDisplayButtonForUser(button: NavigationButton): boolean{
 
-    let display = false;
-
     switch (button.displayForUserRole){
 
       case 'all':{
-        display = true;
-        break;
+        return true;
       }
         
       case 'admin': {
-        display = this.currentUserRole === UserRole.admin;
-        break;
+        return this.currentUserRole === UserRole.admin;
       }
 
       case 'user': {
-        display = this.currentUserRole === UserRole.user;
-        break;
+        return this.currentUserRole === UserRole.user;
       }
 
       default: {
-        display = false;
-        break;
+        return false;
       }
 
     }
-
-    return display;
 
   }
 
