@@ -24,34 +24,37 @@ export class AuthenticationService {
   authenticationSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
   adminSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
 
-  get isUserAuthenticated(): boolean{
+  get isUserAuthenticated(): boolean {
     return this.isAuthenticated;
   }
 
-  get isUserAdmin(): boolean{
+  get isUserAdmin(): boolean {
     return this.isAdmin;
   }
 
-  get authenticationObservable(): BehaviorSubject<boolean>{
+  get authenticationObservable(): BehaviorSubject<boolean> {
     return this.authenticationSubject;
   }
 
-  get adminObservable(): BehaviorSubject<boolean>{
+  get adminObservable(): BehaviorSubject<boolean> {
     return this.adminSubject;
   }
 
-  get userRole(): string | undefined{
+  get userRole(): string | undefined {
     return this.currentUser?.role;
   }
 
+  get loggedUser(): User | undefined {
+    return this.currentUser;
+  }
 
   constructor(private apiService: ApiService, private httpClient: HttpClient, private toastService: ToastService) {
     this.checkLocalStorage();
   }
 
-  public async login(loginUser: LoginUser): Promise<void>{
+  public async login(loginUser: LoginUser): Promise<boolean> {
 
-    return new Promise<void>(async (resolve, reject) => {
+    return new Promise<boolean>(async (resolve, reject) => {
 
       this.httpClient.post(this.baseUrl + ApiOperation.login, loginUser, { observe: 'response' })
         .subscribe({
@@ -65,29 +68,64 @@ export class AuthenticationService {
                 const token = response.body['token'];
                 this.setSession(token);
 
-                resolve();
-                // this.authenticationObservable.next(this.isUserAuthenticated);
+                resolve(true);
+                this.authenticationObservable.next(this.isUserAuthenticated);
 
               }
 
-            }
-            else{
-              reject();
             }
 
           },
 
           error: (error: HttpErrorResponse) => {
             this.toastService.showError(error);
-            reject();
+            reject(false);
           }
 
         });
 
     });
+
   }
 
-  public register(newUser: RegisterUser): Promise<string>{
+  public async setCurrentUser(): Promise<void> {
+    
+    return new Promise<void>((resolve, reject) => {
+
+      this.httpClient.get(this.baseUrl + ApiOperation.currentUser, { observe: 'response' })
+        .subscribe((response: HttpResponse<object>) => {
+
+          if (response.ok && response.status === 200 && response.statusText === 'OK') {
+
+            if ('user' in response['body']!){
+
+              debugger;
+
+              this.currentUser = new User(response.body['user']);
+              this.isAdmin = this.currentUser.role === UserRole.admin;
+
+              localStorage.setItem('current_user', JSON.stringify(this.currentUser));
+
+              this.adminObservable.next(this.isUserAdmin);
+
+              resolve()
+
+            }
+            
+
+          }
+          else{
+            debugger;
+            reject();
+          }
+
+      });
+
+    });
+
+  }
+
+  public register(newUser: RegisterUser): Promise<string> {
     return new Promise<string>((resolve ,reject) => {
 
       this.apiService.post(ApiOperation.register, newUser);
@@ -114,22 +152,21 @@ export class AuthenticationService {
 
   }
 
-  public logout(): void{
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
+  public logout(): void {
+    localStorage.clear();
     this.isAuthenticated = false;
     this.authenticationObservable.next(this.isUserAuthenticated);
   }
 
-  public isLoggedIn(): boolean{
+  public isLoggedIn(): boolean {
     return DateTime.now().valueOf() < this.getExpiration();
   }
 
-  public isLoggedOut(): boolean{
+  public isLoggedOut(): boolean {
     return !this.isLoggedIn();
   }
 
-  private getExpiration(): number{
+  private getExpiration(): number {
 
     const expiration = localStorage.getItem('expires_at');
     const expiresAt = JSON.parse(expiration!);
@@ -138,54 +175,21 @@ export class AuthenticationService {
 
   }
 
-  private checkLocalStorage(): void{
+  private checkLocalStorage(): void {
 
     const token = localStorage.getItem('id_token');
     const expiresAt = localStorage.getItem('expires_at');
+    const currentUser: User = JSON.parse(localStorage.getItem('current_user')!) as User;
+
+    this.currentUser = currentUser;
 
     if (!!token && !!expiresAt){
       this.isAuthenticated = true;
     }
 
-  }
-
-  public async setCurrentUser(): Promise<void>{
-    
-    return new Promise<void>((resolve, reject) => {
-
-      this.httpClient.get(this.baseUrl + ApiOperation.currentUser, { observe: 'response' })
-        .subscribe((response: HttpResponse<object>) => {
-
-          if (response.ok && response.status === 200 && response.statusText === 'OK') {
-
-            if ('user' in response['body']!){
-
-              debugger;
-
-              this.currentUser = new User(response.body['user']);
-
-              console.log(JSON.stringify(this.currentUser));
-
-              this.isAdmin = this.currentUser.role === UserRole.admin;
-
-              console.log(this.isAdmin);
-
-              this.adminObservable.next(this.isUserAdmin);
-
-              resolve()
-
-            }
-            
-
-          }
-          else{
-            debugger;
-            reject();
-          }
-
-      });
-
-    });
+    if (currentUser?.role === UserRole.admin){
+      this.isAdmin = true;
+    }
 
   }
 

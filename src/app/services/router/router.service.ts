@@ -18,10 +18,14 @@ export class RouterService {
 
       if (event.id === 1 && event.url === event.urlAfterRedirects){
 
-        const isUserLoggedIn = this.authenticationService.isLoggedIn();
+        if (event.url !== '/register'){
 
-        if (!isUserLoggedIn){
-          this.navigateTo('/login');
+          const isUserLoggedIn = this.authenticationService.isLoggedIn();
+
+          if (!isUserLoggedIn && event.url){
+            this.navigateTo('/login');
+          }
+
         }
 
       }
@@ -40,6 +44,17 @@ export class RouterService {
     return new Promise<void>((resolve) => {
 
       this.router.navigate([path]);
+      resolve();
+
+    });
+
+  }
+
+  navigateWithData(path: string, routerData: any): Promise<void> {
+
+    return new Promise<void>((resolve) => {
+
+      this.router.navigateByUrl(path, routerData);
       resolve();
 
     });

@@ -15,7 +15,7 @@ export class ToastService {
 
     const messageText = this.getMessageText(apiOperation, statusText)
 
-    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: messageText });
 
   }
 

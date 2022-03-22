@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 // Other modules 
 import { AppRoutingModule } from 'src/app/modules/app-routing.module';
@@ -14,10 +15,11 @@ import { AdminComponent } from 'src/app/components/admin/admin.component';
 import { UsersComponent } from 'src/app/components/users/users.component';
 import { PostsComponent } from 'src/app/components/posts/posts.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
 import { RegisterComponent } from 'src/app/components/register/register.component';
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
+import { LogoutComponent } from 'src/app/components/logout/logout.component';
+import { UserDetailComponent } from 'src/app/components/user-detail/user-detail.component';
 
 // Primeng modules
 import { ButtonModule } from 'primeng/button';
@@ -39,7 +41,9 @@ import { MessageService } from 'primeng/api';
     PostsComponent,
     RegisterComponent,
     LoginComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LogoutComponent,
+    UserDetailComponent
   ],
   imports: [
     BrowserModule,

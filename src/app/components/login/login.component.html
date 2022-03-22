@@ -1,4 +1,4 @@
-<form class="login-register-form" [formGroup]="loginForm" (ngSubmit)="submitForm()">
+<form class="login-register-form" [formGroup]="loginForm" (ngSubmit)="login()">
 
     <h1>Login</h1>
 
@@ -24,6 +24,14 @@
     <div id="register-buttons-section">
         <button pButton type="submit" label="Login" icon="pi pi-check" iconPos="left" [disabled]="loginForm.invalid"></button>
         <button pButton type="button" label="Cancel" icon="pi pi-times" iconPos="left" (click)="resetForm()"></button>
+    </div>
+
+    <br>
+    <br>
+
+    <div class="alternative-bottom-link">
+        <p>New to Love For the Uglies?</p>
+        <p><a routerLink="/register">>>>Sign up!<<<</a></p>
     </div>
 
 </form>

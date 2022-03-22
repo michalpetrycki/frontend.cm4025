@@ -7,6 +7,7 @@ import { RegisterComponent } from 'src/app/components/register/register.componen
 import { UsersComponent } from 'src/app/components/users/users.component';
 import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
 import { UserDetailComponent } from 'src/app/components/user-detail/user-detail.component';
+import { LogoutComponent } from 'src/app/components/logout/logout.component';
 
 const routes: Routes = [
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'posts', component: PostsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 

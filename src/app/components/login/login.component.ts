@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { LoginUser } from 'src/app/models/interfaces/login-user.interface';
 import { InputValidators } from 'src/app/validators/input.validators';
+import { RouterService } from 'src/app/services/router/router.service';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,8 @@ import { InputValidators } from 'src/app/validators/input.validators';
 })
 export class LoginComponent implements OnInit {
 
+  isUserAdmin = false;
+  
   validators: InputValidators = new InputValidators();
 
   loginForm = new FormGroup({
@@ -28,26 +31,51 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('usrnameOrEmail')!;
   }
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService, private routerService: RouterService) { }
 
   ngOnInit(): void { }
 
-  async submitForm(): Promise<void>{
+  public async login(): Promise<void>{
 
-    const loginUser: LoginUser = {
-      email: this.loginForm.get('email')?.value,
-      password: this.loginForm.get('password')?.value
-    } as LoginUser;
+    return new Promise<void>(async (resolve, reject) => {
 
-    await this.authenticationService.login(loginUser);
-    await this.authenticationService.setCurrentUser();
+      const loginUser: LoginUser = {
+        email: this.loginForm.get('email')?.value,
+        password: this.loginForm.get('password')?.value
+      } as LoginUser;
+  
+      const success: boolean = await this.authenticationService.login(loginUser);
+  
+      if (success){
+  
+        await this.resetForm();
+        await this.authenticationService.setCurrentUser();
 
-    this.loginForm.reset();
+        this.isUserAdmin = this.authenticationService.isUserAdmin;
+
+        if (this.isUserAdmin){
+          this.routerService.navigateTo('admin');
+        }
+        else{
+          this.routerService.navigateTo('userDetail');
+        }
+
+        resolve();
+  
+      }
+      else{
+        reject();
+      }
+
+    });
 
   }
 
-  resetForm(): void{
-    this.loginForm.reset();
+  public async resetForm(): Promise<void>{
+    return new Promise<void>((resolve) => {
+      this.loginForm.reset();
+      resolve();
+    });
   }
 
 }
