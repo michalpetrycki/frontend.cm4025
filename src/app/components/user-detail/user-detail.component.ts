@@ -11,6 +11,7 @@ import { DateService } from 'src/app/services/date/date.service';
 export class UserDetailComponent implements OnInit {
 
   public currentUser: User | undefined;
+  public showUpdatePictureButton = false;
 
   constructor(private authenticationService: AuthenticationService, private dateService: DateService) {
 
@@ -25,8 +26,11 @@ export class UserDetailComponent implements OnInit {
     
     switch (propertyName){
 
-      case 'role': 
-      case 'username': 
+      case 'role':
+      case 'username':
+      case 'email':
+      case 'createdAt':
+      case 'updatedAt':
         return true;
 
       default: return false;
@@ -37,6 +41,21 @@ export class UserDetailComponent implements OnInit {
 
   public formatDateString(jsDateFormat: Date | undefined): string{
     return this.dateService.formatToDayMonthYearTimeFormat(jsDateFormat);
+  }
+
+  public updateProfile(): void {
+    alert('Profile updated');
+  }
+
+  public toggleUpdatePictureButton(): void {
+    
+    this.showUpdatePictureButton = !this.showUpdatePictureButton;
+
+  }
+
+  public openUpdatePictureModal(): void {
+    // there is a primeng component for that 
+    // https://www.primefaces.org/primeng/#/fileupload
   }
 
 }

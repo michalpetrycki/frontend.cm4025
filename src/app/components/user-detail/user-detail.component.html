@@ -4,7 +4,15 @@
 
     <!-- That will be updated with user's image -->
     <div id="profile-image">
-        <img src="https://images.pexels.com/photos/11213532/pexels-photo-11213532.png?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt="Here should be displayed user profile picture">
+        
+        <img src="https://images.pexels.com/photos/11213532/pexels-photo-11213532.png?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" 
+            alt="Here should be displayed user profile picture"
+            (mouseenter)="toggleUpdatePictureButton()"
+            (mouseleave)="toggleUpdatePictureButton()"
+        >
+
+        <button [hidden]="!showUpdatePictureButton" (click)="openUpdatePictureModal()">Update picture</button>
+
     </div>
 
     <div class="profile-output">
@@ -19,20 +27,19 @@
 
     <div class="profile-output">
         <label for="user-email">Email:</label>
-        <input id="user-email" name="email" type="text" pInputText value="{{currentUser?.email}}">
+        <input id="user-email" name="email" type="text" pInputText [disabled]="shouldInputBeDisabled('email')" value="{{currentUser?.email}}">
     </div>
 
     <div class="profile-output">
         <label for="user-created">Date of joining:</label>
-        <input id="user-created" name="created" type="text" pInputText value="{{formatDateString(currentUser?.createdAt)}}">
+        <input id="user-created" name="created" type="text" pInputText [disabled]="shouldInputBeDisabled('createdAt')" value="{{formatDateString(currentUser?.createdAt)}}">
     </div>
 
     <div class="profile-output">
         <label for="user-updated">Profile last updated on:</label>
-        <input id="user-updated" name="updated" type="text" pInputText value="{{formatDateString(currentUser?.updatedAt)}}">
+        <input id="user-updated" name="updated" type="text" pInputText [disabled]="shouldInputBeDisabled('updatedAt')" value="{{formatDateString(currentUser?.updatedAt)}}">
     </div>
 
-</div>
+    <button pButton type="button" label="Update profile" icon="pi pi-save" iconPos="left" (click)="updateProfile()"></button>
 
-<p><strong>Current user profile</strong></p>
-<pre>{{currentUser | json }}</pre>
+</div>
