@@ -1,12 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+$yale-blue: rgb(4, 67, 137)
+$gainsboro: rgb(204, 219, 220)
+$honey-yellow: rgb(255, 173, 5)
+$middle-green: rgb(73, 145, 103)
+$antique-fuchsia: rgb(157, 99, 129)
+
+    
+body
+    background-color: $gainsboro
+    color: $yale-blue
+
 form.login-register-form
     width: 33%
     // height: 40%
     padding: 2.5%
     margin: 2.5% auto auto auto
-    border: 2px solid var(--blue-500)
+    border: 2px solid $yale-blue
     border-radius: 2%
-    background-color: var(--indigo-500)
+    background-color: $antique-fuchsia
     .col-12
         margin: 0.3em
     #register-buttons-section
@@ -14,23 +25,23 @@ form.login-register-form
         justify-content: center
         button
             margin: 1.5%
-            background-color: var(--orange-500)
+            background-color: $honey-yellow
     .p-invalid
         display: flex
         justify-content: center
         font-size: 14px
         color: red
-        background-color: var(--blue-800)
+        background-color: $yale-blue
 
 .alternative-bottom-link
     display: inline-block
     width: 100%
     padding: 10px
-    background-color: var(--indigo-900)
-    color: var(--orange-400)
+    background-color: $yale-blue
+    color: $honey-yellow
     text-align: center
     font-size: 16px
     a
         text-decoration: none
-        color: var(--orange-500)
+        color: $honey-yellow
         font-size: 20px

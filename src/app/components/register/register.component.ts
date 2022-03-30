@@ -53,8 +53,11 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  resetForm(): void{
-    console.warn('reset form');
+  public async resetForm(): Promise<void>{
+    return new Promise<void>((resolve) => {
+      this.registerForm.reset();
+      resolve();
+    });
   }
 
   onPasswordChange(): void{

@@ -8,14 +8,16 @@ export class User extends Entity {
     public email: string;
     public createdAt: Date;
     public updatedAt: Date;
+    public avatarUrl: string | undefined;
 
-    constructor(user: UserResponse) {
-        super(user._id);
-        this.username = user.username;
-        this.role = user.role;
-        this.email = user.email;
-        this.createdAt = user.createdAt;
-        this.updatedAt = user.updatedAt;
+    constructor(userResponse: UserResponse) {
+        super(userResponse._id);
+        this.username = userResponse.username;
+        this.role = userResponse.role;
+        this.email = userResponse.email;
+        this.createdAt = userResponse.createdAt;
+        this.updatedAt = userResponse.updatedAt;
+        this.avatarUrl = userResponse.avatarUrl;
     }
 
 }

@@ -4,19 +4,24 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { DateService } from 'src/app/services/date/date.service';
 
 @Component({
-  selector: 'app-user-detail',
-  templateUrl: './user-detail.component.html',
-  styleUrls: ['./user-detail.component.sass']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.sass']
 })
-export class UserDetailComponent implements OnInit {
+export class ProfileComponent implements OnInit {
 
   public currentUser: User | undefined;
-  public showUpdatePictureButton = false;
-
+  public showPicture = true;
+  
+  
   constructor(private authenticationService: AuthenticationService, private dateService: DateService) {
 
     this.currentUser = this.authenticationService.loggedUser;
 
+    this.currentUser!.avatarUrl = 'https://images.pexels.com/photos/11213532/pexels-photo-11213532.png?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
+
+    this.showPicture = this.currentUser?.avatarUrl !== undefined;
+    
   }
 
   ngOnInit(): void {
@@ -49,13 +54,22 @@ export class UserDetailComponent implements OnInit {
 
   public toggleUpdatePictureButton(): void {
     
-    this.showUpdatePictureButton = !this.showUpdatePictureButton;
+    // this.showUpdatePictureButton = !this.showUpdatePictureButton;
 
   }
 
-  public openUpdatePictureModal(): void {
-    // there is a primeng component for that 
-    // https://www.primefaces.org/primeng/#/fileupload
+  public openUpdatePictureModal(event: any): void {
+    
+    console.warn('update');
+    console.log(event.target.files);
+
+  }
+
+  public openUploadPictureModal(event: any): void {
+
+    console.warn('upload');
+    console.log(event.target.files);
+
   }
 
 }

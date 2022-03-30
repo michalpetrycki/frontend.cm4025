@@ -44,6 +44,8 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.get('password')?.value
       } as LoginUser;
   
+      // Discussion here on hashing passwords on client side. Tl;dr doesn't improve security
+      // https://stackoverflow.com/questions/3715920/is-it-worth-hashing-passwords-on-the-client-side
       const success: boolean = await this.authenticationService.login(loginUser);
   
       if (success){
@@ -57,7 +59,7 @@ export class LoginComponent implements OnInit {
           this.routerService.navigateTo('admin');
         }
         else{
-          this.routerService.navigateTo('userDetail');
+          this.routerService.navigateTo('profile');
         }
 
         resolve();

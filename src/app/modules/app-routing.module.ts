@@ -6,13 +6,13 @@ import { PostsComponent } from 'src/app/components/posts/posts.component';
 import { RegisterComponent } from 'src/app/components/register/register.component';
 import { UsersComponent } from 'src/app/components/users/users.component';
 import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
-import { UserDetailComponent } from 'src/app/components/user-detail/user-detail.component';
 import { LogoutComponent } from 'src/app/components/logout/logout.component';
+import { ProfileComponent } from 'src/app/components/profile/profile.component';
 
 const routes: Routes = [
 
   { path: 'admin', component: AdminComponent },
-  { path: 'profile', component: UserDetailComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: 'users', component: UsersComponent },
   { path: 'posts', component: PostsComponent },
   { path: 'login', component: LoginComponent },

@@ -20,7 +20,7 @@ import { RegisterComponent } from 'src/app/components/register/register.componen
 import { LoginComponent } from 'src/app/components/login/login.component';
 import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
 import { LogoutComponent } from 'src/app/components/logout/logout.component';
-import { UserDetailComponent } from 'src/app/components/user-detail/user-detail.component';
+import { ProfileComponent } from 'src/app/components/profile/profile.component';
 
 // Primeng modules
 import { ButtonModule } from 'primeng/button';
@@ -33,6 +33,7 @@ import { ToastModule } from 'primeng/toast';
 import { JwtInterceptor } from 'src/app/services/http-interceptor/JwtInterceptor';
 import { MessageService } from 'primeng/api';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +45,7 @@ import { MessageService } from 'primeng/api';
     LoginComponent,
     PageNotFoundComponent,
     LogoutComponent,
-    UserDetailComponent
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

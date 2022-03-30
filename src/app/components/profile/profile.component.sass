@@ -1,0 +1,55 @@
+@import 'src/styles.sass'
+
+#user-profile
+    width: 32%
+    border: 2px solid orange
+    padding: 1.5%
+
+    .profile-output
+        margin: 3%
+
+        label
+            font-weight: 600
+            width: 200px
+            display: inline-block
+        
+        .p-inputtext:disabled
+            cursor: not-allowed
+            pointer-events: all !important
+
+    #profile-image
+        width: 200px
+        height: 200px
+        border: 1px solid $yale-blue
+        border-radius: 15px
+        background-color: $middle-green
+        margin-bottom: 8%
+
+        #upload-user-picture, #update-user-picture
+            width: 100%
+            height: 100%
+            text-align: center
+
+            #input-wrapper
+                height: 100%
+                width: 100%
+
+            img
+                width: 100%
+                height: 100%
+                border-radius: 15px
+
+            label.avatar-button
+                display: inline-block
+                vertical-align: middle
+                text-align: center
+                height: 30%
+                width: 80%
+                margin-top: -10%
+                background: $gainsboro
+                color: $yale-blue
+                border-radius: 500px
+                background-color: $honey-yellow
+                opacity: 0.8
+                cursor: pointer
+                                

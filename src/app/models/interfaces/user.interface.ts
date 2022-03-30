@@ -6,4 +6,5 @@ export interface UserResponse{
     role: string;
     createdAt: Date;
     updatedAt: Date;
+    avatarUrl?: string;
 }

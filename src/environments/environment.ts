@@ -4,8 +4,15 @@
 
 export const environment = {
   production: false,
+  // baseUrl: 'love-for-the-uglies.uksouth.cloudapp.azure.com/api/'
   baseUrl: 'http://localhost:8000/api/'
 };
+
+// local
+// baseUrl: 'http://localhost:8000/api/'
+
+// Azure
+// baseUrl: 'love-for-the-uglies.uksouth.cloudapp.azure.com/api/'
 
 /*
  * For easier debugging in development mode, you can import the following file
