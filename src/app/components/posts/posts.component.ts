@@ -41,23 +41,28 @@ export class PostsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
 
     await this.fetchPosts();
-    
-    setTimeout(() => {
-      this.spinnerService.hideSpinner();
-    }, 300000);
+    this.spinnerService.hideSpinner();
 
   }
 
   private async fetchPosts(): Promise<void> {
 
-    this.posts = await this.postService.fetchPosts();
+    return new Promise<void>(async (resolve) => {
 
-    this.canDisplayEditArea = this.posts.map(s => false);
-    this.canDisplayEditButton = this.posts.map(s => true);
+      this.posts = await this.postService.fetchPosts();
 
+      this.canDisplayEditArea = this.posts.map(s => false);
+      this.canDisplayEditButton = this.posts.map(s => true);
+
+      resolve();
+
+    });
+    
   }
 
-  public createPost(): void {
+  public async createPost(): Promise<void> {
+
+    this.spinnerService.showSpinner();
 
     const postContent = this.createPostGroup.get('content')?.value;
     const newPost: NewPost = {
@@ -65,9 +70,17 @@ export class PostsComponent implements OnInit {
       authorId: String(1),
       content: postContent
     };
+  
+    const createdPost = await this.postService.createPost(newPost);
 
-    this.postService.createPost(newPost);
-    this.fetchPosts();
+    if (createdPost){
+
+      await this.fetchPosts();
+      this.createPostGroup.reset();
+
+    }
+    
+    this.spinnerService.hideSpinner();
 
   }
 

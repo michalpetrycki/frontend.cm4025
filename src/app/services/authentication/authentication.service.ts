@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ApiOperation } from 'src/app/models/enums/api-operation.enum';
 import { ApiService } from 'src/app/services/api/api.service';
 import { RegisterUser } from 'src/app/models/interfaces/register-user.interface';
 import { LoginUser } from 'src/app/models/interfaces/login-user.interface';
@@ -10,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/models/entities/user';
 import { UserRole } from 'src/app/models/enums/user-role.enum';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,8 @@ export class AuthenticationService {
   private isAuthenticated = false;
   private isAdmin = false;
   private baseUrl = environment.baseUrl;
+  private loginEndpoint: string;
+  private currentUserEndpoint: string;
 
   authenticationSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
   adminSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
@@ -48,15 +50,18 @@ export class AuthenticationService {
     return this.currentUser;
   }
 
-  constructor(private apiService: ApiService, private httpClient: HttpClient, private toastService: ToastService) {
+  constructor(private apiService: ApiService, private httpClient: HttpClient, 
+    private toastService: ToastService, private apiEndpointsService: ApiEndpointsService) {
     this.checkLocalStorage();
+    this.loginEndpoint = this.apiEndpointsService.getUsersEndpoint();
+    this.currentUserEndpoint = this.apiEndpointsService.getCurrentUserEndpoint();
   }
 
   public async login(loginUser: LoginUser): Promise<boolean> {
 
     return new Promise<boolean>(async (resolve, reject) => {
 
-      this.httpClient.post(this.baseUrl + ApiOperation.login, loginUser, { observe: 'response' })
+      this.httpClient.post(this.loginEndpoint, loginUser, { observe: 'response' })
         .subscribe({
           
           next: async (response: HttpResponse<object>) => {
@@ -92,7 +97,7 @@ export class AuthenticationService {
     
     return new Promise<void>((resolve, reject) => {
 
-      this.httpClient.get(this.baseUrl + ApiOperation.currentUser, { observe: 'response' })
+      this.httpClient.get(this.currentUserEndpoint, { observe: 'response' })
         .subscribe((response: HttpResponse<object>) => {
 
           if (response.ok && response.status === 200 && response.statusText === 'OK') {
@@ -128,7 +133,7 @@ export class AuthenticationService {
   public register(newUser: RegisterUser): Promise<string> {
     return new Promise<string>((resolve ,reject) => {
 
-      this.apiService.post(ApiOperation.register, newUser);
+      // this.apiService.post(ApiOperation.register, newUser);
 
     });
   }

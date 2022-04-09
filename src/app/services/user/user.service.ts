@@ -1,9 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
-import { ApiOperation } from 'src/app/models/enums/api-operation.enum';
 import { ApiService } from 'src/app/services/api/api.service';
-import { Entity, EntityType } from 'src/app/models/entities/entity';
+import { Entity } from 'src/app/models/entities/entity';
 
 
 @Injectable({

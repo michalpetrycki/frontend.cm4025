@@ -1,7 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ApiOperation } from 'src/app/models/enums/api-operation.enum';
 import { Entity, EntityType } from 'src/app/models/entities/entity';
 import { User } from 'src/app/models/entities/user';
 import { UserResponse } from 'src/app/models/interfaces/user.response.interface';
@@ -47,13 +46,13 @@ export class ApiService {
   // async post(apiOperation: ApiOperation, body: any): Promise<void>{
   //   return new Promise<void>((resolve, reject) => {
 
-  //     this.httpClient.post(this.baseUrl + apiOperation, body, { observe: 'response' })
+  //     this.httpClient.post(this.baseUrl, body, { observe: 'response' })
   //     .subscribe({
   //       next: async(response: HttpResponse<object>) => {
 
   //         if (response.ok && response.status === 201 && response.statusText === 'Created'){
           
-  //           this.toastService.showSuccess(apiOperation, response.statusText);
+  //           this.toastService.showSuccess(response.statusText);
   //           resolve();
   
   //         }
@@ -66,36 +65,6 @@ export class ApiService {
   //     });
 
   //   });
-  // }
-
-  // extractAndSetEntities(responseBody: object | null, entityType: EntityType): Entity[]{
-
-  //   let entities: Entity[] = [];
-
-  //   if (responseBody){
-
-  //     switch (entityType){
-
-  //       case EntityType.user: {
-  //         const values = Object.values(responseBody);
-  //         entities = values[0].map((x: UserResponse) => new User(x));
-  //         break;
-  //       };
-  
-  //       case EntityType.post: {
-  //         break;
-  //       }
-  
-  //       default: {
-  //         break;
-  //       }
-  
-  //     }
-
-  //   }
-    
-  //   return entities;
-
   // }
 
   // Below idea taken from
