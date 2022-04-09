@@ -10,18 +10,10 @@ import { UserRole } from 'src/app/models/enums/user-role.enum';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.sass']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
-  validators: InputValidators = new InputValidators();
-
-  registerForm = new FormGroup({
-
-    username: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(30), this.validators.specialCharsValidator()]),
-    email: new FormControl('', [Validators.required, this.validators.specialCharsValidator]),
-    password: new FormControl('', [Validators.required]),
-    repeatPassword: new FormControl('', [Validators.required]),
-
-  });
+  validators: InputValidators;
+  registerForm: FormGroup;
 
   get passwordControl(): AbstractControl{
     return this.registerForm.get('password')!;
@@ -35,9 +27,18 @@ export class RegisterComponent implements OnInit {
     return this.registerForm.get('username')!;
   }
 
-  constructor(private authenticationService: AuthenticationService) { }
+  constructor(private authenticationService: AuthenticationService) { 
 
-  ngOnInit(): void {
+    this.validators = new InputValidators();
+    this.registerForm = new FormGroup({
+
+      username: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(30), this.validators.specialCharsValidator()]),
+      email: new FormControl('', [Validators.required, this.validators.specialCharsValidator]),
+      password: new FormControl('', [Validators.required]),
+      repeatPassword: new FormControl('', [Validators.required]),
+  
+    });
+
   }
 
   submitForm(): void{

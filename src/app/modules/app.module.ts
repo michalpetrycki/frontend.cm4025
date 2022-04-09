@@ -29,6 +29,8 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 // Interceptor
 import { JwtInterceptor } from 'src/app/services/http-interceptor/JwtInterceptor';
@@ -49,7 +51,7 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
     LoginComponent,
     PageNotFoundComponent,
     LogoutComponent,
-    ProfileComponent
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
     InputMaskModule,
     TooltipModule, 
     ToastModule,
-    InputTextareaModule
+    InputTextareaModule,
+    ProgressSpinnerModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

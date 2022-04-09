@@ -10,18 +10,11 @@ import { RouterService } from 'src/app/services/router/router.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  isUserAdmin = false;
-  
-  validators: InputValidators = new InputValidators();
-
-  loginForm = new FormGroup({
-
-    email: new FormControl('', [Validators.required, Validators.email, this.validators.specialCharsValidator]),
-    password: new FormControl('', [Validators.required]),
-
-  });
+  isUserAdmin: boolean;
+  validators: InputValidators;
+  loginForm: FormGroup;
 
   get passwordControl(): AbstractControl{
     return this.loginForm.get('password')!;
@@ -31,9 +24,18 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('usrnameOrEmail')!;
   }
 
-  constructor(private authenticationService: AuthenticationService, private routerService: RouterService) { }
+  constructor(private authenticationService: AuthenticationService, private routerService: RouterService) { 
 
-  ngOnInit(): void { }
+    this.isUserAdmin = false;
+    this.validators = new InputValidators();
+    this.loginForm = new FormGroup({
+
+      email: new FormControl('', [Validators.required, Validators.email, this.validators.specialCharsValidator]),
+      password: new FormControl('', [Validators.required]),
+  
+    });
+
+  }
 
   public async login(): Promise<void>{
 

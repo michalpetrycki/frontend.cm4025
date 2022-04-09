@@ -93,4 +93,36 @@ export class PostService {
 
   }
 
+  async updatePost(newPost: NewPost): Promise<Post> {
+
+    return new Promise<Post>((resolve, reject) => {
+
+      this.apiService.patch(this.postsEndpoint, newPost, { observe: 'response' })
+      .subscribe({
+
+        next: async(response: HttpResponse<object>) => {
+
+          if (response.ok && response.status === 200 && response.statusText === 'OK'){
+
+            const responseBody = response.body!;
+  
+            const responseArray = Object.values(responseBody);
+            const posts = responseArray[0].map((x: PostResponse) => new Post(x));
+            
+            resolve(posts);
+  
+          }
+
+        },
+        error: (error: HttpErrorResponse) => {
+          this.toastService.showError(error);
+          reject(false);
+        }
+
+      });
+
+    });
+
+  }
+
 }

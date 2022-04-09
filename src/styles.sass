@@ -64,3 +64,58 @@ form.login-register-form
 
 ::-webkit-scrollbar-thumb:window-inactive
     background: rgba(255,0,0)
+
+
+
+@keyframes p-progress-spinner-color
+    100%,
+    0%
+        stroke: #d62d20
+    
+    40%
+        stroke: #0057e7
+
+    66%
+        stroke: #008744
+
+    80%,
+    90%
+        stroke: #ffa700
+
+// .p-progress-spinner
+//     height: 300px !important
+//     width: 300px !important
+//     position: fixed !important
+//     top: 25% !important
+//     left: 25% !important
+//     z-index: 101
+
+.progress-spinner
+    position: fixed
+    z-index: 999
+    height: 300px
+    width: 300px
+    overflow: show
+    margin: auto
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+
+/* Transparent Overlay */
+.progress-spinner:before
+  content: ''
+  display: block
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  background-color: rgba(0,0,0,0.53)
+
+.p-progress-spinner
+    height: 300px !important
+    width: 300px !important
+    position: fixed !important
+    top: 25% !important
+    left: 25% !important

@@ -12,8 +12,8 @@ import { RouterService } from 'src/app/services/router/router.service';
 })
 export class HeaderComponent implements OnInit {
 
-  isAuthenticated: boolean = false;
-  isAdmin: boolean = false;
+  isAuthenticated: boolean;
+  isAdmin: boolean;
 
   authSubscription: Subscription | undefined;
   adminSubscription: Subscription | undefined;
@@ -23,6 +23,9 @@ export class HeaderComponent implements OnInit {
   navigationButtons: NavigationButton[];
 
   constructor(private authenticationService: AuthenticationService, private routerService: RouterService){
+
+    this.isAuthenticated = false;
+    this.isAdmin = false;
 
     this.navigationButtons = this.createNavigationButtons();
 

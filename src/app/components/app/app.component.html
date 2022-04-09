@@ -2,6 +2,9 @@
     <app-header></app-header>
 </div>
 <p-toast></p-toast>
+<div *ngIf="showSpinner" class="progress-spinner">
+    <p-progressSpinner></p-progressSpinner>
+</div>
 <div id="router-outlet">
     <router-outlet></router-outlet>    
 </div>
