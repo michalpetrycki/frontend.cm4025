@@ -1,5 +1,5 @@
 export interface PostResponse{
-    _id: string;
+    id: string;
     content: string;
     authorId: number;
     createdAt: Date;

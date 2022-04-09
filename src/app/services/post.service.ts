@@ -41,7 +41,7 @@ export class PostService {
             const responseBody = response.body!;
   
             const responseArray = Object.values(responseBody);
-            const posts = responseArray[0].map((x: PostResponse) => new Post(x));
+            const posts = responseArray[0] as Post[];
             
             resolve(posts);
   
@@ -74,7 +74,7 @@ export class PostService {
             const responseBody = response.body!;
   
             const responseArray = Object.values(responseBody);
-            const newPost = new Post(responseArray[0]);
+            const newPost = responseArray[0] as Post;
 
             this.toastService.showSuccess('New post successfully created');
             
@@ -94,23 +94,26 @@ export class PostService {
 
   }
 
-  async updatePost(newPost: NewPost): Promise<Post> {
+  async updatePost(newPost: NewPost): Promise<boolean> {
 
-    return new Promise<Post>((resolve, reject) => {
+    return new Promise<boolean>((resolve, reject) => {
 
       this.apiService.patch(this.postsEndpoint, newPost, { observe: 'response' })
       .subscribe({
 
         next: async(response: HttpResponse<object>) => {
 
-          if (response.ok && response.status === 200 && response.statusText === 'OK'){
+          // Status 201 - new resource created
+          if (response.ok && response.status === 201){
 
             const responseBody = response.body!;
   
             const responseArray = Object.values(responseBody);
-            const posts = responseArray[0].map((x: PostResponse) => new Post(x));
+            const newPost = responseArray[0] as Post;
+
+            this.toastService.showSuccess('Post successfully edited');
             
-            resolve(posts);
+            resolve(newPost !== null && newPost !== undefined);
   
           }
 

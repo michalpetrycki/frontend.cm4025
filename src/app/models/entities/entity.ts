@@ -5,6 +5,10 @@ export class Entity{
         return this._id;
     }
 
+    set id(iid: string){
+        this._id = iid;
+    }
+
     constructor(id: string){
         this._id = id;
     }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Post } from 'src/app/models/entities/post';
 import { NewPost } from 'src/app/models/interfaces/post.new.interface';
@@ -10,7 +10,8 @@ import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.sass']
+  styleUrls: ['./posts.component.sass'],
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class PostsComponent implements OnInit {
 
@@ -19,6 +20,7 @@ export class PostsComponent implements OnInit {
   createPostGroup: FormGroup;
   canDisplayEditArea: boolean[];
   canDisplayEditButton: boolean[];
+  editForms: FormGroup[];
 
   constructor(private postService: PostService, private dateService: DateService, private spinnerService: SpinnerService) 
   {
@@ -35,6 +37,8 @@ export class PostsComponent implements OnInit {
 
     this.canDisplayEditArea = [];
     this.canDisplayEditButton = [];
+
+    this.editForms = [];
 
   }
 
@@ -53,7 +57,8 @@ export class PostsComponent implements OnInit {
 
       this.canDisplayEditArea = this.posts.map(s => false);
       this.canDisplayEditButton = this.posts.map(s => true);
-
+      this.editForms = this.posts.map(fg => new FormGroup({ content: new FormControl('', [ Validators.required ]) }));
+      
       resolve();
 
     });
@@ -84,15 +89,26 @@ export class PostsComponent implements OnInit {
 
   }
 
-  public editPost(): void {
+  public async editPost(index: number, post: Post): Promise<void> {
 
-    const newPost: NewPost = {
-      title: 'Post should be updated now',
+    this.spinnerService.showSpinner();
+
+    const newPost: Post = {
+      _id: post._id,
       authorId: String(1),
-      content: 'Ene due rike fake'
+      title: 'Updated titile',
+      content: this.editForms[index].get('content')?.value
     };
 
-    this.postService.updatePost(newPost);
+    const updatedPost = await this.postService.updatePost(newPost);
+
+    if (updatedPost) {
+
+      this.cancelEditPost(index);
+      this.fetchPosts();
+
+    }
+    this.spinnerService.hideSpinner();
 
   }
 
