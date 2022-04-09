@@ -7,6 +7,8 @@ import { Entity, EntityType } from 'src/app/models/entities/entity';
 import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
 import { Post } from 'src/app/models/entities/post';
 import { PostResponse } from 'src/app/models/interfaces/post.response.interface';
+import { ToastService } from 'src/app/services/toast/toast.service';
+import { NewPost } from 'src/app/models/interfaces/post.new.interface';
 
 
 @Injectable({
@@ -16,12 +18,13 @@ export class PostService {
 
   posts: Entity[] = [];
 
-  private getPostsEndpoint = '';
-
-  constructor(private apiService: ApiService, private apiEndpointsService: ApiEndpointsService) 
+  private postsEndpoint = '';
+  
+  constructor(private apiService: ApiService, private apiEndpointsService: ApiEndpointsService, 
+    private toastService: ToastService) 
   { 
 
-    this.getPostsEndpoint = this.apiEndpointsService.getAllPostsEndpoint();
+    this.postsEndpoint = this.apiEndpointsService.getPostsEndpoint();
 
   }
 
@@ -30,61 +33,64 @@ export class PostService {
 
     return new Promise<Post[]>(async (resolve, reject) => {
 
-        this.apiService.get(this.getPostsEndpoint, { observe: 'response' })
-        .subscribe((response: HttpResponse<object>) => {
+      this.apiService.get(this.postsEndpoint, { observe: 'response' })
+      .subscribe({
 
+        next: async(response: HttpResponse<object>) => {
 
-            if (response.ok && response.status === 200 && response.statusText === 'OK'){
+          if (response.ok && response.status === 200 && response.statusText === 'OK'){
 
-                const responseBody = response.body!;
+            const responseBody = response.body!;
+  
+            const responseArray = Object.values(responseBody);
+            const posts = responseArray[0].map((x: PostResponse) => new Post(x));
+            
+            resolve(posts);
+  
+          }
 
-                const values = Object.values(responseBody);
-                const xxx = values[0].map((x: PostResponse) => new Post(x));
-                const post = xxx[0];
+        },
+        error: (error: HttpErrorResponse) => {
+          this.toastService.showError(error);
+          reject(false);
+        }
 
-                debugger;
-    
-                
-    
-                // if (posts && posts.length > 0){
-                //     resolve(posts);
-                // }
-                // else{
-                //     reject([]);
-                // }
-    
-            }
-        });
-          
-        // .subscribe((response: Post[]) => {
-
-        //     const x = response['results'][0];
-
-
-        //     // const x: Post = new Post(posts[0]);
-
-        //     debugger;
-
-        //     resolve([]);
-        // });
+      });
 
     });
 
   }
 
-  handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, body was: `, error.error);
-    }
-    // Return an observable with a user-facing error message.
-    return throwError(
-      'Something bad happened; please try again later.');
+  async createPost(newPost: NewPost): Promise<Post> {
+
+    return new Promise<Post>((resolve, reject) => {
+
+      this.apiService.post(this.postsEndpoint, newPost, { observe: 'response' })
+      .subscribe({
+
+        next: async(response: HttpResponse<object>) => {
+
+          if (response.ok && response.status === 200 && response.statusText === 'OK'){
+
+            const responseBody = response.body!;
+  
+            const responseArray = Object.values(responseBody);
+            const posts = responseArray[0].map((x: PostResponse) => new Post(x));
+            
+            resolve(posts);
+  
+          }
+
+        },
+        error: (error: HttpErrorResponse) => {
+          this.toastService.showError(error);
+          reject(false);
+        }
+
+      });
+
+    });
+
   }
 
 }

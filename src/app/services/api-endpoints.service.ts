@@ -59,7 +59,7 @@ export class ApiEndpointsService {
 
     }
 
-    public getAllPostsEndpoint(): string {
+    public getPostsEndpoint(): string {
         return this.createUrl('posts');
     }
 

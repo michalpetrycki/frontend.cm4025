@@ -28,6 +28,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 // Interceptor
 import { JwtInterceptor } from 'src/app/services/http-interceptor/JwtInterceptor';
@@ -62,7 +63,8 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
     InputTextModule,
     InputMaskModule,
     TooltipModule, 
-    ToastModule
+    ToastModule,
+    InputTextareaModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

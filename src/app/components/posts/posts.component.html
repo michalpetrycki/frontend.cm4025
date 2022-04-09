@@ -1,5 +1,43 @@
-<div id="posts-component">
+<div id="create-post">
 
-    <p>Posts component works</p>
+    <form id="create-post-form" [formGroup]="createPostGroup" (ngSubmit)="createPost()">
+
+        <textarea pInputTextarea id="new-post-content" placeholder="Share your thoughts here..." 
+            formControlName="content" rows="4"></textarea>
+
+        <br>
+        <br>
+
+        <button pButton type="submit">Create post</button>
+
+    </form>
+
+</div>
+
+<div id="posts-list">
+
+    <ul id="posts-ul">
+
+        <li *ngFor="let post of posts" class="post-body">
+
+            <div class="post-header">
+
+                <img src="https://cdn.pixabay.com/photo/2018/03/04/22/17/cranium-3199408_960_720.png" 
+                    alt="author-avatar" />
+                <p class="author">{{post.authorId}}</p>
+                <p class="creation-time" *ngIf="post.createdAt">{{post.createdAt}}</p>
+                <p class="creation-time" *ngIf="!post.createdAt">17:19 09/04/2022</p>
+
+            </div>
+
+            <br>
+
+            <div class="post-content">
+                <p class="content">{{post.content}}</p>
+            </div>
+
+        </li>
+
+    </ul>
 
 </div>

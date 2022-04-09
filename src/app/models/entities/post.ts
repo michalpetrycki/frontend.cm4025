@@ -5,8 +5,8 @@ export class Post extends Entity {
 
     public content: string;
     public authorId: number;
-    public createdAt: Date;
-    public updatedAt: Date;
+    public createdAt?: Date;
+    public updatedAt?: Date;
 
     constructor(postResponse: PostResponse) {
         super(postResponse._id);
