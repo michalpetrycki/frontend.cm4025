@@ -1,5 +1,5 @@
 import { Entity } from 'src/app/models/entities/entity';
-import { UserResponse } from 'src/app/models/interfaces/user.interface';
+import { UserResponse } from 'src/app/models/interfaces/user.response.interface';
 
 export class User extends Entity {
 

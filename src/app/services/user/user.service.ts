@@ -19,7 +19,7 @@ export class UserService {
 
     return new Promise<Entity[]>(async (resolve, reject) => {
 
-      this.users = await this.apiService.get(ApiOperation.getUsers, EntityType.user);
+      // this.users = await this.apiService.get(ApiOperation.getUsers, EntityType.user);
 
       resolve(this.users);
     

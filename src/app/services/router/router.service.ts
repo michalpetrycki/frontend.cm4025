@@ -23,7 +23,7 @@ export class RouterService {
           const isUserLoggedIn = this.authenticationService.isLoggedIn();
 
           if (!isUserLoggedIn && event.url){
-            this.navigateTo('/login');
+            // this.navigateTo('/login');
           }
 
         }

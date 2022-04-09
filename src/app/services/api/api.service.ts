@@ -4,8 +4,9 @@ import { environment } from 'src/environments/environment';
 import { ApiOperation } from 'src/app/models/enums/api-operation.enum';
 import { Entity, EntityType } from 'src/app/models/entities/entity';
 import { User } from 'src/app/models/entities/user';
-import { UserResponse } from 'src/app/models/interfaces/user.interface';
+import { UserResponse } from 'src/app/models/interfaces/user.response.interface';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -15,86 +16,105 @@ export class ApiService {
   // BaseUrl = 'localhost:8000/api/
   private baseUrl = environment.baseUrl;
 
-  constructor(private httpClient: HttpClient, private toastService: ToastService) { }
+  constructor(private http: HttpClient, private toastService: ToastService) { }
 
-  get(apiOperation: ApiOperation, entityType: EntityType): Promise<Entity[]>{
+  // get(apiOperation: ApiOperation, entityType: EntityType): Promise<Entity[]>{
 
-    return new Promise<Entity[]>((resolve, reject) => {
+  //   return new Promise<Entity[]>((resolve, reject) => {
 
-      this.httpClient.get(this.baseUrl + apiOperation, { observe: 'response' })
-      .subscribe((response: HttpResponse<object>) => {
+  //     this.httpClient.get(this.baseUrl + apiOperation, { observe: 'response' })
+  //     .subscribe((response: HttpResponse<object>) => {
 
-        if (response.ok && response.status === 200 && response.statusText === 'OK'){
+  //       if (response.ok && response.status === 200 && response.statusText === 'OK'){
 
-          const entities: Entity[] = this.extractAndSetEntities(response.body, entityType);
+  //         const entities: Entity[] = this.extractAndSetEntities(response.body, entityType);
 
-          if (entities && entities.length > 0){
-            resolve(entities);
-          }
-          else{
-            reject([]);
-          }
+  //         if (entities && entities.length > 0){
+  //           resolve(entities);
+  //         }
+  //         else{
+  //           reject([]);
+  //         }
 
-        }
+  //       }
 
-      });
+  //     });
 
 
-    });
-  }
+  //   });
+  // }
 
-  async post(apiOperation: ApiOperation, body: any): Promise<void>{
-    return new Promise<void>((resolve, reject) => {
+  // async post(apiOperation: ApiOperation, body: any): Promise<void>{
+  //   return new Promise<void>((resolve, reject) => {
 
-      this.httpClient.post(this.baseUrl + apiOperation, body, { observe: 'response' })
-      .subscribe({
-        next: async(response: HttpResponse<object>) => {
+  //     this.httpClient.post(this.baseUrl + apiOperation, body, { observe: 'response' })
+  //     .subscribe({
+  //       next: async(response: HttpResponse<object>) => {
 
-          if (response.ok && response.status === 201 && response.statusText === 'Created'){
+  //         if (response.ok && response.status === 201 && response.statusText === 'Created'){
           
-            this.toastService.showSuccess(apiOperation, response.statusText);
-            resolve();
+  //           this.toastService.showSuccess(apiOperation, response.statusText);
+  //           resolve();
   
-          }
+  //         }
 
-        },
-        error: (error: HttpErrorResponse) => {
-          this.toastService.showError(error);
-          reject(false);
-        }
-      });
+  //       },
+  //       error: (error: HttpErrorResponse) => {
+  //         this.toastService.showError(error);
+  //         reject(false);
+  //       }
+  //     });
 
-    });
+  //   });
+  // }
+
+  // extractAndSetEntities(responseBody: object | null, entityType: EntityType): Entity[]{
+
+  //   let entities: Entity[] = [];
+
+  //   if (responseBody){
+
+  //     switch (entityType){
+
+  //       case EntityType.user: {
+  //         const values = Object.values(responseBody);
+  //         entities = values[0].map((x: UserResponse) => new User(x));
+  //         break;
+  //       };
+  
+  //       case EntityType.post: {
+  //         break;
+  //       }
+  
+  //       default: {
+  //         break;
+  //       }
+  
+  //     }
+
+  //   }
+    
+  //   return entities;
+
+  // }
+
+  // Below idea taken from
+  // https%3A%2F%2Fbetterprogramming.pub%2Fangular-api-calls-the-right-way-264198bf2c64
+
+  public get(url: string, options?: any): Observable<any> {
+    return this.http.get(url, options);
   }
 
-  extractAndSetEntities(responseBody: object | null, entityType: EntityType): Entity[]{
+  public post(url: string, data: any, options?: any): Observable<any> {
+    return this.http.post(url, data, options);
+  }
 
-    let entities: Entity[] = [];
+  public put(url: string, data: any, options?: any): Observable<any> {
+    return this.http.put(url, data, options);
+  }
 
-    if (responseBody){
-
-      switch (entityType){
-
-        case EntityType.user: {
-          const values = Object.values(responseBody);
-          entities = values[0].map((x: UserResponse) => new User(x));
-          break;
-        };
-  
-        case EntityType.post: {
-          break;
-        }
-  
-        default: {
-          break;
-        }
-  
-      }
-
-    }
-    
-    return entities;
-
+  public delete(url: string, options?: any): Observable<any> {
+    return this.http.delete(url, options);
   }
 
 }

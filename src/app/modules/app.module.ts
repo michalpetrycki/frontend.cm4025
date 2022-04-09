@@ -33,6 +33,9 @@ import { ToastModule } from 'primeng/toast';
 import { JwtInterceptor } from 'src/app/services/http-interceptor/JwtInterceptor';
 import { MessageService } from 'primeng/api';
 
+// Services
+import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
+
 
 @NgModule({
   declarations: [
@@ -63,7 +66,8 @@ import { MessageService } from 'primeng/api';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    MessageService
+    MessageService,
+    ApiEndpointsService
   ],
   bootstrap: [AppComponent]
 })
