@@ -125,8 +125,6 @@ export class ProductService {
 
   async deleteProduct(product: Product): Promise<boolean> {
 
-    debugger;
-
     return new Promise<boolean>((resolve, reject) => {
 
       this.apiService.delete(this.productsEndpoint, { observe: 'response', body: { _id: product._id} })

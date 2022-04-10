@@ -35,6 +35,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
+import { DataViewModule } from 'primeng/dataview';
+import { RatingModule } from 'primeng/rating';
 
 
 // Interceptor
@@ -77,7 +79,9 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
     ProgressSpinnerModule,
     DialogModule,
     DropdownModule,
-    TableModule
+    TableModule,
+    DataViewModule,
+    RatingModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

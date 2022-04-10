@@ -52,18 +52,18 @@
     <p-table [value]="products" responsiveLayout="scroll">
         <ng-template pTemplate="header">
             <tr>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Edit</th>
-                <th>Delete?</th>
+                <th *ngFor="let col of columns; let idx = index;">{{col.header}}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
             <tr>
+                <td class="image-td">
+                    <img src="{{product.imagePath}}" [alt]="'product_image'"
+                        width="200" height="200" class="shadow-4">
+                </td>
                 <td>{{product.name}}</td>
                 <td>{{product.category}}</td>
-                <td>{{product.price}}</td>
+                <td>£{{product.price}}</td>
                 <td>
                     <button pButton (click)="openProductModal(false, product)">
                         <i class="pi pi-edit"></i>&nbsp;
@@ -79,54 +79,5 @@
             </tr>
         </ng-template>
     </p-table>
-
-    <!-- <ul id="posts-ul">
-
-        <li *ngFor="let post of posts; trackBy: trackPostByIndex; let i = index;" class="post-body">
-
-            <div class="post-header">
-
-                <img src="https://cdn.pixabay.com/photo/2018/03/04/22/17/cranium-3199408_960_720.png" 
-                    alt="author-avatar" />
-                <p class="author">{{post.authorId}}</p>
-                <p class="creation-time" *ngIf="post.createdAt">{{formatDate(post.createdAt)}}</p>
-                <p class="creation-time" *ngIf="!post.createdAt">17:19 09/04/2022</p>
-
-            </div>
-
-            <br>
-
-            <div class="post-content">
-                <p class="content">{{post.content}}</p>
-            </div>
-
-            <button *ngIf="editPostTimeIsValid(post) && canDisplayEditButton[i]" 
-                pButton (click)="showEditArea(i)" class="edit-post-button">
-                    <i class="pi pi-pencil"></i>&nbsp;
-                    Edit post
-            </button>
-
-            <button *ngIf="editPostTimeIsValid(post) && canDisplayEditButton[i]" 
-                pButton (click)="deletePost(post)" class="edit-post-button">
-                    <i class="pi pi-trash"></i>&nbsp;
-                    Delete post
-            </button>
-
-            <div class="edit-post" *ngIf="canDisplayEditArea[i]">
-
-                <form [formGroup]="editForms[i]" (ngSubmit)="editPost(i, post)">
-
-                    <textarea pInputTextarea class="update-post-content" rows="4" formControlName="content">{{post.content}}</textarea>
-
-                    <button pButton type="submit"><i class="pi pi-save"></i>&nbsp;Submit</button>
-                    <button pButton (click)="cancelEditPost(i)">Cancel</button>
-
-                </form>
-
-            </div>
-
-        </li>
-
-    </ul> -->
 
 </div>

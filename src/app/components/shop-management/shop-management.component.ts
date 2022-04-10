@@ -18,6 +18,7 @@ export class ShopManagementComponent implements OnInit {
   selectedCategory: CategoryDropdownOption | undefined;
   products: Product[];
   productToEdit: Product | undefined;
+  columns: TableColumn[];
 
   constructor(private spinnerService: SpinnerService, private productService: ProductService) {
 
@@ -29,6 +30,7 @@ export class ShopManagementComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
+      rating: new FormControl('')
     });
     
     this.selectedCategory = undefined;
@@ -42,6 +44,15 @@ export class ShopManagementComponent implements OnInit {
 
     this.products = [];
     this.productToEdit = undefined;
+
+    this.columns = [
+      { header: 'Image' },
+      { header: 'Name' },
+      { header: 'Category' },
+      { header: 'Price' },
+      { header: 'Edit' },
+      { header: 'Delete' }
+    ];
 
   }
 
@@ -61,7 +72,8 @@ export class ShopManagementComponent implements OnInit {
       this.productFormGroup.setValue({
         name: product.name,
         category: product.category,
-        price: product.price
+        price: product.price,
+        rating: product.rating
       });
 
       this.productToEdit = product;
@@ -116,7 +128,8 @@ export class ShopManagementComponent implements OnInit {
       const newProduct: Product = {
         name: this.productFormGroup.get('name')?.value,
         category: this.productFormGroup.get('category')?.value,
-        price: this.productFormGroup.get('price')?.value,
+        price: Number(this.productFormGroup.get('price')?.value).toFixed(2),
+        rating: this.productFormGroup.get('rating')?.value ?? '0.0'
       };
 
       await this.productService.createProduct(newProduct);
@@ -180,7 +193,11 @@ export class ShopManagementComponent implements OnInit {
 
 }
 
-interface CategoryDropdownOption{
+interface CategoryDropdownOption {
   name: string;
   code: string;
+}
+
+interface TableColumn {
+  header: string;
 }
