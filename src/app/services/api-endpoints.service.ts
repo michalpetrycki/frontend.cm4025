@@ -71,4 +71,8 @@ export class ApiEndpointsService {
         return this.createUrl('users/current');
     }
 
+    // public getDeletePostEndpoint(param: string): string {
+    //     return this.createUrl('posts', [param]);
+    // }
+
 }

@@ -42,13 +42,19 @@
                     Edit post
             </button>
 
+            <button *ngIf="editPostTimeIsValid(post) && canDisplayEditButton[i]" 
+                pButton (click)="deletePost(post)" class="edit-post-button">
+                    <i class="pi pi-trash"></i>&nbsp;
+                    Delete post
+            </button>
+
             <div class="edit-post" *ngIf="canDisplayEditArea[i]">
 
                 <form [formGroup]="editForms[i]" (ngSubmit)="editPost(i, post)">
 
                     <textarea pInputTextarea class="update-post-content" rows="4" formControlName="content">{{post.content}}</textarea>
 
-                    <button pButton type="submit">Submit</button>
+                    <button pButton type="submit"><i class="pi pi-save"></i>&nbsp;Submit</button>
                     <button pButton (click)="cancelEditPost(i)">Cancel</button>
 
                 </form>

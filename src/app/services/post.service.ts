@@ -103,7 +103,7 @@ export class PostService {
 
         next: async(response: HttpResponse<object>) => {
 
-          // Status 201 - new resource created
+          // Status 201 - resource updated
           if (response.ok && response.status === 201){
 
             const responseBody = response.body!;
@@ -114,6 +114,40 @@ export class PostService {
             this.toastService.showSuccess('Post successfully edited');
             
             resolve(newPost !== null && newPost !== undefined);
+  
+          }
+
+        },
+        error: (error: HttpErrorResponse) => {
+          this.toastService.showError(error);
+          reject(false);
+        }
+
+      });
+
+    });
+
+  }
+
+  async deletePost(post: Post): Promise<boolean> {
+
+    return new Promise<boolean>((resolve, reject) => {
+
+      // const deleteEndpoint = this.apiEndpointsService.getDeletePostEndpoint(post._id);
+
+      this.apiService.delete(this.postsEndpoint, { observe: 'response', body: { _id: post._id} })
+      .subscribe({
+
+        next: async(response: HttpResponse<object>) => {
+
+          debugger;
+
+          // Status 204 - existing resource successfully removed
+          if (response.ok && response.status === 204){
+
+            this.toastService.showSuccess('Post successfully deleted');
+            
+            resolve(true);
   
           }
 

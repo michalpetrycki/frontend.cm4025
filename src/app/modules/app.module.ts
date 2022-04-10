@@ -21,6 +21,8 @@ import { LoginComponent } from 'src/app/components/login/login.component';
 import { PageNotFoundComponent } from 'src/app/components/page-not-found/page-not-found.component';
 import { LogoutComponent } from 'src/app/components/logout/logout.component';
 import { ProfileComponent } from 'src/app/components/profile/profile.component';
+import { ShopComponent } from 'src/app/components/shop/shop.component';
+import { ShopManagementComponent } from 'src/app/components/shop-management/shop-management.component';
 
 // Primeng modules
 import { ButtonModule } from 'primeng/button';
@@ -52,6 +54,8 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
     PageNotFoundComponent,
     LogoutComponent,
     ProfileComponent,
+    ShopComponent,
+    ShopManagementComponent
   ],
   imports: [
     BrowserModule,

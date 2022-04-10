@@ -112,6 +112,22 @@ export class PostsComponent implements OnInit {
 
   }
 
+  public async deletePost(post: Post): Promise<void> {
+
+    this.spinnerService.showSpinner();
+
+    const success = await this.postService.deletePost(post);
+
+    if (success) {
+
+      this.fetchPosts();
+
+    }
+    
+    this.spinnerService.hideSpinner();
+
+  }
+
   // Used for debugging - striginfies array elements returned by server.
   public displayPost(post: Post){
     return JSON.stringify(post);
