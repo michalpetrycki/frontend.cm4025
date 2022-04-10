@@ -1,4 +1,10 @@
 <div class="card">
+    <button pButton>
+        
+    </button>
+</div>
+
+<div class="card">
     <p-dataView #dv [value]="products" [paginator]="true" [rows]="9" filterBy="name"
         [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
         <ng-template pTemplate="header">
@@ -23,8 +29,8 @@
                     </div>
                     <div class="product-list-action">
                         <span class="product-price">£{{product.price}}</span>
-                        <p-button icon="pi pi-shopping-cart" label="Add to Cart" [disabled]="product.inventoryStatus && product.inventoryStatus === 'OUTOFSTOCK'"></p-button>
-                        <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus ?? 'abcd'}}</span>
+                        <p-button icon="pi pi-shopping-cart" label="Add to Cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"></p-button>
+                        <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
                     </div>
                 </div>
             </div>
@@ -37,7 +43,7 @@
                             <i class="pi pi-tag product-category-icon"></i>
                             <span class="product-category">{{product.category}}</span>
                         </div>
-                        <span [class]="'product-badge status-' + (product.inventoryStatus ? product.inventoryStatus.toLowerCase() : 'abcd')">{{product.inventoryStatus ?? 'abcd'}}</span>
+                        <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span>
                     </div>
                     <div class="product-grid-item-content">
                         <img src="{{product.imagePath}}" [alt]="product.name" width="200" height="200" class="shadow-4"/>
@@ -47,7 +53,7 @@
                     </div>
                     <div class="product-grid-item-bottom">
                         <span class="product-price">£{{product.price}}</span>
-                        <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus && product.inventoryStatus === 'OUTOFSTOCK'" (click)="addToBasket(product)"></p-button>
+                        <p-button icon="pi pi-shopping-cart" [disabled]="product.inventoryStatus === 'OUTOFSTOCK'" (click)="addToBasket(product)"></p-button>
                     </div>
                 </div>
             </div>

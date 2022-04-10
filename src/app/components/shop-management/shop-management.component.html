@@ -1,26 +1,26 @@
-<div id="create-post">
-    <button pButton (click)="openProductModal(true)">
-        <i class="pi pi-plus"></i>&nbsp;
-        Create new product
-    </button>
+<div class="card create-post">
+    <div id="create-post">
+        <button pButton (click)="openProductModal(true)">
+            <i class="pi pi-plus"></i>&nbsp;
+            Create new product
+        </button>
+    </div>
 </div>
 
 <div id="open-modal-overlay" *ngIf="displayProductModal"></div>
 
 <p-dialog header="{{isCreationMode ? 'Create new product' : 'Update product'}}" [(visible)]="displayProductModal" [draggable]="true" [resizable]="true" [style]="{width: '20vw', height: '20vw'}">
     
-    <p>{{isCreationMode}}</p>
-
     <form id="create-product-form" [formGroup]="productFormGroup">
 
-        <div class="col-12 md:col-4">
+        <div class="product-form-input">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
                 <input id="name" type="text" pInputText pTooltip="Product name" placeholder="Product name..." formControlName="name">
             </div>
         </div>
 
-        <div class="col-12 md:col-4">
+        <div class="product-form-input">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
                 <!-- <input id="category" type="category" pInputText pTooltip="Product category" placeholder="Product category..." formControlName="category"> -->
@@ -30,54 +30,82 @@
             </div>
         </div>
 
-        <div class="col-12 md:col-4">
+        <div class="product-form-input">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-money-bill"></i></span>
                 <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" id="price" type="text" pInputText pTooltip="Product price" placeholder="Product price..." formControlName="price">
-                <!-- <small *ngIf="createProductFormGroup.controls['price'].hasError('email')" id="username-error" class="p-invalid">Extra characters are disallowed</small> -->
+            </div>
+        </div>
+
+        <div class="product-form-input">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-money-bill"></i></span>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" id="quantity" type="text" pInputText pTooltip="Quantity" placeholder="Quantity..." formControlName="quantity">
             </div>
         </div>
 
     </form>
 
     <ng-template pTemplate="footer">
-        <p-button (click)="closeProductCreationModal()" label="Cancel" styleClass="p-button-text"></p-button>
-        <p-button (click)="performModalAction()" label="{{isCreationMode ? 'Create product' : 'Update product'}}" styleClass="p-button-text"></p-button>
+        <button pButton (click)="performModalAction()">
+            <i class="pi pi-check"></i>&nbsp;
+            {{isCreationMode ? 'Create product' : 'Update product'}}
+        </button>
+        <button pButton (click)="closeProductCreationModal()">
+            <i class="pi pi-times"></i>&nbsp;
+            Cancel
+        </button>
     </ng-template>
 
 </p-dialog>
  
-<div id="products-table">
+<div class="card">
 
-    <p-table [value]="products" responsiveLayout="scroll">
-        <ng-template pTemplate="header">
-            <tr>
-                <th *ngFor="let col of columns; let idx = index;">{{col.header}}</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td class="image-td">
-                    <img src="{{product.imagePath}}" [alt]="'product_image'"
-                        width="200" height="200" class="shadow-4">
-                </td>
-                <td>{{product.name}}</td>
-                <td>{{product.category}}</td>
-                <td>£{{product.price}}</td>
-                <td>
-                    <button pButton (click)="openProductModal(false, product)">
-                        <i class="pi pi-edit"></i>&nbsp;
-                        Edit product
-                    </button>
-                </td>
-                <td>
-                    <button pButton (click)="deleteProduct(product)">
-                        <i class="pi pi-trash"></i>&nbsp;
-                        Delete product
-                    </button>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+    <div id="products-table">
+
+        <p-table [value]="products" styleClass="p-datatable-striped" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th *ngFor="let col of columns; let idx = index;" [style]="{'text-align': 'center', 'width': '140px'}">{{col.header}}</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>
+                        <img src="{{product.imagePath}}" [alt]="'product_image'"
+                            width="200" height="200" class="shadow-4">
+                    </td>
+                    <td>
+                        {{product.name}}
+                    </td>
+                    <td>
+                        {{product.category}}
+                    </td>
+                    <td>
+                        {{product.quantity}}
+                    </td>
+                    <td [style]="{'text-align': 'center'}" [ngClass]="{'outofstock': product.quantity === 0, 'lowstock': (product.quantity > 0 && product.quantity < 10),'instock': product.quantity > 10}">
+                        {{product.inventoryStatus}}
+                    </td>
+                    <td>
+                        £{{product.price}}
+                    </td>
+                    <td>
+                        <button pButton (click)="openProductModal(false, product)">
+                            <i class="pi pi-pencil"></i>&nbsp;
+                            Edit
+                        </button>
+                    </td>
+                    <td>
+                        <button pButton (click)="deleteProduct(product)">
+                            <i class="pi pi-trash"></i>&nbsp;
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    
+    </div>
 
 </div>

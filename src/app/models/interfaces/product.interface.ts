@@ -4,6 +4,7 @@ export interface Product {
     category: string;
     price: string;
     imagePath?: string;
-    inventoryStatus?: string;
-    rating?: string;
+    inventoryStatus?: 'OUTOFSTOCK' | 'INSTOCK' | 'LOWSTOCK';
+    rating?: number;
+    quantity?: number;
 }

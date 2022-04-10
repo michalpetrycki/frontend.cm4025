@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/interfaces/product.interface';
+import { BasketService } from 'src/app/services/basket/basket.service';
 import { ProductService } from 'src/app/services/product/product.service';
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
-import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'app-shop',
@@ -15,9 +15,8 @@ export class ShopComponent implements OnInit {
   sortOptions: SelectItem[];
   sortField: string;
   sortOrder: number;
-  basket: Product[];
 
-  constructor(private productService: ProductService, private spinnerService: SpinnerService, private toastService: ToastService) { 
+  constructor(private productService: ProductService, private spinnerService: SpinnerService, private basketService: BasketService) { 
 
     this.spinnerService.showSpinner();
     this.products = [];
@@ -29,7 +28,6 @@ export class ShopComponent implements OnInit {
 
     this.sortField = '';
     this.sortOrder = -1;
-    this.basket = [];
 
   }
 
@@ -65,10 +63,7 @@ export class ShopComponent implements OnInit {
   }
 
   public addToBasket(product: Product): void {
-
-    this.basket.push(product);
-    this.toastService.showSuccess('Basket updated');
-
+    this.basketService.addToBasket(product);
   }
 
 }

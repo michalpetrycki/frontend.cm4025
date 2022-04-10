@@ -30,7 +30,8 @@ export class ShopManagementComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
-      rating: new FormControl('')
+      rating: new FormControl(''),
+      quantity: new FormControl('')
     });
     
     this.selectedCategory = undefined;
@@ -49,6 +50,8 @@ export class ShopManagementComponent implements OnInit {
       { header: 'Image' },
       { header: 'Name' },
       { header: 'Category' },
+      { header: 'Quantity' },
+      { header: 'Inventory Status' },
       { header: 'Price' },
       { header: 'Edit' },
       { header: 'Delete' }
@@ -73,7 +76,8 @@ export class ShopManagementComponent implements OnInit {
         name: product.name,
         category: product.category,
         price: product.price,
-        rating: product.rating
+        rating: product.rating,
+        quantity: product.quantity ?? 0
       });
 
       this.productToEdit = product;
@@ -90,12 +94,7 @@ export class ShopManagementComponent implements OnInit {
 
     return new Promise<void>(async (resolve) => {
 
-      this.products = await this.productService.fetchProducts();
-
-      // this.canDisplayEditArea = this.posts.map(s => false);
-      // this.canDisplayEditButton = this.posts.map(s => true);
-      // this.editForms = this.posts.map(fg => new FormGroup({ content: new FormControl('', [ Validators.required ]) }));
-      
+      this.products = await this.productService.fetchProducts();      
       resolve();
 
     });
@@ -129,7 +128,8 @@ export class ShopManagementComponent implements OnInit {
         name: this.productFormGroup.get('name')?.value,
         category: this.productFormGroup.get('category')?.value,
         price: Number(this.productFormGroup.get('price')?.value).toFixed(2),
-        rating: this.productFormGroup.get('rating')?.value ?? '0.0'
+        rating: this.productFormGroup.get('rating')?.value ?? 0.0,
+        quantity: this.productFormGroup.get('quantity')?.value ?? 0
       };
 
       await this.productService.createProduct(newProduct);
@@ -148,12 +148,16 @@ export class ShopManagementComponent implements OnInit {
     return new Promise<void>(async (resolve, reject) => {
 
       this.spinnerService.showSpinner();
+
+      const quantity = Number(this.productFormGroup.get('quantity')?.value);
     
       const productToUpdate: Product = {
         _id: this.productToEdit?._id,
         name: this.productFormGroup.get('name')?.value,
         category: this.productFormGroup.get('category')?.value,
-        price: this.productFormGroup.get('price')?.value,
+        price: this.productFormGroup.get('price')?.value ?? 0.0,
+        quantity: quantity ?? 0,
+        inventoryStatus: this.getInventoryStatus(quantity)
       };
 
       await this.productService.updateProduct(productToUpdate);
@@ -189,6 +193,24 @@ export class ShopManagementComponent implements OnInit {
 
     });
     
+  }
+
+  private getInventoryStatus(quantity: number): 'OUTOFSTOCK' | 'LOWSTOCK' | 'INSTOCK' {
+
+    switch (true) {
+
+      case quantity === 0: {
+        return 'OUTOFSTOCK';
+      }
+      case quantity < 5: {
+        return 'LOWSTOCK';
+      }
+      default: {
+        return 'INSTOCK'
+      }
+
+    }
+
   }
 
 }

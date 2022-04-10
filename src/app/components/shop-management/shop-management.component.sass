@@ -8,3 +8,31 @@
     height: 100%
     background-color: rgba(0,0,0,0.53)
     z-index: 999
+
+.product-form-input:not(:last-of-type)
+    margin-bottom: 4.5%
+
+::ng-deep.p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even)
+    background: rgb(126, 84, 168)
+
+:host p-table ::ng-deep .p-datatable-thead > tr > th
+    background-color: rgb(150, 103, 21)
+
+:host p-table ::ng-deep .p-datatable-tbody > tr > td
+    text-align: center
+
+.outofstock
+    font-weight: 700
+    color: #FF5252
+    text-decoration: line-through
+
+.lowstock
+    font-weight: 700
+    color: #FFA726
+
+.instock
+    font-weight: 700
+    color: #66BB6A
+
+.card.create-post
+    padding: 15px
