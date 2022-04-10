@@ -53,7 +53,7 @@ export class LoginComponent {
       if (success){
   
         await this.resetForm();
-        await this.authenticationService.setCurrentUser();
+        // await this.authenticationService.setCurrentUser();
 
         this.isUserAdmin = this.authenticationService.isUserAdmin;
 

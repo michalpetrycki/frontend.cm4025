@@ -32,6 +32,9 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ToastModule } from 'primeng/toast';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
 
 
 // Interceptor
@@ -71,7 +74,10 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
     TooltipModule, 
     ToastModule,
     InputTextareaModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    DialogModule,
+    DropdownModule,
+    TableModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

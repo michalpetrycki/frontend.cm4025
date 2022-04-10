@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { ApiService } from 'src/app/services/api/api.service';
-import { Entity } from 'src/app/models/entities/entity';
 
 
 @Injectable({
@@ -10,21 +9,21 @@ import { Entity } from 'src/app/models/entities/entity';
 })
 export class UserService {
 
-  users: Entity[] = [];
+  // users: Entity[] = [];
 
   constructor(private apiService: ApiService) { }
 
-  async fetchUsers(): Promise<Entity[]>{
+  // async fetchUsers(): Promise<Entity[]>{
 
-    return new Promise<Entity[]>(async (resolve, reject) => {
+  //   return new Promise<Entity[]>(async (resolve, reject) => {
 
-      // this.users = await this.apiService.get(ApiOperation.getUsers, EntityType.user);
+  //     // this.users = await this.apiService.get(ApiOperation.getUsers, EntityType.user);
 
-      resolve(this.users);
+  //     resolve(this.users);
     
-    });
+  //   });
 
-  }
+  // }
 
   handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

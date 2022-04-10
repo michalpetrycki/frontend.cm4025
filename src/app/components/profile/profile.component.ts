@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/entities/user';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { DateService } from 'src/app/services/date/date.service';
 
@@ -10,17 +9,17 @@ import { DateService } from 'src/app/services/date/date.service';
 })
 export class ProfileComponent implements OnInit {
 
-  public currentUser: User | undefined;
+  // public currentUser: User | undefined;
   public showPicture = true;
   
   
   constructor(private authenticationService: AuthenticationService, private dateService: DateService) {
 
-    this.currentUser = this.authenticationService.loggedUser;
+    // this.currentUser = this.authenticationService.loggedUser;
 
-    this.currentUser!.avatarUrl = 'https://images.pexels.com/photos/11213532/pexels-photo-11213532.png?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
+    // this.currentUser!.avatarUrl = 'https://images.pexels.com/photos/11213532/pexels-photo-11213532.png?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260';
 
-    this.showPicture = this.currentUser?.avatarUrl !== undefined;
+    // this.showPicture = this.currentUser?.avatarUrl !== undefined;
     
   }
 

@@ -1,1 +1,132 @@
-<p>shop-management works!</p>
+<div id="create-post">
+    <button pButton (click)="openProductModal(true)">
+        <i class="pi pi-plus"></i>&nbsp;
+        Create new product
+    </button>
+</div>
+
+<div id="open-modal-overlay" *ngIf="displayProductModal"></div>
+
+<p-dialog header="{{isCreationMode ? 'Create new product' : 'Update product'}}" [(visible)]="displayProductModal" [draggable]="true" [resizable]="true" [style]="{width: '20vw', height: '20vw'}">
+    
+    <p>{{isCreationMode}}</p>
+
+    <form id="create-product-form" [formGroup]="productFormGroup">
+
+        <div class="col-12 md:col-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+                <input id="name" type="text" pInputText pTooltip="Product name" placeholder="Product name..." formControlName="name">
+            </div>
+        </div>
+
+        <div class="col-12 md:col-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+                <!-- <input id="category" type="category" pInputText pTooltip="Product category" placeholder="Product category..." formControlName="category"> -->
+                <p-dropdown [options]="categories" formControlName="category" optionLabel="name" optionValue="code"
+                    [filter]="true" filterBy="name" [showClear]="true" placeholder="Select product category" 
+                    appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
+            </div>
+        </div>
+
+        <div class="col-12 md:col-4">
+            <div class="p-inputgroup">
+                <span class="p-inputgroup-addon"><i class="pi pi-money-bill"></i></span>
+                <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" id="price" type="text" pInputText pTooltip="Product price" placeholder="Product price..." formControlName="price">
+                <!-- <small *ngIf="createProductFormGroup.controls['price'].hasError('email')" id="username-error" class="p-invalid">Extra characters are disallowed</small> -->
+            </div>
+        </div>
+
+    </form>
+
+    <ng-template pTemplate="footer">
+        <p-button (click)="closeProductCreationModal()" label="Cancel" styleClass="p-button-text"></p-button>
+        <p-button (click)="performModalAction()" label="{{isCreationMode ? 'Create product' : 'Update product'}}" styleClass="p-button-text"></p-button>
+    </ng-template>
+
+</p-dialog>
+ 
+<div id="products-table">
+
+    <p-table [value]="products" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Edit</th>
+                <th>Delete?</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.category}}</td>
+                <td>{{product.price}}</td>
+                <td>
+                    <button pButton (click)="openProductModal(false, product)">
+                        <i class="pi pi-edit"></i>&nbsp;
+                        Edit product
+                    </button>
+                </td>
+                <td>
+                    <button pButton (click)="deleteProduct(product)">
+                        <i class="pi pi-trash"></i>&nbsp;
+                        Delete product
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!-- <ul id="posts-ul">
+
+        <li *ngFor="let post of posts; trackBy: trackPostByIndex; let i = index;" class="post-body">
+
+            <div class="post-header">
+
+                <img src="https://cdn.pixabay.com/photo/2018/03/04/22/17/cranium-3199408_960_720.png" 
+                    alt="author-avatar" />
+                <p class="author">{{post.authorId}}</p>
+                <p class="creation-time" *ngIf="post.createdAt">{{formatDate(post.createdAt)}}</p>
+                <p class="creation-time" *ngIf="!post.createdAt">17:19 09/04/2022</p>
+
+            </div>
+
+            <br>
+
+            <div class="post-content">
+                <p class="content">{{post.content}}</p>
+            </div>
+
+            <button *ngIf="editPostTimeIsValid(post) && canDisplayEditButton[i]" 
+                pButton (click)="showEditArea(i)" class="edit-post-button">
+                    <i class="pi pi-pencil"></i>&nbsp;
+                    Edit post
+            </button>
+
+            <button *ngIf="editPostTimeIsValid(post) && canDisplayEditButton[i]" 
+                pButton (click)="deletePost(post)" class="edit-post-button">
+                    <i class="pi pi-trash"></i>&nbsp;
+                    Delete post
+            </button>
+
+            <div class="edit-post" *ngIf="canDisplayEditArea[i]">
+
+                <form [formGroup]="editForms[i]" (ngSubmit)="editPost(i, post)">
+
+                    <textarea pInputTextarea class="update-post-content" rows="4" formControlName="content">{{post.content}}</textarea>
+
+                    <button pButton type="submit"><i class="pi pi-save"></i>&nbsp;Submit</button>
+                    <button pButton (click)="cancelEditPost(i)">Cancel</button>
+
+                </form>
+
+            </div>
+
+        </li>
+
+    </ul> -->
+
+</div>

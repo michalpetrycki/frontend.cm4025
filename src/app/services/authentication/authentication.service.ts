@@ -6,7 +6,6 @@ import { DateTime } from 'luxon';
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { BehaviorSubject } from 'rxjs';
-import { User } from 'src/app/models/entities/user';
 import { UserRole } from 'src/app/models/enums/user-role.enum';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
@@ -16,7 +15,7 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
 })
 export class AuthenticationService {
 
-  private currentUser: User | undefined;
+  // private currentUser: User | undefined;
   private isAuthenticated = false;
   private isAdmin = false;
   private baseUrl = environment.baseUrl;
@@ -42,17 +41,17 @@ export class AuthenticationService {
     return this.adminSubject;
   }
 
-  get userRole(): string | undefined {
-    return this.currentUser?.role;
-  }
+  // get userRole(): string | undefined {
+  //   return this.currentUser?.role;
+  // }
 
-  get loggedUser(): User | undefined {
-    return this.currentUser;
-  }
+  // get loggedUser(): User | undefined {
+  //   return this.currentUser;
+  // }
 
   constructor(private apiService: ApiService, private httpClient: HttpClient, 
     private toastService: ToastService, private apiEndpointsService: ApiEndpointsService) {
-    this.checkLocalStorage();
+    // this.checkLocalStorage();
     this.loginEndpoint = this.apiEndpointsService.getUsersEndpoint();
     this.currentUserEndpoint = this.apiEndpointsService.getCurrentUserEndpoint();
   }
@@ -93,42 +92,42 @@ export class AuthenticationService {
 
   }
 
-  public async setCurrentUser(): Promise<void> {
+  // public async setCurrentUser(): Promise<void> {
     
-    return new Promise<void>((resolve, reject) => {
+  //   return new Promise<void>((resolve, reject) => {
 
-      this.httpClient.get(this.currentUserEndpoint, { observe: 'response' })
-        .subscribe((response: HttpResponse<object>) => {
+  //     this.httpClient.get(this.currentUserEndpoint, { observe: 'response' })
+  //       .subscribe((response: HttpResponse<object>) => {
 
-          if (response.ok && response.status === 200 && response.statusText === 'OK') {
+  //         if (response.ok && response.status === 200 && response.statusText === 'OK') {
 
-            if ('user' in response['body']!){
+  //           if ('user' in response['body']!){
 
-              debugger;
+  //             debugger;
 
-              this.currentUser = new User(response.body['user']);
-              this.isAdmin = this.currentUser.role === UserRole.admin;
+  //             this.currentUser = new User(response.body['user']);
+  //             this.isAdmin = this.currentUser.role === UserRole.admin;
 
-              localStorage.setItem('current_user', JSON.stringify(this.currentUser));
+  //             localStorage.setItem('current_user', JSON.stringify(this.currentUser));
 
-              this.adminObservable.next(this.isUserAdmin);
+  //             this.adminObservable.next(this.isUserAdmin);
 
-              resolve()
+  //             resolve()
 
-            }
+  //           }
             
 
-          }
-          else{
-            debugger;
-            reject();
-          }
+  //         }
+  //         else{
+  //           debugger;
+  //           reject();
+  //         }
 
-      });
+  //     });
 
-    });
+  //   });
 
-  }
+  // }
 
   public register(newUser: RegisterUser): Promise<string> {
     return new Promise<string>((resolve ,reject) => {
@@ -180,22 +179,22 @@ export class AuthenticationService {
 
   }
 
-  private checkLocalStorage(): void {
+  // private checkLocalStorage(): void {
 
-    const token = localStorage.getItem('id_token');
-    const expiresAt = localStorage.getItem('expires_at');
-    const currentUser: User = JSON.parse(localStorage.getItem('current_user')!) as User;
+  //   const token = localStorage.getItem('id_token');
+  //   const expiresAt = localStorage.getItem('expires_at');
+  //   const currentUser: User = JSON.parse(localStorage.getItem('current_user')!) as User;
 
-    this.currentUser = currentUser;
+  //   this.currentUser = currentUser;
 
-    if (!!token && !!expiresAt){
-      this.isAuthenticated = true;
-    }
+  //   if (!!token && !!expiresAt){
+  //     this.isAuthenticated = true;
+  //   }
 
-    if (currentUser?.role === UserRole.admin){
-      this.isAdmin = true;
-    }
+  //   if (currentUser?.role === UserRole.admin){
+  //     this.isAdmin = true;
+  //   }
 
-  }
+  // }
 
 }

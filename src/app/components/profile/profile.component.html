@@ -1,6 +1,6 @@
 <div id="user-profile">
 
-    <h1>Welcome {{currentUser?.username}}</h1>
+    <!-- <h1>Welcome {{currentUser?.username}}</h1> -->
 
     <!-- That will be updated with user's image -->
     <div id="profile-image">
@@ -12,8 +12,8 @@
             <div id="update-user-picture" (mouseenter)="toggleUpdatePictureButton()"
                 (mouseleave)="toggleUpdatePictureButton()">
 
-                <img src="{{currentUser?.avatarUrl}}" 
-                    alt="'{user avatar image}'">
+                <!-- <img src="{{currentUser?.avatarUrl}}" 
+                    alt="'{user avatar image}'"> -->
 
                 <div id="input-wrapper">
 
@@ -59,7 +59,7 @@
 
     
 
-    <div class="profile-output">
+    <!-- <div class="profile-output">
         <label for="user-role">Username:</label>
         <input id="user-role" name="role" type="text" pInputText [disabled]="shouldInputBeDisabled('username')" value="{{currentUser?.role}}">
     </div>
@@ -84,6 +84,6 @@
         <input id="user-updated" name="updated" type="text" pInputText [disabled]="shouldInputBeDisabled('updatedAt')" value="{{formatDateString(currentUser?.updatedAt)}}">
     </div>
 
-    <button pButton type="button" label="Update profile" icon="pi pi-save" iconPos="left" (click)="updateProfile()"></button>
+    <button pButton type="button" label="Update profile" icon="pi pi-save" iconPos="left" (click)="updateProfile()"></button> -->
 
 </div>

@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit {
 
     this.isAuthenticated = this.authenticationService.isUserAuthenticated;
     this.isAdmin = this.authenticationService.isUserAdmin;
-    this.currentUserRole = this.authenticationService.userRole;
+    // this.currentUserRole = this.authenticationService.userRole;
 
   }
 

@@ -1,9 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Entity, EntityType } from 'src/app/models/entities/entity';
-import { User } from 'src/app/models/entities/user';
-import { UserResponse } from 'src/app/models/interfaces/user.response.interface';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { Observable } from 'rxjs/internal/Observable';
 

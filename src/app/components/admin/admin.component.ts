@@ -36,7 +36,7 @@ export class AdminComponent implements OnInit {
 
     return new Promise<void>(async (resolve, reject) => {
 
-      this.users = await this.userService.fetchUsers();
+      // this.users = await this.userService.fetchUsers();
       debugger;
 
     });

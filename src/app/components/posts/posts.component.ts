@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Post } from 'src/app/models/entities/post';
-import { NewPost } from 'src/app/models/interfaces/post.new.interface';
+import { Post } from 'src/app/models/interfaces/post.interface';
 import { DateService } from 'src/app/services/date/date.service';
 import { PostService } from 'src/app/services/post.service';
 import { DateTime } from 'luxon';
@@ -67,64 +66,81 @@ export class PostsComponent implements OnInit {
 
   public async createPost(): Promise<void> {
 
-    this.spinnerService.showSpinner();
+    return new Promise<void>(async (resolve, reject) => {
 
-    const postContent = this.createPostGroup.get('content')?.value;
-    const newPost: NewPost = {
-      title: 'Do I actually need a title here?',
-      authorId: String(1),
-      content: postContent
-    };
-  
-    const createdPost = await this.postService.createPost(newPost);
+      this.spinnerService.showSpinner();
 
-    if (createdPost){
-
-      await this.fetchPosts();
-      this.createPostGroup.reset();
-
-    }
+      const postContent = this.createPostGroup.get('content')?.value;
+      const newPost: Post = {
+        title: 'Do I actually need a title here?',
+        authorId: String(1),
+        content: postContent
+      };
     
-    this.spinnerService.hideSpinner();
+      const createdPost = await this.postService.createPost(newPost);
+
+      if (createdPost){
+
+        await this.fetchPosts();
+        this.createPostGroup.reset();
+
+      }
+      
+      this.spinnerService.hideSpinner();
+
+      resolve();
+
+    });
 
   }
 
   public async editPost(index: number, post: Post): Promise<void> {
 
-    this.spinnerService.showSpinner();
+    return new Promise<void>(async(resolve, reject) => {
 
-    const newPost: Post = {
-      _id: post._id,
-      authorId: String(1),
-      title: 'Updated titile',
-      content: this.editForms[index].get('content')?.value
-    };
+      this.spinnerService.showSpinner();
 
-    const updatedPost = await this.postService.updatePost(newPost);
+      const newPost: Post = {
+        _id: post._id,
+        authorId: String(1),
+        title: 'Updated titile',
+        content: this.editForms[index].get('content')?.value
+      };
 
-    if (updatedPost) {
+      const updatedPost = await this.postService.updatePost(newPost);
 
-      this.cancelEditPost(index);
-      this.fetchPosts();
+      if (updatedPost) {
 
-    }
-    this.spinnerService.hideSpinner();
+        this.cancelEditPost(index);
+        this.fetchPosts();
+
+      }
+      this.spinnerService.hideSpinner();
+
+      resolve();
+
+    });
 
   }
 
   public async deletePost(post: Post): Promise<void> {
 
-    this.spinnerService.showSpinner();
+    return new Promise<void>(async(resolve, reject) => {
 
-    const success = await this.postService.deletePost(post);
+      this.spinnerService.showSpinner();
 
-    if (success) {
+      const success = await this.postService.deletePost(post);
 
-      this.fetchPosts();
+      if (success) {
 
-    }
-    
-    this.spinnerService.hideSpinner();
+        this.fetchPosts();
+
+      }
+      
+      this.spinnerService.hideSpinner();
+      resolve();
+
+    });
 
   }
 

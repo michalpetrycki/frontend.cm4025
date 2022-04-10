@@ -1,33 +1,28 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApiService } from 'src/app/services/api/api.service';
+import { Product } from 'src/app/models/interfaces/product.interface';
 import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
-import { Post } from 'src/app/models/interfaces/post.interface';
+import { ApiService } from 'src/app/services/api/api.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
+export class ProductService {
 
-  posts: Post[] = [];
+  private productsEndpoint: string;
 
-  private postsEndpoint = '';
-  
-  constructor(private apiService: ApiService, private apiEndpointsService: ApiEndpointsService, 
-    private toastService: ToastService) 
-  { 
+  constructor(private apiService: ApiService, private apiEndpointsService: ApiEndpointsService, private toastService: ToastService) { 
 
-    this.postsEndpoint = this.apiEndpointsService.getPostsEndpoint();
+    this.productsEndpoint = this.apiEndpointsService.getProductsEndpoint();
 
   }
 
+  async fetchProducts(): Promise<Product[]>{
 
-  async fetchPosts(): Promise<Post[]>{
+    return new Promise<Product[]>(async (resolve, reject) => {
 
-    return new Promise<Post[]>(async (resolve, reject) => {
-
-      this.apiService.get(this.postsEndpoint, { observe: 'response' })
+      this.apiService.get(this.productsEndpoint, { observe: 'response' })
       .subscribe({
 
         next: async(response: HttpResponse<object>) => {
@@ -37,9 +32,9 @@ export class PostService {
             const responseBody = response.body!;
   
             const responseArray = Object.values(responseBody);
-            const posts = responseArray[0] as Post[];
+            const products = responseArray[0] as Product[];
             
-            resolve(posts);
+            resolve(products);
   
           }
           else {
@@ -58,11 +53,11 @@ export class PostService {
 
   }
 
-  async createPost(newPost: Post): Promise<boolean> {
+  async createProduct(newProduct: Product): Promise<boolean> {
 
     return new Promise<boolean>((resolve, reject) => {
 
-      this.apiService.post(this.postsEndpoint, newPost, { observe: 'response' })
+      this.apiService.post(this.productsEndpoint, newProduct, { observe: 'response' })
       .subscribe({
 
         next: async(response: HttpResponse<object>) => {
@@ -73,14 +68,14 @@ export class PostService {
             const responseBody = response.body!;
   
             const responseArray = Object.values(responseBody);
-            const newPost = responseArray[0] as Post;
+            const newProduct = responseArray[0] as Product;
 
-            this.toastService.showSuccess('New post successfully created');
+            this.toastService.showSuccess('New product successfully created');
             
-            resolve(newPost !== null && newPost !== undefined);
+            resolve(newProduct !== null && newProduct !== undefined);
   
           }
-          
+
         },
         error: (error: HttpErrorResponse) => {
           this.toastService.showError(error);
@@ -93,11 +88,11 @@ export class PostService {
 
   }
 
-  async updatePost(newPost: Post): Promise<boolean> {
+  async updateProduct(newProduct: Product): Promise<boolean> {
 
     return new Promise<boolean>((resolve, reject) => {
 
-      this.apiService.patch(this.postsEndpoint, newPost, { observe: 'response' })
+      this.apiService.patch(this.productsEndpoint, newProduct, { observe: 'response' })
       .subscribe({
 
         next: async(response: HttpResponse<object>) => {
@@ -108,11 +103,11 @@ export class PostService {
             const responseBody = response.body!;
   
             const responseArray = Object.values(responseBody);
-            const newPost = responseArray[0] as Post;
+            const newProduct = responseArray[0] as Product;
 
-            this.toastService.showSuccess('Post successfully edited');
+            this.toastService.showSuccess('Product successfully edited');
             
-            resolve(newPost !== null && newPost !== undefined);
+            resolve(newProduct !== null && newProduct !== undefined);
   
           }
 
@@ -128,11 +123,13 @@ export class PostService {
 
   }
 
-  async deletePost(post: Post): Promise<boolean> {
+  async deleteProduct(product: Product): Promise<boolean> {
+
+    debugger;
 
     return new Promise<boolean>((resolve, reject) => {
 
-      this.apiService.delete(this.postsEndpoint, { observe: 'response', body: { _id: post._id} })
+      this.apiService.delete(this.productsEndpoint, { observe: 'response', body: { _id: product._id} })
       .subscribe({
 
         next: async(response: HttpResponse<object>) => {
@@ -140,7 +137,7 @@ export class PostService {
           // Status 204 - existing resource successfully removed
           if (response.ok && response.status === 204){
 
-            this.toastService.showSuccess('Post successfully deleted');
+            this.toastService.showSuccess('Product successfully deleted');
             
             resolve(true);
   
