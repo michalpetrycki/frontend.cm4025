@@ -7,7 +7,7 @@
     </div>
 </div>
 
-<div id="open-modal-overlay" *ngIf="displayProductModal"></div>
+<div id="open-modal-overlay" *ngIf="displayProductModal || displayConfirmationDialog"></div>
 
 <p-dialog header="{{isCreationMode ? 'Create new product' : 'Update product'}}" [(visible)]="displayProductModal" [draggable]="true" [resizable]="true" [style]="{width: '20vw', height: '20vw'}">
     
@@ -58,6 +58,23 @@
     </ng-template>
 
 </p-dialog>
+
+<p-dialog header="Delete product?" [(visible)]="displayConfirmationDialog" [draggable]="true" [resizable]="true" [style]="{width: '20vw', height: '20vw'}">
+    
+    <!-- Are you sure you want to delete {{}} -->
+
+    <ng-template pTemplate="footer">
+        <button pButton (click)="confirmDeletion()">
+            <i class="pi pi-trash"></i>&nbsp;
+            Delete
+        </button>
+        <button pButton (click)="cancelDeletion()">
+            <i class="pi pi-times"></i>&nbsp;
+            Cancel
+        </button>
+    </ng-template>
+
+</p-dialog>
  
 <div class="card">
 
@@ -97,7 +114,7 @@
                         </button>
                     </td>
                     <td>
-                        <button pButton (click)="deleteProduct(product)">
+                        <button pButton (click)="openConfirmationDialog(product)">
                             <i class="pi pi-trash"></i>&nbsp;
                             Delete
                         </button>

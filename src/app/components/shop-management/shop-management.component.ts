@@ -18,13 +18,17 @@ export class ShopManagementComponent implements OnInit {
   selectedCategory: CategoryDropdownOption | undefined;
   products: Product[];
   productToEdit: Product | undefined;
+  productToDelete: Product | undefined;
   columns: TableColumn[];
+  displayConfirmationDialog: boolean;
+  // confirmDeletion: boolean;
 
   constructor(private spinnerService: SpinnerService, private productService: ProductService) {
 
     this.spinnerService.showSpinner();
 
     this.displayProductModal = false;
+    this.displayConfirmationDialog = false;
     this.isCreationMode = true;
     this.productFormGroup = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -45,6 +49,7 @@ export class ShopManagementComponent implements OnInit {
 
     this.products = [];
     this.productToEdit = undefined;
+    this.productToDelete = undefined;
 
     this.columns = [
       { header: 'Image' },
@@ -56,6 +61,8 @@ export class ShopManagementComponent implements OnInit {
       { header: 'Edit' },
       { header: 'Delete' }
     ];
+
+    // this.confirmDeletion = false;
 
   }
 
@@ -88,6 +95,7 @@ export class ShopManagementComponent implements OnInit {
 
   public closeProductCreationModal(): void {
     this.displayProductModal = false;
+    this.productFormGroup.reset();
   }
 
   private async fetchProducts(): Promise<void> {
@@ -123,13 +131,16 @@ export class ShopManagementComponent implements OnInit {
     return new Promise<void>(async (resolve, reject) => {
 
       this.spinnerService.showSpinner();
+
+      const productQuantity = Number(this.productFormGroup.get('quantity')?.value) ?? 0;
     
       const newProduct: Product = {
         name: this.productFormGroup.get('name')?.value,
         category: this.productFormGroup.get('category')?.value,
         price: Number(this.productFormGroup.get('price')?.value).toFixed(2),
-        rating: this.productFormGroup.get('rating')?.value ?? 0.0,
-        quantity: this.productFormGroup.get('quantity')?.value ?? 0
+        inventoryStatus: this.getInventoryStatus(productQuantity),
+        rating: Number('0.0'),
+        quantity: productQuantity
       };
 
       await this.productService.createProduct(newProduct);
@@ -174,13 +185,31 @@ export class ShopManagementComponent implements OnInit {
 
   }
 
-  public async deleteProduct(product: Product): Promise<void> {
+  public openConfirmationDialog(product: Product): void {
+    this.displayConfirmationDialog = true;
+    this.productToDelete = product;
+  }
+
+  public hideonfirmationDialog(): void {
+    this.displayConfirmationDialog = false;
+  }
+
+  public confirmDeletion(): void {
+    this.deleteProduct();
+  }
+
+  public cancelDeletion(): void {
+    this.productToDelete = undefined;
+    this.displayConfirmationDialog = false;
+  }
+
+  public async deleteProduct(): Promise<void> {
 
     return new Promise<void>(async(resolve, reject) => {
 
       this.spinnerService.showSpinner();
 
-      const success = await this.productService.deleteProduct(product);
+      const success = await this.productService.deleteProduct(this.productToDelete!);
 
       // If product has been deleted
       if (success) {
