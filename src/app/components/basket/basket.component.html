@@ -16,6 +16,11 @@
 
 </div>
 
+<div id="floating-panel" *ngIf="basket.length > 0">
+    <h1>Total amount to pay:</h1>
+    <h2><strong>£{{totalAmount.toFixed(2)}}</strong></h2>
+</div>
+
 <div class="card">
 
     <div class="card product-card" *ngFor="let product of basket; let idx = index; trackBy: trackProductByIndex;">
@@ -35,7 +40,8 @@
             <div>
                 {{quantity[idx]}}
                 <p-inputNumber [showButtons]="true" [(ngModel)]="quantity[idx]" [min]="1" [max]="100" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical"
-                    decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+                    decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
+                    (ngModelChange)="calculateTotal()">
                 </p-inputNumber>
             </div>
         </span>

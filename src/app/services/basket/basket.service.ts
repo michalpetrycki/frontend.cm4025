@@ -8,21 +8,26 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 export class BasketService {
 
   private basket: Product[];
+  quantities: number[];
 
   constructor(private toastService: ToastService) { 
 
     this.basket = [];
+    this.quantities = [];
 
   }
 
   public addToBasket(product: Product): void {
 
+    const existingItem = this.basket.find(x => x._id === product._id);
+
     // Item already in the basket
-    if (this.basket.indexOf(product) > -1){
+    if (existingItem){
       this.toastService.showError(`${product.name} already in basket`);
     }
     else{
       this.basket.push(product);
+      this.quantities?.push(1);
       this.toastService.showSuccess(`${product.name} added to basket`);
     }
     
