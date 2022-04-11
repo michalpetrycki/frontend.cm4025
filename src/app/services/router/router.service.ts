@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 })
 export class RouterService {
 
-  constructor(private router: Router, private authenticationService: AuthenticationService) { 
+  constructor(private router: Router, private authenticationService: AuthenticationService, private spinnerService: SpinnerService) { 
 
     // This code intercepts page refresh event
     this.router.events
@@ -23,7 +24,8 @@ export class RouterService {
           const isUserLoggedIn = this.authenticationService.isLoggedIn();
 
           if (!isUserLoggedIn && event.url){
-            // this.navigateTo('/login');
+            this.navigateTo('/posts');
+            this.spinnerService.hideSpinner();
           }
 
         }

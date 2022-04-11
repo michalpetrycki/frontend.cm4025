@@ -5,6 +5,8 @@ import { DateService } from 'src/app/services/date/date.service';
 import { PostService } from 'src/app/services/post.service';
 import { DateTime } from 'luxon';
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
+import { Subscription } from 'rxjs';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-posts',
@@ -20,11 +22,19 @@ export class PostsComponent implements OnInit {
   canDisplayEditArea: boolean[];
   canDisplayEditButton: boolean[];
   editForms: FormGroup[];
+  displayLoginModal: boolean;
+  displayRegisterModal: boolean;
+  closeRegistrationModalSubscription: Subscription | undefined;
+  closeLoginModalSubscription: Subscription | undefined;
 
-  constructor(private postService: PostService, private dateService: DateService, private spinnerService: SpinnerService) 
+  constructor(private postService: PostService, private dateService: DateService,
+    private spinnerService: SpinnerService, private authenticationService: AuthenticationService) 
   {
 
     this.spinnerService.showSpinner();
+
+    this.displayLoginModal = false;
+    this.displayRegisterModal = false;
 
     this.posts = [];
     this.showUpdateButton = false;
@@ -38,6 +48,15 @@ export class PostsComponent implements OnInit {
     this.canDisplayEditButton = [];
 
     this.editForms = [];
+
+    this.closeLoginModalSubscription = this.authenticationService.closeLoginModalSubject.subscribe(closeModal => {
+      this.displayLoginModal = closeModal;
+    });
+
+    this.closeRegistrationModalSubscription = this.authenticationService.closeRegistrationModalSubject.subscribe(closeModal => {
+      this.displayRegisterModal = closeModal;
+    });
+    
 
   }
 
@@ -178,6 +197,14 @@ export class PostsComponent implements OnInit {
   public cancelEditPost(index: number): void {
     this.canDisplayEditArea[index] = false;
     this.canDisplayEditButton[index] = true;
+  }
+
+  public openLoginModal(): void {
+    this.displayLoginModal = true;
+  }
+
+  public openRegisterModal(): void {
+    this.displayRegisterModal = true;
   }
 
 }

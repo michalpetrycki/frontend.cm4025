@@ -16,27 +16,28 @@ import { PersonalStepComponent } from 'src/app/components/steps/personal-step/pe
 import { PaymentStepComponent } from 'src/app/components/steps/payment-step/payment-step.component';
 import { ConfirmationStepComponent } from 'src/app/components/steps/confirmation-step/confirmation-step.component';
 import { AddressStepComponent } from 'src/app/components/steps/address-step/address-step.component';
+import { AuthGuard } from 'src/app/services/auth-guard/AuthGuard';
 
 const routes: Routes = [
 
-  { path: 'admin', component: AdminComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'users', component: UsersComponent },
+  { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersComponent, canActivate: [AuthGuard] },
   { path: 'posts', component: PostsComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
   { path: 'logout', component: LogoutComponent },
-  { path: 'shop-management', component: ShopManagementComponent },
-  { path: 'shop', component: ShopComponent },
-  { path: 'basket', component: BasketComponent },
+  { path: 'shop-management', component: ShopManagementComponent, canActivate: [AuthGuard] },
+  { path: 'shop', component: ShopComponent, canActivate: [AuthGuard] },
+  { path: 'basket', component: BasketComponent, canActivate: [AuthGuard] },
 
-  { path: 'checkout', component: CheckoutComponent,
+  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard],
     children: [
 
-      { path: 'personal', component: PersonalStepComponent },
-      { path: 'address', component: AddressStepComponent },
-      { path: 'payment', component: PaymentStepComponent },
-      { path: 'confirmation', component: ConfirmationStepComponent },
+      { path: 'personal', component: PersonalStepComponent, canActivate: [AuthGuard] },
+      { path: 'address', component: AddressStepComponent, canActivate: [AuthGuard] },
+      { path: 'payment', component: PaymentStepComponent, canActivate: [AuthGuard] },
+      { path: 'confirmation', component: ConfirmationStepComponent, canActivate: [AuthGuard] },
 
     ] 
   },

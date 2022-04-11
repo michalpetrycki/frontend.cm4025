@@ -1,10 +1,8 @@
-<form class="login-register-form" [formGroup]="registerForm" (ngSubmit)="submitForm()">
+<div id="register-component">
 
-    <h1>Register</h1>
+    <form class="login-register-form" [formGroup]="registerForm" (ngSubmit)="submitForm()">
 
-    <div class="grid p-fluid">
-
-        <div class="col-12 md:col-4">
+        <div class="input-group">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
                 <input id="username" type="text" pInputText pTooltip="Enter your username" placeholder="Username..." formControlName="username">
@@ -14,7 +12,7 @@
             <small *ngIf="registerForm.controls['username'].hasError('maxlength')" id="max-length-error" class="p-invalid">Maximum length is 30</small>
         </div>
 
-        <div class="col-12 md:col-4">
+        <div class="input-group">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
                 <input id="email" type="email" pInputText pTooltip="Enter your email" placeholder="email@domain.com..." formControlName="email" email>
@@ -22,34 +20,34 @@
             <small *ngIf="registerForm.controls['email'].hasError('email')" id="email-error" class="p-invalid">Email not valid</small>
         </div>
 
-        <div class="col-12 md:col-4">
+        <div class="input-group">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
                 <input id="password" type="password" pInputText pTooltip="Enter your password" placeholder="Password..." formControlName="password"  (ngModelChange)="onPasswordChange()">
             </div>
         </div>
 
-        <div class="col-12 md:col-4">
+        <div class="input-group">
             <div class="p-inputgroup">
                 <span class="p-inputgroup-addon"><i class="pi pi-replay"></i></span>
                 <input id="repeatPassword" type="password" pInputText pTooltip="Repeat your password" placeholder="Repeat password..." formControlName="repeatPassword" (ngModelChange)="onPasswordChange()">
             </div>
             <small *ngIf="registerForm.controls['repeatPassword'].hasError('mismatch')" id="repeat-password-error" class="p-invalid">Repeat password and password don't match.</small>
         </div>
+    
+        <div id="register-buttons-section">
+            <button pButton type="submit" label="Register" icon="pi pi-check" iconPos="left" [disabled]="registerForm.invalid"></button>
+            <button pButton type="button" label="Reset" icon="pi pi-times" iconPos="left" (click)="resetForm()"></button>
+        </div>
+    
+        <!-- <br>
+        <br>
+    
+        <div class="alternative-bottom-link">
+            <p>Already have account with Love For the Uglies?</p>
+            <p><a routerLink="/login">>>>Sign in!<<<</a></p>
+        </div> -->
+    
+    </form>
 
-    </div>
-
-    <div id="register-buttons-section">
-        <button pButton type="submit" label="Register" icon="pi pi-check" iconPos="left" [disabled]="registerForm.invalid"></button>
-        <button pButton type="button" label="Cancel" icon="pi pi-times" iconPos="left" (click)="resetForm()"></button>
-    </div>
-
-    <br>
-    <br>
-
-    <div class="alternative-bottom-link">
-        <p>Already have account with Love For the Uglies?</p>
-        <p><a routerLink="/login">>>>Sign in!<<<</a></p>
-    </div>
-
-</form>
+</div>

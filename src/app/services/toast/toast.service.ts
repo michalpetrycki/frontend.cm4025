@@ -18,7 +18,7 @@ export class ToastService {
   public showError(response: HttpErrorResponse | string): void{
 
     if (response instanceof HttpErrorResponse) {
-      this.messageService.add({ severity: 'error', summary: response?.error.status, detail: response?.error.message });
+      this.messageService.add({ severity: 'error', summary: response?.error.status, detail: response?.error.errors[0] });
       setTimeout(() => {
         this.spinnerService.hideSpinner();
       }, 1000);

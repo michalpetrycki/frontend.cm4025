@@ -4,6 +4,7 @@ import { InputValidators } from 'src/app/validators/input.validators';
 import { RegisterUser } from 'src/app/models/interfaces/register-user.interface';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { UserRole } from 'src/app/models/enums/user-role.enum';
+import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ export class RegisterComponent {
 
   validators: InputValidators;
   registerForm: FormGroup;
-
+  
   get passwordControl(): AbstractControl{
     return this.registerForm.get('password')!;
   }
@@ -27,7 +28,7 @@ export class RegisterComponent {
     return this.registerForm.get('username')!;
   }
 
-  constructor(private authenticationService: AuthenticationService) { 
+  constructor(private authenticationService: AuthenticationService, private spinnerService: SpinnerService) { 
 
     this.validators = new InputValidators();
     this.registerForm = new FormGroup({
@@ -41,16 +42,28 @@ export class RegisterComponent {
 
   }
 
-  submitForm(): void{
+  async submitForm(): Promise<void> {
 
-    const newUser: RegisterUser = {
-      username: this.registerForm.get('username')?.value,
-      email: this.registerForm.get('email')?.value,
-      password: this.registerForm.get('password')?.value,
-      role: UserRole.user
-    } as RegisterUser;
+    return new Promise(async (resolve, reject) => {
 
-    this.authenticationService.register(newUser);
+      this.spinnerService.showSpinner();
+
+      const newUser: RegisterUser = {
+        username: this.registerForm.get('username')?.value,
+        email: this.registerForm.get('email')?.value,
+        password: this.registerForm.get('password')?.value,
+        role: UserRole.user
+      } as RegisterUser;
+
+      const register_success: boolean = await this.authenticationService.register(newUser);
+
+      this.spinnerService.showSpinner();
+      const current_user_success: boolean = await this.authenticationService.setCurrentUser();
+      this.spinnerService.hideSpinner();
+
+      this.resetForm();
+
+    });
 
   }
 

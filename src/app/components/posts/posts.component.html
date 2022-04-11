@@ -5,6 +5,16 @@
         Back
     </button>
 
+    <button id="sign-up-btn" pButton back-button (click)="openRegisterModal()">
+        <i class="pi pi-user-plus"></i>&nbsp;
+        Register
+    </button>
+
+    <button id="sign-in-btn" pButton back-button (click)="openLoginModal()">
+        <i class="pi pi-sign-in"></i>&nbsp;
+        Login
+    </button>
+
 </div>
 
 <div id="create-post">
@@ -75,3 +85,22 @@
     </ul>
 
 </div>
+
+
+<div id="open-modal-overlay" *ngIf="displayLoginModal || displayRegisterModal"></div>
+<app-login *ngIf="displayLoginModal"></app-login>
+<app-register *ngIf="displayRegisterModal"></app-register>
+
+<p-dialog header="Welcome back" [(visible)]="displayLoginModal" [draggable]="true" [resizable]="true" [style]="{width: '40vw', height: '30vw'}">
+    
+    <h1>Logiin</h1>
+    <app-login></app-login>
+
+</p-dialog>
+
+<p-dialog header="Welcome unknown person" [(visible)]="displayRegisterModal" [draggable]="true" [resizable]="true" [style]="{width: '40vw'}">
+    
+    <h1>Regiister</h1>
+    <app-register></app-register>
+
+</p-dialog>

@@ -1,37 +1,39 @@
-<form class="login-register-form" [formGroup]="loginForm" (ngSubmit)="login()">
+<div id="login-component">
 
-    <h1>Login</h1>
+    <form class="login-register-form" [formGroup]="loginForm" (ngSubmit)="login()">
 
-    <div class="grid p-fluid">
-
-        <div class="col-12 md:col-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
-                <input id="email" type="email" pInputText pTooltip="Enter your email" placeholder="Email..." formControlName="email">
+        <div>
+    
+            <div class="input-group">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-envelope"></i></span>
+                    <input id="email" type="email" pInputText pTooltip="Enter your email" placeholder="Email..." formControlName="email">
+                </div>
+                <small *ngIf="loginForm.controls['email'].hasError('email')" id="username-error" class="p-invalid">Extra characters are disallowed</small>
             </div>
-            <small *ngIf="loginForm.controls['email'].hasError('email')" id="username-error" class="p-invalid">Extra characters are disallowed</small>
-        </div>
-
-        <div class="col-12 md:col-4">
-            <div class="p-inputgroup">
-                <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
-                <input id="password" type="password" pInputText pTooltip="Enter your password" placeholder="Password..." formControlName="password">
+    
+            <div class="input-group">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon"><i class="pi pi-lock"></i></span>
+                    <input id="password" type="password" pInputText pTooltip="Enter your password" placeholder="Password..." formControlName="password">
+                </div>
             </div>
+    
         </div>
+    
+        <div id="register-buttons-section">
+            <button pButton type="submit" label="Login" icon="pi pi-check" iconPos="left" [disabled]="loginForm.invalid"></button>
+            <button pButton type="button" label="Reset" icon="pi pi-times" iconPos="left" (click)="resetForm()"></button>
+        </div>
+<!--     
+        <br>
+        <br>
+    
+        <div class="alternative-bottom-link">
+            <p>New to Love For the Uglies?</p>
+            <p><a routerLink="/register">>>>Sign up!<<<</a></p>
+        </div> -->
+    
+    </form>
 
-    </div>
-
-    <div id="register-buttons-section">
-        <button pButton type="submit" label="Login" icon="pi pi-check" iconPos="left" [disabled]="loginForm.invalid"></button>
-        <button pButton type="button" label="Cancel" icon="pi pi-times" iconPos="left" (click)="resetForm()"></button>
-    </div>
-
-    <br>
-    <br>
-
-    <div class="alternative-bottom-link">
-        <p>New to Love For the Uglies?</p>
-        <p><a routerLink="/register">>>>Sign up!<<<</a></p>
-    </div>
-
-</form>
+</div>

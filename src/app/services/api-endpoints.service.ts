@@ -75,4 +75,12 @@ export class ApiEndpointsService {
         return this.createUrl('products');
     }
 
+    public getRegisterEndpoint(): string {
+        return this.createUrl('users/register');
+    }
+
+    public getLoginEndpoint(): string {
+        return this.createUrl('login');
+    }
+
 }

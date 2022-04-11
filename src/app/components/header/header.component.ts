@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService, private routerService: RouterService){
 
-    this.isAuthenticated = true;
+    this.isAuthenticated = false;
     this.isAdmin = false;
 
     this.navigationButtons = this.createNavigationButtons();
@@ -32,10 +32,6 @@ export class HeaderComponent implements OnInit {
     // this.isAuthenticated = this.authenticationService.isUserAuthenticated;
     this.isAdmin = this.authenticationService.isUserAdmin;
     // this.currentUserRole = this.authenticationService.userRole;
-
-  }
-
-  ngOnInit(): void {
 
     this.authSubscription = this.authenticationService.authenticationObservable.subscribe(isUserAuthenticated => {
       
@@ -60,6 +56,8 @@ export class HeaderComponent implements OnInit {
     });
 
   }
+
+  ngOnInit(): void {}
 
   public logout(): void{
     this.authenticationService.logout();
