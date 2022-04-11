@@ -3,7 +3,8 @@
     <ul>
 
       <li *ngFor="let button of navigationButtons">
-        <a *ngIf="canDisplayButtonForUser(button)" routerLink="{{button.routerLink}}">
+        <!-- <a *ngIf="canDisplayButtonForUser(button)" routerLink="{{button.routerLink}}"> -->
+          <a routerLink="{{button.routerLink}}">
           <i class="{{button.class}}"></i>
           {{button.text}}
         </a>

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // baseUrl: 'https://localhost:8000/api'
-  baseUrl: 'https://coursework-for-the-uglies.uksouth.cloudapp.azure.com/api'
+  baseUrl: 'http://localhost:8000/api'
+  // baseUrl: 'https://coursework-for-the-uglies.uksouth.cloudapp.azure.com/api'
 };
 
 // local

@@ -24,12 +24,12 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService, private routerService: RouterService){
 
-    this.isAuthenticated = false;
+    this.isAuthenticated = true;
     this.isAdmin = false;
 
     this.navigationButtons = this.createNavigationButtons();
 
-    this.isAuthenticated = this.authenticationService.isUserAuthenticated;
+    // this.isAuthenticated = this.authenticationService.isUserAuthenticated;
     this.isAdmin = this.authenticationService.isUserAdmin;
     // this.currentUserRole = this.authenticationService.userRole;
 
