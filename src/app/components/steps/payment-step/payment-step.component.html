@@ -12,33 +12,30 @@
 
         <ng-template pTemplate="content">
 
-            <div class="p-fluid formgrid grid">
-                
-                <div class="field col-12">
-                    <label for="class">Card Holder Name</label>
-                    <input type="text" required pInputText [(ngModel)]="paymentInformation.cardholderName"> 
-                </div>
+            <div class="field">
+                <label for="class">Card Holder Name</label>
+                <input #name="ngModel" id="name" type="text" required pInputText [(ngModel)]="paymentInformation.cardholderName" [ngClass]="{'ng-dirty': (name.invalid && submitted) || (name.dirty && name.invalid)}">
+                <small *ngIf="(name.invalid && submitted) || (name.dirty && name.invalid)" class="p-error">Cardholder name is required.</small>
+            </div>
 
-                <div class="field col-8">
-                    <label id="number" for="lastname">Number</label>
-                    <p-inputMask inputId="number" mask="9999-9999-9999-9999" [(ngModel)]="paymentInformation.cardholderNumber"></p-inputMask>
-                </div>
+            <div class="field">
+                <label id="number" for="lastname">Number</label>
+                <p-inputMask #number="ngModel" inputId="number" mask="9999-9999-9999-9999" [(ngModel)]="paymentInformation.cardholderNumber" [ngClass]="{'ng-dirty': (number.invalid && submitted) || (number.dirty && name.invalid)}"></p-inputMask>
+            </div>
 
-                <div class="field col-2">
-                    <label id="date" for="date">Date</label>
-                    <p-inputMask inputId="date" mask="99/99" [(ngModel)]="paymentInformation.date"></p-inputMask>
-                </div>
+            <div class="field">
+                <label id="date" for="date">Date</label>
+                <p-inputMask #date="ngModel" inputId="date" mask="99/99" [(ngModel)]="paymentInformation.date" [ngClass]="{'ng-dirty': (date.invalid && submitted) || (date.dirty && date.invalid)}"></p-inputMask>
+            </div>
 
-                <div class="field col-2">
-                    <label for="cvv">CVV</label>
-                    <p-inputMask id="cvv" mask="999" [(ngModel)]="paymentInformation.cvv"></p-inputMask>
-                </div>
+            <div class="field">
+                <label for="cvv">CVV</label>
+                <p-inputMask #cvv="ngModel" id="cvv" mask="999" [(ngModel)]="paymentInformation.cvv" [ngClass]="{'ng-dirty': (cvv.invalid && submitted) || (cvv.dirty && cvv.invalid)}"></p-inputMask>
+            </div>
 
-                <div class="field-checkbox col-12">
-                    <p-checkbox id="remember" [binary]="true" [(ngModel)]="paymentInformation.remember"></p-checkbox>
-                    <label for="remember" class="p-checkbox-label">Save credit card information for future</label>
-                </div>
-
+            <div class="field-checkbox">
+                <p-checkbox id="remember" [binary]="true" [(ngModel)]="paymentInformation.remember"></p-checkbox>
+                <label for="remember" class="p-checkbox-label">Save credit card information for future</label>
             </div>
 
         </ng-template>
@@ -47,6 +44,7 @@
 
             <div class="grid grid-nogutter justify-content-end">
                 <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+                &nbsp;&nbsp;
                 <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
             </div>
             

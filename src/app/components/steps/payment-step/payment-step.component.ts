@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CheckoutService } from 'src/app/services/checkout/checkout.service';
 import { RouterService } from 'src/app/services/router/router.service';
 
 @Component({
@@ -10,21 +11,31 @@ export class PaymentStepComponent implements OnInit {
 
   paymentInformation: any;
 
-  constructor(private routerService: RouterService) { }
+  submitted: boolean = false;
 
-  ngOnInit() { 
-    // this.paymentInformation = this.ticketService.ticketInformation.paymentInformation;
+  constructor(private routerService: RouterService, private checkoutService: CheckoutService) {}
+
+  ngOnInit(): void { 
+    this.paymentInformation = this.checkoutService.checkoutInformation.paymentInformation || {};
   }
 
-  nextPage() {
-    if (this.paymentInformation.cardholderName && this.paymentInformation.cardholderNumber && this.paymentInformation.date && this.paymentInformation.cvv) {
-      // this.ticketService.ticketInformation.paymentInformation = this.paymentInformation;
-      this.routerService.navigateTo('steps/confirmation');
+  nextPage(): void {
+
+    if (this.paymentInformation.cardholderName && this.paymentInformation.cardholderNumber 
+        && this.paymentInformation.date && this.paymentInformation.cvv) {
+      
+      this.checkoutService.checkoutInformation.paymentInformation = this.paymentInformation;
+      this.routerService.navigateTo('checkout/confirmation');
+      return;
+
     }
+
+    this.submitted = true;
+
   }
 
-  prevPage() {
-    this.routerService.navigateTo('steps/seat');
+  prevPage(): void {
+    this.routerService.navigateTo('checkout/address');
   }
 
 }

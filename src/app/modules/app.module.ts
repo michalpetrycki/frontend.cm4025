@@ -28,6 +28,7 @@ import { CheckoutComponent } from 'src/app/components/checkout/checkout.componen
 import { PersonalStepComponent } from 'src/app/components/steps/personal-step/personal-step.component';
 import { PaymentStepComponent } from 'src/app/components/steps/payment-step/payment-step.component';
 import { ConfirmationStepComponent } from 'src/app/components/steps/confirmation-step/confirmation-step.component';
+import { AddressStepComponent } from 'src/app/components/steps/address-step/address-step.component';
 
 // Primeng modules
 import { ButtonModule } from 'primeng/button';
@@ -77,7 +78,8 @@ import { DirectivesModule } from 'src/app/modules/directives/directives.module';
     CheckoutComponent,
     PersonalStepComponent,
     PaymentStepComponent,
-    ConfirmationStepComponent
+    ConfirmationStepComponent,
+    AddressStepComponent
   ],
   imports: [
     BrowserModule,

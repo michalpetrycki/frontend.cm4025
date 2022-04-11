@@ -12,7 +12,8 @@
 
         <ng-template pTemplate="content">
 
-            <div class="p-fluid"formgrid;grid class="field">
+            
+            <div class="field">
                 <label for="firstname">Firstname</label>
                 <input #firstname="ngModel" id="firstname" type="text" required pInputText [(ngModel)]="personalInformation.firstname" [ngClass]="{'ng-dirty': (firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)}"> 
                 <small *ngIf="(firstname.invalid && submitted) || (firstname.dirty && firstname.invalid)" class="p-error">Firstname is required.</small>

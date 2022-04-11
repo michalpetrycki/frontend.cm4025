@@ -1,24 +1,23 @@
-<div class="card">
+<div class="card top-buttons">
     
     <button pButton back-button>
         <i class="pi pi-arrow-left"></i>&nbsp;&nbsp;
         Back
     </button>
 
-    &nbsp;&nbsp;&nbsp;
+    <!-- &nbsp;&nbsp;&nbsp;
     &nbsp;&nbsp;&nbsp;
 
     <button pButton (click)="sendOrder()">
         Place order &nbsp;
         <i class="pi pi-angle-double-right"></i>&nbsp;&nbsp;
         <i class="pi pi-send"></i>&nbsp;&nbsp;
-    </button>
+    </button> -->
 
 </div>
 
 <div class="card">
-
-    <p-steps [model]="steps"></p-steps>
+    <p-toast></p-toast>
+    <p-steps [model]="steps" [readonly]="true"></p-steps>
     <router-outlet></router-outlet>
-
 </div>

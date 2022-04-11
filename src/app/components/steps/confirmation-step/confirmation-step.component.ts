@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CheckoutService } from 'src/app/services/checkout/checkout.service';
 import { RouterService } from 'src/app/services/router/router.service';
 
 @Component({
@@ -8,20 +9,23 @@ import { RouterService } from 'src/app/services/router/router.service';
 })
 export class ConfirmationStepComponent implements OnInit {
 
-  ticketInformation: any;
+  confirmationInformation: any;
     
-  constructor(private routerService: RouterService) { }
+  constructor(private routerService: RouterService, private checkoutService: CheckoutService) {
+
+    this.confirmationInformation = this.checkoutService.checkoutInformation || {};
+
+  }
 
   ngOnInit() { 
-    // this.ticketInformation = this.ticketService.ticketInformation;
   }
 
   complete() {
-    // this.ticketService.complete();
+    this.checkoutService.complete();
   }
 
   prevPage() {
-    this.routerService.navigateTo('steps/payment');
+    this.routerService.navigateTo('checkout/payment');
   }
 
 }

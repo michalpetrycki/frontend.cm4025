@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs/internal/Subscription';
+import { RouterService } from 'src/app/services/router/router.service';
 
 @Component({
   selector: 'app-checkout',
@@ -12,12 +13,16 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   steps: MenuItem[];
   subscription: Subscription | null;
 
-  constructor() {
+  constructor(private routerService: RouterService) {
 
     this.steps = [
       {
         label: 'Personal',
         routerLink: 'personal'
+      },
+      {
+        label: 'Address',
+        routerLink: 'address'
       },
       {
         label: 'Payment',
@@ -37,6 +42,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.routerService.navigateTo('checkout/personal');
   }
 
   ngOnDestroy(): void {

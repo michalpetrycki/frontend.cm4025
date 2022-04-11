@@ -12,6 +12,10 @@ import { ShopManagementComponent } from 'src/app/components/shop-management/shop
 import { ShopComponent } from 'src/app/components/shop/shop.component';
 import { BasketComponent } from 'src/app/components/basket/basket.component';
 import { CheckoutComponent } from 'src/app/components/checkout/checkout.component';
+import { PersonalStepComponent } from 'src/app/components/steps/personal-step/personal-step.component';
+import { PaymentStepComponent } from 'src/app/components/steps/payment-step/payment-step.component';
+import { ConfirmationStepComponent } from 'src/app/components/steps/confirmation-step/confirmation-step.component';
+import { AddressStepComponent } from 'src/app/components/steps/address-step/address-step.component';
 
 const routes: Routes = [
 
@@ -25,7 +29,18 @@ const routes: Routes = [
   { path: 'shop-management', component: ShopManagementComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'basket', component: BasketComponent },
-  { path: 'checkout', component: CheckoutComponent },
+
+  { path: 'checkout', component: CheckoutComponent,
+    children: [
+
+      { path: 'personal', component: PersonalStepComponent },
+      { path: 'address', component: AddressStepComponent },
+      { path: 'payment', component: PaymentStepComponent },
+      { path: 'confirmation', component: ConfirmationStepComponent },
+
+    ] 
+  },
+
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 

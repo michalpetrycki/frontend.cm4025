@@ -1,0 +1,59 @@
+<div class="stepsdemo-content">
+
+    <p-card>
+
+        <ng-template pTemplate="title">
+            Personal Information
+        </ng-template>
+
+        <ng-template pTemplate="subtitle">
+            Enter your personal information
+        </ng-template>
+
+        <ng-template pTemplate="content">
+
+            
+            <div class="field">
+                <label for="street">Street Address</label>
+                <input #street="ngModel" id="street" type="text" required pInputText [(ngModel)]="addressInformation.street" [ngClass]="{'ng-dirty': (street.invalid && submitted) || (street.dirty && street.invalid)}"> 
+                <small *ngIf="(street.invalid && submitted) || (street.dirty && street.invalid)" class="p-error">Street address is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="apartment">Apt, suite, etc (optional)</label>
+                <input #apartment="ngModel" id="apartment" type="text" pInputText [(ngModel)]="addressInformation.apartment"> 
+            </div>
+
+            <div class="field">
+                <label for="city">City</label>
+                <input #city="ngModel" id="city" type="text" required pInputText [(ngModel)]="addressInformation.city" [ngClass]="{'ng-dirty': (city.invalid && submitted) || (city.dirty && city.invalid)}"> 
+                <small *ngIf="(city.invalid && submitted) || (city.dirty && city.invalid)" class="p-error">City is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="country">Country</label>
+                <input #country="ngModel" id="country" type="text" required pInputText [(ngModel)]="addressInformation.country" [ngClass]="{'ng-dirty': (country.invalid && submitted) || (country.dirty && country.invalid)}"> 
+                <small *ngIf="(country.invalid && submitted) || (country.dirty && country.invalid)" class="p-error">Country is required.</small>
+            </div>
+
+            <div class="field">
+                <label for="postcode">Postcode</label>
+                <input #postcode="ngModel" id="postcode" type="text" required pInputText [(ngModel)]="addressInformation.postcode" [ngClass]="{'ng-dirty': (postcode.invalid && submitted) || (postcode.dirty && postcode.invalid)}"> 
+                <small *ngIf="(postcode.invalid && submitted) || (postcode.dirty && postcode.invalid)" class="p-error">Postcode is required.</small>
+            </div>
+
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            
+            <div class="grid grid-nogutter justify-content-end">
+                <p-button label="Back" (onClick)="prevPage()" icon="pi pi-angle-left"></p-button>
+                &nbsp;&nbsp;
+                <p-button label="Next" (onClick)="nextPage()" icon="pi pi-angle-right" iconPos="right"></p-button>
+            </div>
+            
+        </ng-template>
+
+    </p-card>
+
+</div>

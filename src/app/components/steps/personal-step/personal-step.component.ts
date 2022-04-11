@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CheckoutService } from 'src/app/services/checkout/checkout.service';
 import { RouterService } from 'src/app/services/router/router.service';
 
 @Component({
@@ -12,19 +13,20 @@ export class PersonalStepComponent implements OnInit {
 
   submitted: boolean = false;
 
-  constructor(private routerService: RouterService) { }
+  constructor(private routerService: RouterService, private checkoutService: CheckoutService) { }
 
   ngOnInit() { 
-    // this.personalInformation = this.ticketService.getTicketInformation().personalInformation;
+    this.personalInformation = this.checkoutService.checkoutInformation.personalInformation || {};
   }
 
   nextPage() {
 
     if (this.personalInformation.firstname && this.personalInformation.lastname && this.personalInformation.age) {
-      // this.ticketService.ticketInformation.personalInformation = this.personalInformation;
-      this.routerService.navigateTo('steps/seat');
-
+      
+      this.checkoutService.checkoutInformation.personalInformation = this.personalInformation;
+      this.routerService.navigateTo('checkout/address');
       return;
+
     }
 
     this.submitted = true;
