@@ -11,6 +11,7 @@ import { ProfileComponent } from 'src/app/components/profile/profile.component';
 import { ShopManagementComponent } from 'src/app/components/shop-management/shop-management.component';
 import { ShopComponent } from 'src/app/components/shop/shop.component';
 import { BasketComponent } from 'src/app/components/basket/basket.component';
+import { CheckoutComponent } from 'src/app/components/checkout/checkout.component';
 
 const routes: Routes = [
 
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'shop-management', component: ShopManagementComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'basket', component: BasketComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 

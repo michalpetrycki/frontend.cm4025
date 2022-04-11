@@ -24,6 +24,10 @@ import { ProfileComponent } from 'src/app/components/profile/profile.component';
 import { ShopComponent } from 'src/app/components/shop/shop.component';
 import { ShopManagementComponent } from 'src/app/components/shop-management/shop-management.component';
 import { BasketComponent } from 'src/app/components/basket/basket.component';
+import { CheckoutComponent } from 'src/app/components/checkout/checkout.component';
+import { PersonalStepComponent } from 'src/app/components/steps/personal-step/personal-step.component';
+import { PaymentStepComponent } from 'src/app/components/steps/payment-step/payment-step.component';
+import { ConfirmationStepComponent } from 'src/app/components/steps/confirmation-step/confirmation-step.component';
 
 // Primeng modules
 import { ButtonModule } from 'primeng/button';
@@ -39,6 +43,9 @@ import { TableModule } from 'primeng/table';
 import { DataViewModule } from 'primeng/dataview';
 import { RatingModule } from 'primeng/rating';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { StepsModule } from 'primeng/steps';
+import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 // Interceptor
@@ -66,7 +73,11 @@ import { DirectivesModule } from 'src/app/modules/directives/directives.module';
     ProfileComponent,
     ShopComponent,
     ShopManagementComponent,
-    BasketComponent
+    BasketComponent,
+    CheckoutComponent,
+    PersonalStepComponent,
+    PaymentStepComponent,
+    ConfirmationStepComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +100,10 @@ import { DirectivesModule } from 'src/app/modules/directives/directives.module';
     DataViewModule,
     RatingModule,
     DirectivesModule,
-    InputNumberModule
+    InputNumberModule,
+    StepsModule,
+    CardModule,
+    CheckboxModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

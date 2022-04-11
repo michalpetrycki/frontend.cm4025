@@ -1,5 +1,5 @@
 // Copied from https://nils-mehlhorn.de/posts/angular-navigate-back-previous-page
-import { Directive, ElementRef, HostListener, OnInit } from '@angular/core'
+import { Directive, HostListener } from '@angular/core'
 import { NavigationService } from 'src/app/services/navigation/navigation.service'
 
 @Directive({
@@ -7,7 +7,7 @@ import { NavigationService } from 'src/app/services/navigation/navigation.servic
 })
 export class BackButtonDirective {
   
-  constructor(private navigation: NavigationService, private elRef: ElementRef) {}
+  constructor(private navigation: NavigationService) {}
 
   @HostListener('click')
   onClick(): void {

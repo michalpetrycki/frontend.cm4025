@@ -17,8 +17,6 @@ export class BasketService {
 
   public addToBasket(product: Product): void {
 
-    debugger;
-
     // Item already in the basket
     if (this.basket.indexOf(product) > -1){
       this.toastService.showError(`${product.name} already in basket`);
@@ -30,6 +28,7 @@ export class BasketService {
     
   }
 
+  // Removes item from the basket by returning all items which _id is different than of removed item
   public removeFromBasket(product: Product): void {
 
     this.basket = this.basket.filter(x => x._id !== product._id);
@@ -37,6 +36,7 @@ export class BasketService {
 
   }
 
+  // Returns basket - array of products
   public getContent(): Product[] {
     return this.basket;
   }

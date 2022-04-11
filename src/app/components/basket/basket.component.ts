@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/interfaces/product.interface';
 import { BasketService } from 'src/app/services/basket/basket.service';
 import { NavigationService } from 'src/app/services/navigation/navigation.service';
+import { RouterService } from 'src/app/services/router/router.service';
 
 @Component({
   selector: 'app-basket',
@@ -13,7 +14,7 @@ export class BasketComponent implements OnInit {
   basket: Product[];
   quantity: number[];
 
-  constructor(private navigationService: NavigationService, private basketService: BasketService) { 
+  constructor(private navigationService: NavigationService, private basketService: BasketService, private routerService: RouterService) { 
     
     this.basket = [];
     this.quantity = [];
@@ -42,6 +43,10 @@ export class BasketComponent implements OnInit {
 
   public trackProductByIndex(index: number): number {
     return index;
+  }
+
+  public navigateToCheckout(): void {
+    this.routerService.navigateTo('checkout');
   }
 
 }
