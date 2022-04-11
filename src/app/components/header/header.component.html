@@ -1,4 +1,4 @@
-<div id="navigation-panel" *ngIf="isAuthenticated">
+<div id="navigation-panel" *ngIf="isLoggedIn">
   <nav>
     <ul>
 
@@ -10,7 +10,7 @@
         </a>
       </li>
 
-      <!-- <li *ngIf="isAuthenticated" (click)="logout()">Logout<i class="pi pi-sign-out"></i></li> -->
+      <li *ngIf="isLoggedIn" (click)="logout()">Logout<i class="pi pi-sign-out"></i></li>
     </ul>
   </nav>
 </div>

@@ -12,8 +12,8 @@ import { RouterService } from 'src/app/services/router/router.service';
 })
 export class HeaderComponent implements OnInit {
 
-  isAuthenticated: boolean;
-  isAdmin: boolean;
+  // isAuthenticated: boolean;
+  // isAdmin: boolean;
 
   authSubscription: Subscription | undefined;
   adminSubscription: Subscription | undefined;
@@ -22,38 +22,63 @@ export class HeaderComponent implements OnInit {
 
   navigationButtons: NavigationButton[];
 
+
+  isUserLoggedInSubscription: Subscription | undefined;
+  isUserAdminSubscription: Subscription | undefined;
+
+  isLoggedIn: boolean;
+  isAdmin: boolean;
+
   constructor(private authenticationService: AuthenticationService, private routerService: RouterService){
 
-    this.isAuthenticated = false;
+    this.isLoggedIn = false;
     this.isAdmin = false;
+
+    this.isUserLoggedInSubscription = this.authenticationService.isUserLoggedInSubject.subscribe(isLoggedIn => {
+      this.isLoggedIn = isLoggedIn
+    });
+
+    this.isUserAdminSubscription = this.authenticationService.isUserAdminSubject.subscribe(isAdmin => {
+      this.isAdmin = isAdmin;
+    });
 
     this.navigationButtons = this.createNavigationButtons();
 
+
+
+
+
+
+    // this.isAuthenticated = false;
+    // this.isAdmin = false;
+
+    
+
     // this.isAuthenticated = this.authenticationService.isUserAuthenticated;
-    this.isAdmin = this.authenticationService.isUserAdmin;
+    // this.isAdmin = this.authenticationService.isUserAdmin;
     // this.currentUserRole = this.authenticationService.userRole;
 
-    this.authSubscription = this.authenticationService.authenticationObservable.subscribe(isUserAuthenticated => {
+    // this.authSubscription = this.authenticationService.authenticationObservable.subscribe(isUserAuthenticated => {
       
-      if (isUserAuthenticated !== undefined){
-        this.isAuthenticated = isUserAuthenticated;
-      }
+    //   if (isUserAuthenticated !== undefined){
+    //     this.isAuthenticated = isUserAuthenticated;
+    //   }
       
-    });
+    // });
 
-    this.adminSubscription = this.authenticationService.adminObservable.subscribe(isUserAdmin => {
+    // this.adminSubscription = this.authenticationService.adminObservable.subscribe(isUserAdmin => {
 
-      if (isUserAdmin !== undefined){
+    //   if (isUserAdmin !== undefined){
 
-        this.isAdmin = isUserAdmin;
+    //     this.isAdmin = isUserAdmin;
 
-        if (this.isAdmin){
-          this.routerService.navigateTo('/admin');
-        }
+    //     if (this.isAdmin){
+    //       this.routerService.navigateTo('/admin');
+    //     }
 
-      }
+    //   }
 
-    });
+    // });
 
   }
 

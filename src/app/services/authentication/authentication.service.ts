@@ -28,21 +28,22 @@ export class AuthenticationService {
   closeRegistrationModalSubject: BehaviorSubject<boolean>;
   closeLoginModalSubject: BehaviorSubject<boolean>;
   isUserLoggedInSubject: BehaviorSubject<boolean>;
+  isUserAdminSubject: BehaviorSubject<boolean>
 
-  authenticationSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
-  adminSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
+  // authenticationSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
+  // adminSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
 
-  get isUserAdmin(): boolean {
-    return this.isAdmin;
-  }
+  // get isUserAdmin(): boolean {
+  //   return this.isAdmin;
+  // }
 
-  get authenticationObservable(): BehaviorSubject<boolean> {
-    return this.authenticationSubject;
-  }
+  // get authenticationObservable(): BehaviorSubject<boolean> {
+  //   return this.authenticationSubject;
+  // }
 
-  get adminObservable(): BehaviorSubject<boolean> {
-    return this.adminSubject;
-  }
+  // get adminObservable(): BehaviorSubject<boolean> {
+  //   return this.adminSubject;
+  // }
 
   // get userRole(): string | undefined {
   //   return this.currentUser?.role;
@@ -67,8 +68,9 @@ export class AuthenticationService {
       this.closeRegistrationModalSubject = new BehaviorSubject<boolean>(false);
       this.closeLoginModalSubject = new BehaviorSubject<boolean>(false);
       this.isUserLoggedInSubject = new BehaviorSubject<boolean>(false);
+      this.isUserAdminSubject = new BehaviorSubject<boolean>(false);
 
-      // this.checkLocalStorage();
+      this.checkLocalStorage();
 
   }
 
@@ -83,16 +85,19 @@ export class AuthenticationService {
 
             debugger;
 
-            if (response.ok && response.status === 200 && response.statusText === 'OK'){
+            if (response.ok && response.status === 200){
 
               if ('token' in response.body!){
 
                 const token = response.body['token'];
                 this.setSession(token);
 
-                resolve(true);
-                this.authenticationObservable.next(this.isUserAuthenticated);
+                // Used by interceptor together with checking access_token
+                this.isUserAuthenticated = true;
 
+                this.isUserLoggedInSubject.next(true);
+                resolve(true);
+                
               }
 
             }
@@ -136,11 +141,16 @@ export class AuthenticationService {
             this.currentUser = responseArray[0] as User;
             this.isAdmin = this.currentUser.role === UserRole.admin;
 
+            // Set but what for?
+            localStorage.setItem('current_user', JSON.stringify(this.currentUser));
+
             // In postsComponente there's a 'displayRegisterModal' property.
             // Its value determines if the modal is open
             // True - display; false - hide
             this.closeRegistrationModalSubject.next(false);
+            this.closeLoginModalSubject.next(false);
             this.isUserLoggedInSubject.next(true);
+            this.isUserAdminSubject.next(this.currentUser.role === UserRole.admin);
 
             // this.adminObservable.next(this.isUserAdmin);
             
@@ -178,6 +188,7 @@ export class AuthenticationService {
             const responseArray = Object.values(responseBody);
             const authToken = responseArray[0] as string;
 
+            // Used by interceptor together with checking access_token
             this.isUserAuthenticated = true;
             
             this.setSession(authToken);
@@ -224,7 +235,7 @@ export class AuthenticationService {
   public logout(): void {
     localStorage.clear();
     this.isUserAuthenticated = false;
-    this.authenticationObservable.next(this.isUserAuthenticated);
+    this.isUserLoggedInSubject.next(this.isUserAuthenticated);
   }
 
   // Used by routerService
@@ -245,22 +256,24 @@ export class AuthenticationService {
 
   }
 
-  // private checkLocalStorage(): void {
+  private checkLocalStorage(): void {
 
-  //   const token = localStorage.getItem('id_token');
-  //   const expiresAt = localStorage.getItem('expires_at');
-  //   const currentUser: User = JSON.parse(localStorage.getItem('current_user')!) as User;
+    const token = localStorage.getItem('access_token');
+    const expiresAt = localStorage.getItem('expires_at');
+    const currentUser: User = JSON.parse(localStorage.getItem('current_user')!) as User;
 
-  //   this.currentUser = currentUser;
+    this.currentUser = currentUser;
 
-  //   if (!!token && !!expiresAt){
-  //     this.isAuthenticated = true;
-  //   }
+    if (!!token && !!expiresAt){
+      this.isUserAuthenticated = true;
+      this.isUserLoggedInSubject.next(true);
+    }
 
-  //   if (currentUser?.role === UserRole.admin){
-  //     this.isAdmin = true;
-  //   }
+    if (currentUser?.role === UserRole.admin){
+      this.isAdmin = true;
+      this.isUserAdminSubject.next(true);
+    }
 
-  // }
+  }
 
 }

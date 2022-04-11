@@ -4,6 +4,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { LoginUser } from 'src/app/models/interfaces/login-user.interface';
 import { InputValidators } from 'src/app/validators/input.validators';
 import { RouterService } from 'src/app/services/router/router.service';
+import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent {
     return this.loginForm.get('usrnameOrEmail')!;
   }
 
-  constructor(private authenticationService: AuthenticationService, private routerService: RouterService) { 
+  constructor(private authenticationService: AuthenticationService, private spinnerService: SpinnerService) { 
 
     this.isUserAdmin = false;
     this.validators = new InputValidators();
@@ -41,6 +42,8 @@ export class LoginComponent {
 
     return new Promise<void>(async (resolve, reject) => {
 
+      this.spinnerService.showSpinner();
+
       const loginUser: LoginUser = {
         email: this.loginForm.get('email')?.value,
         password: this.loginForm.get('password')?.value
@@ -48,22 +51,18 @@ export class LoginComponent {
   
       // Discussion here on hashing passwords on client side. Tl;dr doesn't improve security
       // https://stackoverflow.com/questions/3715920/is-it-worth-hashing-passwords-on-the-client-side
-      const success: boolean = await this.authenticationService.login(loginUser);
+      const login_success: boolean = await this.authenticationService.login(loginUser);
+      this.spinnerService.hideSpinner();
+
+      this.spinnerService.showSpinner();
+      const current_user_success: boolean = await this.authenticationService.setCurrentUser();
+      this.spinnerService.hideSpinner();
+
+      debugger;
   
-      if (success){
+      if (login_success && current_user_success){
   
-        await this.resetForm();
-        // await this.authenticationService.setCurrentUser();
-
-        this.isUserAdmin = this.authenticationService.isUserAdmin;
-
-        if (this.isUserAdmin){
-          this.routerService.navigateTo('admin');
-        }
-        else{
-          this.routerService.navigateTo('profile');
-        }
-
+        this.resetForm();
         resolve();
   
       }
