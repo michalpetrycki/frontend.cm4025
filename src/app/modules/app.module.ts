@@ -1,5 +1,5 @@
 // Common modules
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +23,7 @@ import { LogoutComponent } from 'src/app/components/logout/logout.component';
 import { ProfileComponent } from 'src/app/components/profile/profile.component';
 import { ShopComponent } from 'src/app/components/shop/shop.component';
 import { ShopManagementComponent } from 'src/app/components/shop-management/shop-management.component';
+import { BasketComponent } from 'src/app/components/basket/basket.component';
 
 // Primeng modules
 import { ButtonModule } from 'primeng/button';
@@ -45,7 +46,10 @@ import { MessageService } from 'primeng/api';
 
 // Services
 import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
+import { NavigationService } from 'src/app/services/navigation/navigation.service';
 
+// Modules
+import { DirectivesModule } from 'src/app/modules/directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -60,7 +64,8 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
     LogoutComponent,
     ProfileComponent,
     ShopComponent,
-    ShopManagementComponent
+    ShopManagementComponent,
+    BasketComponent
   ],
   imports: [
     BrowserModule,
@@ -81,12 +86,19 @@ import { ApiEndpointsService } from 'src/app/services/api-endpoints.service';
     DropdownModule,
     TableModule,
     DataViewModule,
-    RatingModule
+    RatingModule,
+    DirectivesModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     MessageService,
-    ApiEndpointsService
+    ApiEndpointsService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => null,
+      deps: [NavigationService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent]
 })

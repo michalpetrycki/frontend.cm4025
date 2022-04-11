@@ -32,8 +32,6 @@ export class PostService {
 
         next: async(response: HttpResponse<object>) => {
 
-          debugger;
-
           if (response.ok && response.status === 200 && response.statusText === 'OK'){
 
             const responseBody = response.body!;

@@ -10,6 +10,7 @@ import { LogoutComponent } from 'src/app/components/logout/logout.component';
 import { ProfileComponent } from 'src/app/components/profile/profile.component';
 import { ShopManagementComponent } from 'src/app/components/shop-management/shop-management.component';
 import { ShopComponent } from 'src/app/components/shop/shop.component';
+import { BasketComponent } from 'src/app/components/basket/basket.component';
 
 const routes: Routes = [
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'shop-management', component: ShopManagementComponent },
   { path: 'shop', component: ShopComponent },
+  { path: 'basket', component: BasketComponent },
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }
 
