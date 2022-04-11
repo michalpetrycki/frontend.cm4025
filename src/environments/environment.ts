@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  // baseUrl: 'love-for-the-uglies.uksouth.cloudapp.azure.com/api/'
   baseUrl: 'https://localhost:8000/api'
 };
 

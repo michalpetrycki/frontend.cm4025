@@ -15,7 +15,7 @@ export class ApiEndpointsService {
     constructor() { }
   
     // URL
-    private createUrl(action: string, isMockAPI: boolean = false): string {
+    private createUrl(action: string): string {
     
         const urlBuilder: UrlBuilder = new UrlBuilder(environment.baseUrl, action);
         return urlBuilder.toString();
