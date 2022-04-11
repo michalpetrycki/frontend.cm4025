@@ -27,6 +27,7 @@ export class AuthenticationService {
 
   closeRegistrationModalSubject: BehaviorSubject<boolean>;
   closeLoginModalSubject: BehaviorSubject<boolean>;
+  isUserLoggedInSubject: BehaviorSubject<boolean>;
 
   authenticationSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
   adminSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
@@ -65,6 +66,7 @@ export class AuthenticationService {
 
       this.closeRegistrationModalSubject = new BehaviorSubject<boolean>(false);
       this.closeLoginModalSubject = new BehaviorSubject<boolean>(false);
+      this.isUserLoggedInSubject = new BehaviorSubject<boolean>(false);
 
       // this.checkLocalStorage();
 
@@ -80,7 +82,7 @@ export class AuthenticationService {
           next: async (response: HttpResponse<object>) => {
 
             debugger;
-            
+
             if (response.ok && response.status === 200 && response.statusText === 'OK'){
 
               if ('token' in response.body!){
@@ -98,7 +100,15 @@ export class AuthenticationService {
           },
 
           error: (error: HttpErrorResponse) => {
-            this.toastService.showError(error);
+
+            debugger;
+
+            const errorMessage = {
+              status: error.status,
+              message: error.message
+            };
+            
+            this.toastService.showError(errorMessage);
             reject(false);
           }
 
@@ -130,6 +140,7 @@ export class AuthenticationService {
             // Its value determines if the modal is open
             // True - display; false - hide
             this.closeRegistrationModalSubject.next(false);
+            this.isUserLoggedInSubject.next(true);
 
             // this.adminObservable.next(this.isUserAdmin);
             
@@ -168,7 +179,7 @@ export class AuthenticationService {
             const authToken = responseArray[0] as string;
 
             this.isUserAuthenticated = true;
-
+            
             this.setSession(authToken);
             
             this.toastService
@@ -216,6 +227,7 @@ export class AuthenticationService {
     this.authenticationObservable.next(this.isUserAuthenticated);
   }
 
+  // Used by routerService
   public isLoggedIn(): boolean {
     return DateTime.now().valueOf() < this.getExpiration();
   }

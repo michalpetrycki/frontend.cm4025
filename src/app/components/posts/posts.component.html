@@ -5,12 +5,12 @@
         Back
     </button>
 
-    <button id="sign-up-btn" pButton back-button (click)="openRegisterModal()">
+    <button *ngIf="!isUserLoggedIn" id="sign-up-btn" pButton back-button (click)="openRegisterModal()">
         <i class="pi pi-user-plus"></i>&nbsp;
         Register
     </button>
 
-    <button id="sign-in-btn" pButton back-button (click)="openLoginModal()">
+    <button *ngIf="!isUserLoggedIn" id="sign-in-btn" pButton back-button (click)="openLoginModal()">
         <i class="pi pi-sign-in"></i>&nbsp;
         Login
     </button>

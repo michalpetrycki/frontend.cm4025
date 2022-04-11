@@ -80,7 +80,7 @@ export class ApiEndpointsService {
     }
 
     public getLoginEndpoint(): string {
-        return this.createUrl('login');
+        return this.createUrl('users/login');
     }
 
 }

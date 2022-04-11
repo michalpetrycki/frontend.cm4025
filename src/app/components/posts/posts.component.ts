@@ -26,6 +26,8 @@ export class PostsComponent implements OnInit {
   displayRegisterModal: boolean;
   closeRegistrationModalSubscription: Subscription | undefined;
   closeLoginModalSubscription: Subscription | undefined;
+  isUserLoggedInSubscription: Subscription | undefined;
+  isUserLoggedIn: boolean;
 
   constructor(private postService: PostService, private dateService: DateService,
     private spinnerService: SpinnerService, private authenticationService: AuthenticationService) 
@@ -56,7 +58,12 @@ export class PostsComponent implements OnInit {
     this.closeRegistrationModalSubscription = this.authenticationService.closeRegistrationModalSubject.subscribe(closeModal => {
       this.displayRegisterModal = closeModal;
     });
-    
+
+    this.isUserLoggedInSubscription = this.authenticationService.isUserLoggedInSubject.subscribe(loggedIn => {
+      this.isUserLoggedIn = loggedIn;
+    });
+
+    this.isUserLoggedIn = this.authenticationService.isUserAuthenticated;
 
   }
 

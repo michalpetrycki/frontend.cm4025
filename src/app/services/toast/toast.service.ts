@@ -15,7 +15,7 @@ export class ToastService {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: messageText });
   }
 
-  public showError(response: HttpErrorResponse | string): void{
+  public showError(response: HttpErrorResponse | string | { status: number, message: string }): void{
 
     if (response instanceof HttpErrorResponse) {
       this.messageService.add({ severity: 'error', summary: response?.error.status, detail: response?.error.errors[0] });
@@ -25,6 +25,9 @@ export class ToastService {
     }
     else if (typeof response === 'string') {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: String(response) });
+    }
+    else {
+      this.messageService.add({ severity: 'error', summary: `Status code: ${response.status }`, detail: response.message });
     }
     
   }
