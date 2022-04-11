@@ -15,11 +15,18 @@ export class ToastService {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: messageText });
   }
 
-  public showError(response: HttpErrorResponse): void{
-    this.messageService.add({ severity:'error', summary: response.error.status, detail: response.error.message });
-    setTimeout(() => {
-      this.spinnerService.hideSpinner();
-    }, 1000);
+  public showError(response: HttpErrorResponse | string): void{
+
+    if (response instanceof HttpErrorResponse) {
+      this.messageService.add({ severity: 'error', summary: response?.error.status, detail: response?.error.message });
+      setTimeout(() => {
+        this.spinnerService.hideSpinner();
+      }, 1000);
+    }
+    else if (typeof response === 'string') {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: String(response) });
+    }
+    
   }
 
 }

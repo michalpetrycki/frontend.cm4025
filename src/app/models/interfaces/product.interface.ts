@@ -2,7 +2,7 @@ export interface Product {
     _id?: string;
     name: string;
     category: string;
-    price: string;
+    price: number;
     imagePath?: string;
     inventoryStatus?: 'OUTOFSTOCK' | 'INSTOCK' | 'LOWSTOCK';
     rating?: number;

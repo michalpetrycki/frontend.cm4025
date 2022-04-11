@@ -113,7 +113,7 @@
                         {{product.inventoryStatus}}
                     </td>
                     <td>
-                        £{{product.price}}
+                        £{{product.price.toFixed(2)}}
                     </td>
                     <td>
                         <button pButton (click)="openProductModal(false, product)">

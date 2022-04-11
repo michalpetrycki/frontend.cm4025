@@ -7,7 +7,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 })
 export class BasketService {
 
-  basket: Product[];
+  private basket: Product[];
 
   constructor(private toastService: ToastService) { 
 
@@ -16,14 +16,29 @@ export class BasketService {
   }
 
   public addToBasket(product: Product): void {
-    this.basket.push(product);
-    this.toastService.showSuccess(`${product.name} added to basket`);
+
+    debugger;
+
+    // Item already in the basket
+    if (this.basket.indexOf(product) > -1){
+      this.toastService.showError(`${product.name} already in basket`);
+    }
+    else{
+      this.basket.push(product);
+      this.toastService.showSuccess(`${product.name} added to basket`);
+    }
+    
   }
 
   public removeFromBasket(product: Product): void {
 
-    this.toastService.showSuccess(`${product.name} removed from basket`)
+    this.basket = this.basket.filter(x => x._id !== product._id);
+    this.toastService.showSuccess(`${product.name} removed from basket`);
 
+  }
+
+  public getContent(): Product[] {
+    return this.basket;
   }
 
 }

@@ -137,7 +137,7 @@ export class ShopManagementComponent implements OnInit {
       const newProduct: Product = {
         name: this.productFormGroup.get('name')?.value,
         category: this.productFormGroup.get('category')?.value,
-        price: Number(this.productFormGroup.get('price')?.value).toFixed(2),
+        price: Number(this.productFormGroup.get('price')?.value),
         inventoryStatus: this.getInventoryStatus(productQuantity),
         rating: Number('0.0'),
         quantity: productQuantity

@@ -42,7 +42,7 @@ export class ShopComponent implements OnInit {
 
   public async fetchProducts(): Promise<void>{
 
-    return new Promise<void>(async(resolve, reject) => {
+    return new Promise<void>(async(resolve) => {
 
       this.products = await this.productService.fetchProducts();
       resolve();
@@ -51,8 +51,9 @@ export class ShopComponent implements OnInit {
 
   }
 
-  public onSortChange(event: any) {
-    let value = event.value;
+  public onSortChange(event: any): void {
+
+    const value = event.value;
 
     if (value.indexOf('!') === 0) {
       this.sortOrder = -1;

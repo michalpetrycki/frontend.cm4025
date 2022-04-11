@@ -38,6 +38,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { DataViewModule } from 'primeng/dataview';
 import { RatingModule } from 'primeng/rating';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 
 // Interceptor
@@ -87,7 +88,8 @@ import { DirectivesModule } from 'src/app/modules/directives/directives.module';
     TableModule,
     DataViewModule,
     RatingModule,
-    DirectivesModule
+    DirectivesModule,
+    InputNumberModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

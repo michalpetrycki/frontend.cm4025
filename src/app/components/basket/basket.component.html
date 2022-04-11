@@ -4,3 +4,37 @@
         Back
     </button>
 </div>
+
+<div class="card">
+
+    <div class="card product-card" *ngFor="let product of basket; let idx = index; trackBy: trackProductByIndex;">
+
+        <span>
+            <img src="{{product.imagePath}}" alt="product_image" style="height: 200px; width: 200px;">
+        </span>
+
+        <span>
+
+            <p><strong>{{product.name}}</strong></p>
+            <p>£{{product.price.toFixed(2)}}</p>
+
+        </span>
+
+        <span>
+            <div>
+                {{quantity[idx]}}
+                <p-inputNumber [showButtons]="true" [(ngModel)]="quantity[idx]" [min]="1" [max]="100" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical"
+                    decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+                </p-inputNumber>
+            </div>
+        </span>
+
+        <span>
+            <button pButton (click)="removeFromBasket(product)">
+                <i class="pi pi-trash"></i>
+            </button>
+        </span>
+
+    </div>
+
+</div>
