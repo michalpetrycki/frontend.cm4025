@@ -1,10 +1,18 @@
-<div class="card create-post">
-    <div id="create-post">
-        <button pButton (click)="openProductModal(true)">
-            <i class="pi pi-plus"></i>&nbsp;
-            Create new product
-        </button>
-    </div>
+<div class="card">
+
+    <button pButton back-button>
+        <i class="pi pi-angle-double-left"></i>&nbsp;
+        Back
+    </button>
+
+    &nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;
+
+    <button pButton (click)="openProductModal(true)">
+        <i class="pi pi-plus"></i>&nbsp;
+        Create new product
+    </button>
+    
 </div>
 
 <div id="open-modal-overlay" *ngIf="displayProductModal || displayConfirmationDialog"></div>
