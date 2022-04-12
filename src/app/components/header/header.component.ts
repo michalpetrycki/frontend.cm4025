@@ -85,6 +85,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   }
 
+  // Save to localStorage so on page refresh can revert active button
   public updateCurrentlySelected(button: NavigationButton): void {
     this.currentlySelectedButton = button;
     localStorage.setItem('currently_selected_navigation_button', JSON.stringify(this.currentlySelectedButton));
