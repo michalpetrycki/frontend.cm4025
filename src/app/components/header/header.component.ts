@@ -74,7 +74,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const buttons: NavigationButton[] = [];
 
     buttons.push({ routerLink: '/admin', text: 'Admin', class: 'pi pi-key', displayForUserRole: 'admin' });
-    buttons.push({ routerLink: '/users', text: 'Users', class: 'pi pi-users', displayForUserRole: 'admin'  });
+    // buttons.push({ routerLink: '/users', text: 'Users', class: 'pi pi-users', displayForUserRole: 'admin'  });
     buttons.push({ routerLink: '/posts', text: 'Posts', class: 'pi pi-comments', displayForUserRole: 'all'  });
     buttons.push({ routerLink: '/shop-management', text: 'Shop management', class: 'pi pi-book', displayForUserRole: 'admin'  });
     buttons.push({ routerLink: '/shop', text: 'Shop', class: 'pi pi-shopping-cart', displayForUserRole: 'all'  });

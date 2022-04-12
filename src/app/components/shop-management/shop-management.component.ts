@@ -202,6 +202,8 @@ export class ShopManagementComponent implements OnInit {
 
   public confirmDeletion(): void {
     this.deleteProduct();
+    this.displayConfirmationDialog = false;
+    this.productToDelete = undefined;
   }
 
   public cancelDeletion(): void {

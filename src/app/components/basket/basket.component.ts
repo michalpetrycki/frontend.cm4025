@@ -31,6 +31,7 @@ export class BasketComponent {
   public removeFromBasket(product: Product): void {
     this.basketService.removeFromBasket(product);
     this.basket = this.basketService.getContent();
+    this.calculateTotal();
   }
 
   public trackProductByIndex(index: number): number {
@@ -52,7 +53,6 @@ export class BasketComponent {
     }
 
     this.totalAmount = t;
-
     this.basketService.quantities = this.quantity;
 
   }

@@ -38,7 +38,6 @@
 
         <span>
             <div>
-                {{quantity[idx]}}
                 <p-inputNumber [showButtons]="true" [(ngModel)]="quantity[idx]" [min]="1" [max]="100" buttonLayout="vertical" spinnerMode="vertical" inputId="vertical"
                     decrementButtonClass="p-button-secondary" incrementButtonClass="p-button-secondary" incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus"
                     (ngModelChange)="calculateTotal()">

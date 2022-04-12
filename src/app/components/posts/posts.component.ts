@@ -144,7 +144,7 @@ export class PostsComponent implements OnInit, OnDestroy {
 
       const newPost: Post = {
         _id: post._id,
-        authorId: String(1),
+        authorId: this.authenticationService.currentUser?._id || String(-1),
         title: 'Updated titile',
         content: this.editForms[index].get('content')?.value
       };
