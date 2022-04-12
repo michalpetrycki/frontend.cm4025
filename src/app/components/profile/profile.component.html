@@ -3,6 +3,13 @@
     <div id="user-profile">
 
         <!-- <h1>Welcome {{currentUser?.username}}</h1> -->
+
+        <div class="profile-output-url">
+            <label for="image-url">Image url:</label>
+            <input id="image-url" name="image-url" type="text" pInputText [(ngModel)]="currentUserModel.imageUrl">
+        </div>
+
+        <br><br>
     
         <!-- That will be updated with user's image -->
         <div id="profile-image">
@@ -14,15 +21,15 @@
                 <div id="update-user-picture" (mouseenter)="toggleUpdatePictureButton()"
                     (mouseleave)="toggleUpdatePictureButton()">
     
-                    <!-- <img src="{{currentUser?.avatarUrl}}" 
-                        alt="'{user avatar image}'"> -->
+                    <img src="{{currentUser?.imageUrl}}" 
+                        alt="'{user avatar image}'">
     
                     <div id="input-wrapper">
     
-                        <label class="avatar-button" for="update-picture-input">
+                        <!-- <label class="avatar-button" for="update-picture-input">
                             <br>
                             <strong>Update picture</strong>
-                        </label>
+                        </label> -->
         
                         <input hidden type="file" id="update-picture-input" name="update-picture-input"
                             accept="image/png, image/jpeg"
@@ -31,6 +38,10 @@
     
                     </div>
                     
+                </div>
+
+                <div>
+                    ( above picture upload not working yet )
                 </div>
     
             </ng-template>
@@ -61,7 +72,7 @@
     
         <div class="profile-output">
             <label for="user-role">Username:</label>
-            <input id="user-role" name="role" type="text" pInputText [disabled]="shouldInputBeDisabled('username')" value="{{currentUser?.role}}">
+            <input id="user-role" name="role" type="text" pInputText [disabled]="shouldInputBeDisabled('username')" value="{{currentUser?.username}}">
         </div>
     
         <div class="profile-output">

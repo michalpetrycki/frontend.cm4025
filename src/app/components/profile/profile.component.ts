@@ -31,7 +31,8 @@ export class ProfileComponent implements OnInit {
       propertyToEdit1: this.currentUser?.propertyToEdit1,
       propertyToEdit2: this.currentUser?.propertyToEdit2,
       propertyToEdit3: this.currentUser?.propertyToEdit3,
-      propertyToEdit4: this.currentUser?.propertyToEdit4
+      propertyToEdit4: this.currentUser?.propertyToEdit4,
+      imageUrl: this.currentUser?.imageUrl || '{{ == Paste your avatar url here == }}'
     };
 
     this.currentUserUpdateSubscription = this.authenticationService.currentUserSubject.subscribe(updatedUser => {
@@ -85,7 +86,8 @@ export class ProfileComponent implements OnInit {
         propertyToEdit1: this.currentUserModel.propertyToEdit1,
         propertyToEdit2: this.currentUserModel.propertyToEdit2,
         propertyToEdit3: this.currentUserModel.propertyToEdit3,
-        propertyToEdit4: this.currentUserModel.propertyToEdit4
+        propertyToEdit4: this.currentUserModel.propertyToEdit4,
+        imageUrl: this.currentUserModel.imageUrl !== '{{ == Paste your avatar url here == }}' ? this.currentUserModel.imageUrl : null
 
       }
 

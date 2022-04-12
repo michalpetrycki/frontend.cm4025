@@ -9,4 +9,5 @@ export interface User {
     propertyToEdit2?: string;
     propertyToEdit3?: string;
     propertyToEdit4?: string;
+    imageUrl?: '';
 }
