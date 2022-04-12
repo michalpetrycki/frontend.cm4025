@@ -27,6 +27,7 @@ export class AuthenticationService {
   closeLoginModalSubject: BehaviorSubject<boolean>;
   isUserLoggedInSubject: BehaviorSubject<boolean>;
   isUserAdminSubject: BehaviorSubject<boolean>
+  currentUserSubject: BehaviorSubject<User | undefined>;
 
   currentUser: User | undefined;
   
@@ -68,6 +69,7 @@ export class AuthenticationService {
       this.closeLoginModalSubject = new BehaviorSubject<boolean>(false);
       this.isUserLoggedInSubject = new BehaviorSubject<boolean>(false);
       this.isUserAdminSubject = new BehaviorSubject<boolean>(false);
+      this.currentUserSubject = new BehaviorSubject<User | undefined>(undefined)
 
       this.currentUser = undefined;
       
@@ -154,6 +156,7 @@ export class AuthenticationService {
             this.closeLoginModalSubject.next(false);
             this.isUserLoggedInSubject.next(true);
             this.isUserAdminSubject.next(this.currentUser.role === UserRole.admin);
+            this.currentUserSubject.next(this.currentUser);
 
             // this.adminObservable.next(this.isUserAdmin);
             
@@ -271,6 +274,7 @@ export class AuthenticationService {
     const currentUser: User = JSON.parse(localStorage.getItem('current_user')!) as User;
 
     this.currentUser = currentUser;
+    this.currentUserSubject.next(this.currentUser);
 
     if (!!token && !!expiresAt){
       this.isUserAuthenticated = true;

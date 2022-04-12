@@ -4,9 +4,9 @@
   
     <ul>
 
-      <li *ngFor="let button of navigationButtons">
-        <!-- <a *ngIf="canDisplayButtonForUser(button)" routerLink="{{button.routerLink}}"> -->
-          <a routerLink="{{button.routerLink}}">
+      <li *ngFor="let button of navigationButtons" (click)="updateCurrentlySelected(button)"
+        [ngClass]="{'active-button': button.text === currentlySelectedButton?.text}">
+          <a *ngIf="canDisplayButtonForUser(button)" routerLink="{{button.routerLink}}">
           <i class="{{button.class}}"></i>
           {{button.text}}
         </a>
