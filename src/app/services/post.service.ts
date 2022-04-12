@@ -48,6 +48,9 @@ export class PostService {
 
         },
         error: (error: HttpErrorResponse) => {
+
+          debugger;
+
           this.toastService.showError(error);
           reject(false);
         }
@@ -83,6 +86,9 @@ export class PostService {
           
         },
         error: (error: HttpErrorResponse) => {
+
+          debugger;
+
           this.toastService.showError(error);
           reject(false);
         }
@@ -118,6 +124,8 @@ export class PostService {
 
         },
         error: (error: HttpErrorResponse) => {
+          debugger;
+          
           this.toastService.showError(error);
           reject(false);
         }
@@ -148,6 +156,8 @@ export class PostService {
 
         },
         error: (error: HttpErrorResponse) => {
+          
+          debugger;
           this.toastService.showError(error);
           reject(false);
         }

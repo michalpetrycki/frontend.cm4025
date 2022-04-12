@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserRole } from 'src/app/models/enums/user-role.enum';
 import { NavigationButton } from 'src/app/models/interfaces/navigation-button.interface';
@@ -10,18 +10,11 @@ import { RouterService } from 'src/app/services/router/router.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.sass']
 })
-export class HeaderComponent implements OnInit {
-
-  // isAuthenticated: boolean;
-  // isAdmin: boolean;
-
-  authSubscription: Subscription | undefined;
-  adminSubscription: Subscription | undefined;
+export class HeaderComponent implements OnInit, OnDestroy {
 
   currentUserRole: string | undefined;
 
   navigationButtons: NavigationButton[];
-
 
   isUserLoggedInSubscription: Subscription | undefined;
   isUserAdminSubscription: Subscription | undefined;
@@ -31,62 +24,41 @@ export class HeaderComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService, private routerService: RouterService){
 
+    // debugger;
+
     this.isLoggedIn = false;
     this.isAdmin = false;
 
     this.isUserLoggedInSubscription = this.authenticationService.isUserLoggedInSubject.subscribe(isLoggedIn => {
-      this.isLoggedIn = isLoggedIn
+      // debugger;
+      this.isLoggedIn = isLoggedIn;
     });
 
     this.isUserAdminSubscription = this.authenticationService.isUserAdminSubject.subscribe(isAdmin => {
+      // debugger;
       this.isAdmin = isAdmin;
     });
 
     this.navigationButtons = this.createNavigationButtons();
 
-
-
-
-
-
-    // this.isAuthenticated = false;
-    // this.isAdmin = false;
-
-    
-
-    // this.isAuthenticated = this.authenticationService.isUserAuthenticated;
-    // this.isAdmin = this.authenticationService.isUserAdmin;
-    // this.currentUserRole = this.authenticationService.userRole;
-
-    // this.authSubscription = this.authenticationService.authenticationObservable.subscribe(isUserAuthenticated => {
-      
-    //   if (isUserAuthenticated !== undefined){
-    //     this.isAuthenticated = isUserAuthenticated;
-    //   }
-      
-    // });
-
-    // this.adminSubscription = this.authenticationService.adminObservable.subscribe(isUserAdmin => {
-
-    //   if (isUserAdmin !== undefined){
-
-    //     this.isAdmin = isUserAdmin;
-
-    //     if (this.isAdmin){
-    //       this.routerService.navigateTo('/admin');
-    //     }
-
-    //   }
-
-    // });
-
   }
 
   ngOnInit(): void {}
 
-  public logout(): void{
-    this.authenticationService.logout();
-    this.routerService.navigateTo('/login');
+  ngOnDestroy(): void {
+    
+    if (this.isUserAdminSubscription){
+      this.isUserAdminSubscription.unsubscribe();
+    }
+
+    if (this.isUserLoggedInSubscription){
+      this.isUserLoggedInSubscription.unsubscribe();
+    }
+    
+  }
+
+  public logout(): void {
+    this.routerService.navigateTo('logout');
   }
 
   private createNavigationButtons(): NavigationButton[]{
@@ -97,9 +69,7 @@ export class HeaderComponent implements OnInit {
     buttons.push({ routerLink: '/users', text: 'Users', class: 'pi pi-users', displayForUserRole: 'admin'  });
     buttons.push({ routerLink: '/posts', text: 'Posts', class: 'pi pi-book', displayForUserRole: 'user'  });
     buttons.push({ routerLink: '/profile', text: 'My Profile', class: 'pi pi-user', displayForUserRole: 'user' });
-    // buttons.push({ routerLink: '/login', text: 'Login', class: 'pi pi-sign-in', displayForUserRole: ''  });
-    // buttons.push({ routerLink: '/register', text: 'Register', class: 'pi pi-user-plus', displayForUserRole: ''  });
-    buttons.push({ routerLink: '/logout', text: 'Logout', class: 'pi pi-sign-out', displayForUserRole: 'all' })
+    buttons.push({ routerLink: '/logout', text: 'Logout', class: 'pi pi-sign-out', displayForUserRole: 'all' });
 
     return buttons;
 
@@ -128,15 +98,5 @@ export class HeaderComponent implements OnInit {
     }
 
   }
-
-
-
-  // getActiveRoute(): string{
-
-  //   return 'abcd';
-
-  // }
-
-
 
 }

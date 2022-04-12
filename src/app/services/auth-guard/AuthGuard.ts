@@ -16,10 +16,19 @@ export class AuthGuard implements CanActivate {
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        
         const currentUser = this.authenticationService.isUserAuthenticated;
-        if (currentUser) {
+        const userRole = this.checkUserLogin(route);
+
+        debugger;
+
+        if (currentUser && userRole) {
             // authorised so return true
             return true;
+        }
+        else if (!userRole){
+            this.toastService.showError('Unauthorized. Only admin can visit this page.');
+            return false;
         }
 
         this.toastService.showError('Unauthorized. Please login first.');
@@ -27,4 +36,23 @@ export class AuthGuard implements CanActivate {
         // this.router.navigate(['/posts'], { queryParams: { returnUrl: state.url }});
         return false;
     }
+
+    checkUserLogin(route: ActivatedRouteSnapshot): boolean {
+
+        debugger;
+
+        if (this.authenticationService.isLoggedIn()) {
+            const userRole = this.authenticationService.getRole();
+            if (route.data['role'] && route.data['role'].indexOf(userRole) === -1) {
+              this.router.navigate(['/posts']);
+              return false;
+            }
+            return true;
+          }
+      
+        this.router.navigate(['/posts']);
+        return false;
+
+    }
+
 }

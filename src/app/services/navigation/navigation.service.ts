@@ -1,10 +1,10 @@
 // Copied from https://nils-mehlhorn.de/posts/angular-navigate-back-previous-page
-import { Injectable } from '@angular/core'
+import { Injectable, OnDestroy } from '@angular/core'
 import { Location } from '@angular/common'
 import { Router, NavigationEnd } from '@angular/router'
 
 @Injectable({ providedIn: 'root' })
-export class NavigationService {
+export class NavigationService implements OnDestroy {
   private history: string[] = []
 
   constructor(private router: Router, private location: Location) {
@@ -13,6 +13,15 @@ export class NavigationService {
         this.history.push(event.urlAfterRedirects)
       }
     })
+  }
+
+  ngOnDestroy(): void {
+    
+    const subscription = this.router.events.subscribe();
+    if (subscription) {
+      subscription.unsubscribe();
+    }
+
   }
 
   back(): void {

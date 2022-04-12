@@ -1,5 +1,7 @@
 <div id="navigation-panel" *ngIf="isLoggedIn">
+  
   <nav>
+  
     <ul>
 
       <li *ngFor="let button of navigationButtons">
@@ -10,7 +12,8 @@
         </a>
       </li>
 
-      <li *ngIf="isLoggedIn" (click)="logout()">Logout<i class="pi pi-sign-out"></i></li>
     </ul>
+
   </nav>
+
 </div>

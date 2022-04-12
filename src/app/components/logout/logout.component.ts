@@ -14,10 +14,9 @@ export class LogoutComponent implements OnInit {
   ngOnInit(): void {
 
     this.authenticationService.logout();
+
     setTimeout(() => {
-
-      this.routerService.navigateTo('login');
-
+      this.routerService.navigateTo('posts');
     }, 1500);
 
   }

@@ -63,10 +63,6 @@ export class ApiEndpointsService {
         return this.createUrl('posts');
     }
 
-    public getUsersEndpoint(): string {
-        return this.createUrl('users/login');
-    }
-
     public getCurrentUserEndpoint(): string {
         return this.createUrl('users/current');
     }

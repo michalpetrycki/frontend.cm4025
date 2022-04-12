@@ -23,12 +23,13 @@ export class AuthenticationService {
   private loginEndpoint: string;
   private currentUserEndpoint: string;
 
-  currentUser: User | undefined;
-
   closeRegistrationModalSubject: BehaviorSubject<boolean>;
   closeLoginModalSubject: BehaviorSubject<boolean>;
   isUserLoggedInSubject: BehaviorSubject<boolean>;
   isUserAdminSubject: BehaviorSubject<boolean>
+
+  currentUser: User | undefined;
+  
 
   // authenticationSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
   // adminSubject: BehaviorSubject<any> = new BehaviorSubject(undefined);
@@ -63,13 +64,13 @@ export class AuthenticationService {
       this.loginEndpoint = this.apiEndpointsService.getLoginEndpoint();
       this.currentUserEndpoint = this.apiEndpointsService.getCurrentUserEndpoint();
 
-      this.currentUser = undefined;
-
       this.closeRegistrationModalSubject = new BehaviorSubject<boolean>(false);
       this.closeLoginModalSubject = new BehaviorSubject<boolean>(false);
       this.isUserLoggedInSubject = new BehaviorSubject<boolean>(false);
       this.isUserAdminSubject = new BehaviorSubject<boolean>(false);
 
+      this.currentUser = undefined;
+      
       this.checkLocalStorage();
 
   }
@@ -83,19 +84,19 @@ export class AuthenticationService {
           
           next: async (response: HttpResponse<object>) => {
 
-            debugger;
-
             if (response.ok && response.status === 200){
 
               if ('token' in response.body!){
 
-                const token = response.body['token'];
-                this.setSession(token);
+                const responseBody = response.body!;
+                const responseArray = Object.values(responseBody);
+                const authToken = responseArray[0] as string;
+
+                this.setSession(authToken);
 
                 // Used by interceptor together with checking access_token
                 this.isUserAuthenticated = true;
 
-                this.isUserLoggedInSubject.next(true);
                 resolve(true);
                 
               }
@@ -141,6 +142,8 @@ export class AuthenticationService {
             this.currentUser = responseArray[0] as User;
             this.isAdmin = this.currentUser.role === UserRole.admin;
 
+            const role = this.isAdmin ? 'ROLE_ADMIN' : 'ROLE_USER';
+
             // Set but what for?
             localStorage.setItem('current_user', JSON.stringify(this.currentUser));
 
@@ -160,6 +163,8 @@ export class AuthenticationService {
       
         },
         error: (error: HttpErrorResponse) => {
+          debugger;
+          
           // It shows error message and then hides spinner
           this.toastService.showError(error);
           reject(false);
@@ -184,7 +189,6 @@ export class AuthenticationService {
           if (response.ok && response.status === 201){
 
             const responseBody = response.body!;
-  
             const responseArray = Object.values(responseBody);
             const authToken = responseArray[0] as string;
 
@@ -204,6 +208,8 @@ export class AuthenticationService {
 
         },
         error: (error: HttpErrorResponse) => {
+          debugger;
+          
           // It shows error message and then hides spinner
           this.toastService.showError(error);
           reject(false);
@@ -235,7 +241,9 @@ export class AuthenticationService {
   public logout(): void {
     localStorage.clear();
     this.isUserAuthenticated = false;
+    this.isAdmin = false;
     this.isUserLoggedInSubject.next(this.isUserAuthenticated);
+    this.isUserAdminSubject.next(this.isAdmin);
   }
 
   // Used by routerService
@@ -274,6 +282,10 @@ export class AuthenticationService {
       this.isUserAdminSubject.next(true);
     }
 
+  }
+
+  public getRole(): string | undefined {
+    return this.isAdmin ? 'ROLE_ADMIN' : 'ROLE_USER';
   }
 
 }

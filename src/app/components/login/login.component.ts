@@ -57,8 +57,6 @@ export class LoginComponent {
       this.spinnerService.showSpinner();
       const current_user_success: boolean = await this.authenticationService.setCurrentUser();
       this.spinnerService.hideSpinner();
-
-      debugger;
   
       if (login_success && current_user_success){
   

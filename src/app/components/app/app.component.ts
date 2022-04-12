@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 
@@ -7,7 +7,7 @@ import { SpinnerService } from 'src/app/services/spinner/spinner.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   showSpinner: boolean;
   spinnerSubscription: Subscription | undefined;
@@ -26,6 +26,12 @@ export class AppComponent implements OnInit {
       
     });
 
+  }
+
+  ngOnDestroy(): void {
+    if (this.spinnerSubscription){
+      this.spinnerSubscription?.unsubscribe();
+    }
   }
 
 }

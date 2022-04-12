@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
@@ -8,7 +8,7 @@ import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 @Injectable({
   providedIn: 'root'
 })
-export class RouterService {
+export class RouterService implements OnDestroy {
 
   constructor(private router: Router, private authenticationService: AuthenticationService, private spinnerService: SpinnerService) { 
 
@@ -33,6 +33,15 @@ export class RouterService {
       }
 
     });
+
+  }
+
+  ngOnDestroy(): void {
+    
+    const subscription = this.router.events.subscribe();
+    if (subscription) {
+      subscription.unsubscribe();
+    }
 
   }
 

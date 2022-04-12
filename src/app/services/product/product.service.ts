@@ -43,6 +43,8 @@ export class ProductService {
 
         },
         error: (error: HttpErrorResponse) => {
+          debugger;
+          
           this.toastService.showError(error);
           reject(false);
         }
@@ -78,6 +80,8 @@ export class ProductService {
 
         },
         error: (error: HttpErrorResponse) => {
+          debugger;
+          
           this.toastService.showError(error);
           reject(false);
         }
@@ -113,6 +117,8 @@ export class ProductService {
 
         },
         error: (error: HttpErrorResponse) => {
+          debugger;
+          
           this.toastService.showError(error);
           reject(false);
         }
@@ -143,6 +149,8 @@ export class ProductService {
 
         },
         error: (error: HttpErrorResponse) => {
+          debugger;
+          
           this.toastService.showError(error);
           reject(false);
         }

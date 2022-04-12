@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Post } from 'src/app/models/interfaces/post.interface';
 import { DateService } from 'src/app/services/date/date.service';
@@ -14,7 +14,7 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
   styleUrls: ['./posts.component.sass'],
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnDestroy {
 
   posts: Post[];
   showUpdateButton: boolean;
@@ -71,6 +71,22 @@ export class PostsComponent implements OnInit {
 
     await this.fetchPosts();
     this.spinnerService.hideSpinner();
+
+  }
+
+  ngOnDestroy(): void {
+    
+    if (this.isUserLoggedInSubscription){
+      this.isUserLoggedInSubscription.unsubscribe();
+    }
+
+    if (this.closeLoginModalSubscription){
+      this.closeLoginModalSubscription.unsubscribe();
+    }
+
+    if (this.closeRegistrationModalSubscription){
+      this.closeRegistrationModalSubscription.unsubscribe();
+    }
 
   }
 
