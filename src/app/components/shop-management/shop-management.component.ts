@@ -35,7 +35,8 @@ export class ShopManagementComponent implements OnInit {
       category: new FormControl('', [Validators.required]),
       price: new FormControl('', [Validators.required]),
       rating: new FormControl(''),
-      quantity: new FormControl('')
+      quantity: new FormControl(''),
+      imagePath: new FormControl('')
     });
     
     this.selectedCategory = undefined;
@@ -84,7 +85,8 @@ export class ShopManagementComponent implements OnInit {
         category: product.category,
         price: product.price,
         rating: product.rating,
-        quantity: product.quantity ?? 0
+        quantity: product.quantity ?? 0,
+        imagePath: product.imagePath
       });
 
       this.productToEdit = product;
@@ -140,7 +142,8 @@ export class ShopManagementComponent implements OnInit {
         price: Number(this.productFormGroup.get('price')?.value),
         inventoryStatus: this.getInventoryStatus(productQuantity),
         rating: Number('0.0'),
-        quantity: productQuantity
+        quantity: productQuantity,
+        imagePath: this.productFormGroup.get('imagePath')?.value
       };
 
       await this.productService.createProduct(newProduct);
@@ -168,8 +171,11 @@ export class ShopManagementComponent implements OnInit {
         category: this.productFormGroup.get('category')?.value,
         price: this.productFormGroup.get('price')?.value ?? 0.0,
         quantity: quantity ?? 0,
-        inventoryStatus: this.getInventoryStatus(quantity)
+        inventoryStatus: this.getInventoryStatus(quantity),
+        imagePath: this.productFormGroup.get('imagePath')?.value
       };
+
+      debugger;
 
       await this.productService.updateProduct(productToUpdate);
       this.productFormGroup.reset();
