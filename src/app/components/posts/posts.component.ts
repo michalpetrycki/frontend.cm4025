@@ -115,7 +115,7 @@ export class PostsComponent implements OnInit, OnDestroy {
       const postContent = this.createPostGroup.get('content')?.value;
       const newPost: Post = {
         title: 'Do I actually need a title here?',
-        authorId: String(1),
+        authorId: this.authenticationService.currentUser?._id || String(-1),
         content: postContent
       };
     
@@ -206,6 +206,10 @@ export class PostsComponent implements OnInit, OnDestroy {
     // If difference is 15 minutes - don't show 'Edit Post'
     return diff <= 900000;
 
+  }
+
+  public userIsAuthor(post: Post): boolean {
+    return this.authenticationService.currentUser?._id === post.authorId && post.authorId !== String(-1);
   }
 
   public trackPostByIndex(index: number): number {

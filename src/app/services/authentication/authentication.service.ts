@@ -245,6 +245,7 @@ export class AuthenticationService {
     localStorage.clear();
     this.isUserAuthenticated = false;
     this.isAdmin = false;
+    this.currentUser = undefined;
     this.isUserLoggedInSubject.next(this.isUserAuthenticated);
     this.isUserAdminSubject.next(this.isAdmin);
   }

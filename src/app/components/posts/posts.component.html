@@ -55,13 +55,13 @@
                 <p class="content">{{post.content}}</p>
             </div>
 
-            <button *ngIf="editPostTimeIsValid(post) && canDisplayEditButton[i]" 
+            <button *ngIf="editPostTimeIsValid(post) && canDisplayEditButton[i] && userIsAuthor(post)" 
                 pButton (click)="showEditArea(i)" class="edit-post-button">
                     <i class="pi pi-pencil"></i>&nbsp;
                     Edit post
             </button>
 
-            <button *ngIf="editPostTimeIsValid(post) && canDisplayEditButton[i]" 
+            <button *ngIf="editPostTimeIsValid(post) && canDisplayEditButton[i] && userIsAuthor(post)" 
                 pButton (click)="deletePost(post)" class="edit-post-button">
                     <i class="pi pi-trash"></i>&nbsp;
                     Delete post
