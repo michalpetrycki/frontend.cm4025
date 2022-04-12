@@ -20,8 +20,6 @@ export class AuthGuard implements CanActivate {
         const currentUser = this.authenticationService.isUserAuthenticated;
         const userRole = this.checkUserLogin(route);
 
-        debugger;
-
         if (currentUser && userRole) {
             // authorised so return true
             return true;
@@ -39,18 +37,16 @@ export class AuthGuard implements CanActivate {
 
     checkUserLogin(route: ActivatedRouteSnapshot): boolean {
 
-        debugger;
-
         if (this.authenticationService.isLoggedIn()) {
             const userRole = this.authenticationService.getRole();
             if (route.data['role'] && route.data['role'].indexOf(userRole) === -1) {
-              this.router.navigate(['/posts']);
+            //   this.router.navigate(['/posts']);
               return false;
             }
             return true;
           }
       
-        this.router.navigate(['/posts']);
+        // this.router.navigate(['/posts']);
         return false;
 
     }
