@@ -101,8 +101,8 @@ export class ProductService {
 
         next: async(response: HttpResponse<object>) => {
 
-          // Status 201 - resource updated
-          if (response.ok && response.status === 201){
+          // Status 200 - resource updated
+          if (response.ok && response.status === 200){
 
             const responseBody = response.body!;
   

@@ -5,4 +5,8 @@ export interface User {
     username: string;
     createdAt: Date;
     updatedAt: Date;
+    propertyToEdit1?: string;
+    propertyToEdit2?: string;
+    propertyToEdit3?: string;
+    propertyToEdit4?: string;
 }

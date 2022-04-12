@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/interfaces/user.interface';
+import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
@@ -8,39 +10,31 @@ import { UserService } from 'src/app/services/user/user.service';
 })
 export class AdminComponent implements OnInit {
 
-  users = <any>[];
+  users: User[];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private spinnerService: SpinnerService) { 
+
+    this.spinnerService.showSpinner();
+    this.users = [];
+
+  }
 
   async ngOnInit(): Promise<void> {
 
-    this.loadData();
+    await this.fetchsUsers();
+    this.spinnerService.hideSpinner();
 
-    // try{
-    //   this.users = await this.userService.fetchUsers();
-    // }
-    // catch (error){
-    //   console.log(error);
-    // }
-
-    // try{
-    //   this.userService.registerUser({ username: 'username', password: 'password', email: 'email', role: 'role' });
-    // }
-    // catch (error){
-    //   console.log(error);
-    // }
-    
   }
 
-  private async loadData(): Promise<void>{
+  private async fetchsUsers(): Promise<void> {
 
-    return new Promise<void>(async (resolve, reject) => {
+    return new Promise<void>(async (resolve) => {
 
-      // this.users = await this.userService.fetchUsers();
-      debugger;
+      this.users = await this.userService.fetchUsers();
+      resolve();
 
     });
-
+    
   }
 
   displayUser(user: any){

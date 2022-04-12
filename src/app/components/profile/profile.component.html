@@ -1,89 +1,111 @@
-<div id="user-profile">
+<div class="card">
 
-    <!-- <h1>Welcome {{currentUser?.username}}</h1> -->
+    <div id="user-profile">
 
-    <!-- That will be updated with user's image -->
-    <div id="profile-image">
+        <!-- <h1>Welcome {{currentUser?.username}}</h1> -->
+    
+        <!-- That will be updated with user's image -->
+        <div id="profile-image">
+            
+            <div *ngIf="showPicture == true then picture else noPicture;"></div>
+            
+            <ng-template #picture>
+            
+                <div id="update-user-picture" (mouseenter)="toggleUpdatePictureButton()"
+                    (mouseleave)="toggleUpdatePictureButton()">
+    
+                    <!-- <img src="{{currentUser?.avatarUrl}}" 
+                        alt="'{user avatar image}'"> -->
+    
+                    <div id="input-wrapper">
+    
+                        <label class="avatar-button" for="update-picture-input">
+                            <br>
+                            <strong>Update picture</strong>
+                        </label>
         
-        <div *ngIf="showPicture == true then picture else noPicture;"></div>
-        
-        <ng-template #picture>
-        
-            <div id="update-user-picture" (mouseenter)="toggleUpdatePictureButton()"
-                (mouseleave)="toggleUpdatePictureButton()">
-
-                <!-- <img src="{{currentUser?.avatarUrl}}" 
-                    alt="'{user avatar image}'"> -->
-
-                <div id="input-wrapper">
-
-                    <label class="avatar-button" for="update-picture-input">
+                        <input hidden type="file" id="update-picture-input" name="update-picture-input"
+                            accept="image/png, image/jpeg"
+                            (click)="openUpdatePictureModal($event)"
+                        >
+    
+                    </div>
+                    
+                </div>
+    
+            </ng-template>
+    
+            <ng-template #noPicture>
+                
+                <div id="upload-user-picture">
+    
+                    <img src="">
+            
+                    <!-- <button class="avatar-button" ><strong>Upload your picture</strong></button> -->
+    
+                    <label class="avatar-button" for="upload-picture-input">
                         <br>
-                        <strong>Update picture</strong>
+                        <strong>Upload your picture</strong>
                     </label>
     
-                    <input hidden type="file" id="update-picture-input" name="update-picture-input"
+                    <input hidden type="file" id="upload-picture-input" name="upload-picture-input"
                         accept="image/png, image/jpeg"
-                        (click)="openUpdatePictureModal($event)"
+                        (click)="openUploadPictureModal($event)"
                     >
-
-                </div>
-                
-            </div>
-
-        </ng-template>
-
-        <ng-template #noPicture>
-            
-            <div id="upload-user-picture">
-
-                <img src="">
-        
-                <!-- <button class="avatar-button" ><strong>Upload your picture</strong></button> -->
-
-                <label class="avatar-button" for="upload-picture-input">
-                    <br>
-                    <strong>Upload your picture</strong>
-                </label>
-
-                <input hidden type="file" id="upload-picture-input" name="upload-picture-input"
-                    accept="image/png, image/jpeg"
-                    (click)="openUploadPictureModal($event)"
-                >
-
-            </div>
-
-        </ng-template>
-
-    </div>
-
     
-
-    <!-- <div class="profile-output">
-        <label for="user-role">Username:</label>
-        <input id="user-role" name="role" type="text" pInputText [disabled]="shouldInputBeDisabled('username')" value="{{currentUser?.role}}">
+                </div>
+    
+            </ng-template>
+    
+        </div>
+    
+        <div class="profile-output">
+            <label for="user-role">Username:</label>
+            <input id="user-role" name="role" type="text" pInputText [disabled]="shouldInputBeDisabled('username')" value="{{currentUser?.role}}">
+        </div>
+    
+        <div class="profile-output">
+            <label for="user-role">Role:</label>
+            <input id="user-role" name="role" type="text" pInputText [disabled]="shouldInputBeDisabled('role')" value="{{currentUser?.role}}">
+        </div>
+    
+        <div class="profile-output">
+            <label for="user-email">Email:</label>
+            <input id="user-email" name="email" type="text" pInputText [disabled]="shouldInputBeDisabled('email')" value="{{currentUser?.email}}">
+        </div>
+    
+        <div class="profile-output">
+            <label for="user-created">Date of joining:</label>
+            <input id="user-created" name="created" type="text" pInputText [disabled]="shouldInputBeDisabled('createdAt')" value="{{formatDateString(currentUser?.createdAt)}}">
+        </div>
+    
+        <div class="profile-output">
+            <label for="user-updated">Profile last updated on:</label>
+            <input id="user-updated" name="updated" type="text" pInputText [disabled]="shouldInputBeDisabled('updatedAt')" value="{{formatDateString(currentUser?.updatedAt)}}">
+        </div>
+    
+        <div class="profile-output">
+            <label for="user-updated">Some property to edit (1): </label>
+            <input id="user-updated" name="updated" type="text" pInputText [disabled]="shouldInputBeDisabled('toEdit1')" [(ngModel)]="currentUserModel.propertyToEdit1">
+        </div>
+    
+        <div class="profile-output">
+            <label for="user-updated">Some property to edit (2): </label>
+            <input id="user-updated" name="updated" type="text" pInputText [disabled]="shouldInputBeDisabled('toEdit2')" [(ngModel)]="currentUserModel.propertyToEdit2">
+        </div>
+    
+        <div class="profile-output">
+            <label for="user-updated">Some property to edit (3): </label>
+            <input id="user-updated" name="updated" type="text" pInputText [disabled]="shouldInputBeDisabled('toEdit3')" [(ngModel)]="currentUserModel.propertyToEdit3">
+        </div>
+    
+        <div class="profile-output">
+            <label for="user-updated">Some property to edit (4): </label>
+            <input id="user-updated" name="updated" type="text" pInputText [disabled]="shouldInputBeDisabled('toEdit4')" [(ngModel)]="currentUserModel.propertyToEdit4">
+        </div>
+    
+        <button pButton type="button" label="Update profile" icon="pi pi-save" iconPos="left" (click)="updateProfile()"></button>
+    
     </div>
-
-    <div class="profile-output">
-        <label for="user-role">Role:</label>
-        <input id="user-role" name="role" type="text" pInputText [disabled]="shouldInputBeDisabled('role')" value="{{currentUser?.role}}">
-    </div>
-
-    <div class="profile-output">
-        <label for="user-email">Email:</label>
-        <input id="user-email" name="email" type="text" pInputText [disabled]="shouldInputBeDisabled('email')" value="{{currentUser?.email}}">
-    </div>
-
-    <div class="profile-output">
-        <label for="user-created">Date of joining:</label>
-        <input id="user-created" name="created" type="text" pInputText [disabled]="shouldInputBeDisabled('createdAt')" value="{{formatDateString(currentUser?.createdAt)}}">
-    </div>
-
-    <div class="profile-output">
-        <label for="user-updated">Profile last updated on:</label>
-        <input id="user-updated" name="updated" type="text" pInputText [disabled]="shouldInputBeDisabled('updatedAt')" value="{{formatDateString(currentUser?.updatedAt)}}">
-    </div>
-
-    <button pButton type="button" label="Update profile" icon="pi pi-save" iconPos="left" (click)="updateProfile()"></button> -->
 
 </div>

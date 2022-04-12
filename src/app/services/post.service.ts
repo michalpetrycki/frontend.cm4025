@@ -11,7 +11,6 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 export class PostService {
 
   posts: Post[] = [];
-
   private postsEndpoint = '';
   
   constructor(private apiService: ApiService, private apiEndpointsService: ApiEndpointsService, 
@@ -108,8 +107,8 @@ export class PostService {
 
         next: async(response: HttpResponse<object>) => {
 
-          // Status 201 - resource updated
-          if (response.ok && response.status === 201){
+          // Status 200 - resource updated
+          if (response.ok && response.status === 200){
 
             const responseBody = response.body!;
   

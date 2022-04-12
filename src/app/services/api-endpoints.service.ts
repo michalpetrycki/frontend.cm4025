@@ -79,4 +79,8 @@ export class ApiEndpointsService {
         return this.createUrl('users/login');
     }
 
+    public getUsersEndpoint(): string {
+        return this.createUrl('users');
+    }
+
 }
