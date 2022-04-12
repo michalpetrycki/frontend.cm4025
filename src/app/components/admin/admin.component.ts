@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/interfaces/user.interface';
+import { DateService } from 'src/app/services/date/date.service';
 import { SpinnerService } from 'src/app/services/spinner/spinner.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -12,7 +13,7 @@ export class AdminComponent implements OnInit {
 
   users: User[];
 
-  constructor(private userService: UserService, private spinnerService: SpinnerService) { 
+  constructor(private userService: UserService, private spinnerService: SpinnerService, private dateService: DateService) { 
 
     this.spinnerService.showSpinner();
     this.users = [];
@@ -39,6 +40,10 @@ export class AdminComponent implements OnInit {
 
   displayUser(user: any){
     return JSON.stringify(user);
+  }
+
+  formatDate(date: Date): string {
+    return this.dateService.formatToDayMonthYearTimeFormat(date);
   }
 
 }

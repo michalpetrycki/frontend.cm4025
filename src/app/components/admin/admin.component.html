@@ -1,5 +1,30 @@
-<h1>I'm an admin pal</h1>
+<div class="card">
 
-<pre *ngFor="let user of users">
-    {{displayUser(user)}}
-</pre>
+    <h1>All users</h1>
+
+    <div class="card" *ngFor="let user of users">
+        
+        <label class="label"><strong>Username</strong></label>
+        <input id="username" name="username" type="text" pInputText disabled value="{{user.username}}">
+
+        <br>
+        <br>
+
+        <label class="label"><strong>Email</strong></label>
+        <input id="email" name="email" type="text" pInputText disabled value="{{user.email}}">
+
+        <br>
+        <br>
+
+        <label class="label"><strong>Role</strong></label>
+        <input id="role" name="role" type="text" pInputText disabled value="{{user.role}}">
+
+        <br>
+        <br>
+
+        <label class="label"><strong>Created at</strong></label>
+        <input id="createdAt" name="createdAt" type="text" pInputText disabled value="{{formatDate(user.createdAt)}}">
+
+    </div>
+
+</div>
